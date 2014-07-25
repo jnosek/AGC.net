@@ -17,8 +17,6 @@ namespace Apollo.Virtual.AGC.Base
             m = new ushort[size];
         }
 
-
-
         public ushort this[uint address]
         {
             get
