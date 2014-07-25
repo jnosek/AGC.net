@@ -257,6 +257,21 @@ namespace Apollo.Virtual.AGC
             INLINK = new Register(unswitchedErasable, 0x25);
 
         }
+
+        // try some instructions
+        
+        /// <summary>
+        /// AD - 011
+        /// </summary>
+ 
+        public void Add(ushort K)
+        {
+            var value = unswitchedErasable[K];
+            A.Add(value);
+            
+            // value in K is re-written
+            unswitchedErasable[K] = value;
+        }
     }
 }
 

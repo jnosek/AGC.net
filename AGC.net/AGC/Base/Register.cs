@@ -31,5 +31,10 @@ namespace Apollo.Virtual.AGC.Base
         {
             return ram[address];
         }
+
+        public void Add(ushort K)
+        {
+            this.Write((ushort)(this.Read() + K));
+        }
     }
 }

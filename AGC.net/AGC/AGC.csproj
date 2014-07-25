@@ -40,6 +40,7 @@
     <Compile Include="Base\Memory.cs" />
     <Compile Include="Base\Register.cs" />
     <Compile Include="Computer.cs" />
+    <Compile Include="MemoryMap.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
