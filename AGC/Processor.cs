@@ -13,6 +13,12 @@ namespace Apollo.Virtual.AGC
         internal MemoryMap Memory;
 
         private InstructionSet instructions;
+        private ExtraCodeInstructionSet extraCodeInstructions;
+
+        /// <summary>
+        /// used to allow more than 8 instruction codes
+        /// </summary>
+        internal bool ExtraCodeFlag = false;
 
         #region Register Definitions
 
@@ -213,6 +219,7 @@ namespace Apollo.Virtual.AGC
         {
             this.Memory = memory;
             instructions = new InstructionSet(this);
+            extraCodeInstructions = new ExtraCodeInstructionSet(this);
 
             // configure registers
 
@@ -262,9 +269,7 @@ namespace Apollo.Virtual.AGC
             // LM Only Pitch, Yaw, and Roll registers
 
             INLINK = new Register(memory.GetAddress(0x25));
-
         }
-
 
         public void Execute()
         {
@@ -277,7 +282,16 @@ namespace Apollo.Virtual.AGC
             var code = (ushort)(address.Read() >> 12);
             var K = (ushort)(address.Read() & 0xFFF);
 
-            instructions[code].Execute(K);
+            // determine if this is an extra code instruction
+            if (ExtraCodeFlag)
+            {
+                extraCodeInstructions[code].Execute(K);
+                
+                // clear the extra code flag
+                ExtraCodeFlag = false;
+            }
+            else
+                instructions[code].Execute(K);
         }
     }
 }

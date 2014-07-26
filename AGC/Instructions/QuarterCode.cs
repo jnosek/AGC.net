@@ -12,14 +12,11 @@ namespace Apollo.Virtual.AGC.Instructions
     /// Operation on 10-bit address space operand restricted to eraseable memory
     /// Followed by 2-bit quarter code for instruction
     /// </summary>
-    class QuarterCode : IInstruction
+    class QuarterCode : InstructionList, IInstruction
     {
-        private InstructionList instuctions;
-
-        public QuarterCode()
+        public QuarterCode() : base(3)
         {
-            instuctions = new InstructionList(3);
-            instuctions.Add(new AddToStorage { CPU = this.CPU });
+            Add(new AddToStorage { CPU = this.CPU });
         }
 
         public ushort Code
@@ -34,7 +31,7 @@ namespace Apollo.Virtual.AGC.Instructions
             var quarterCode = (ushort)(K >> 10);
             K = (ushort)(K & 0x3FF);
 
-            instuctions[quarterCode].Execute(K);
+            base[quarterCode].Execute(K);
         }
     }
 }

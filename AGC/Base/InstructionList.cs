@@ -19,7 +19,7 @@ namespace Apollo.Virtual.AGC.Base
         {
         }
 
-        public void Add(IInstruction instruction)
+        protected void Add(IInstruction instruction)
         {
             this[instruction.Code] = instruction;
         }

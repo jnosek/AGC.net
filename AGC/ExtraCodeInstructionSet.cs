@@ -7,18 +7,16 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC
 {
-    class InstructionSet : InstructionList
+    class ExtraCodeInstructionSet : InstructionList
     {
         private Processor CPU;
-        
-        public InstructionSet(Processor cpu)
-            :base(7)
+
+        public ExtraCodeInstructionSet(Processor cpu)
+            : base(7)
         {
             CPU = cpu;
 
-            Add(new TransferControl { CPU = CPU });
-            Add(new QuarterCode { CPU = CPU });
-            Add(new Add { CPU = CPU });
+            Add(new Augment { CPU = CPU });
         }
 
         public new IInstruction this[ushort code]
