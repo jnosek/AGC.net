@@ -8,14 +8,16 @@ namespace Apollo.Virtual.AGC
 {
     // http://www.ibiblio.org/apollo/assembly_language_manual.html
 
-    class Processor
+    public class Processor
     {
-        private Memory unswitchedErasable;
+        private MemoryMap memory;
+
+        #region Register Definitions
 
         /// <summary>
         /// Accumulator
         /// </summary>
-        public Register A; 
+        public Register A;
 
         /// <summary>
         /// The lower product after MP instructions
@@ -184,7 +186,7 @@ namespace Apollo.Virtual.AGC
         /// Monitors vehicle velocity
         /// </summary>
         public Register PIPAX;
-        
+
         /// <summary>
         /// Pulsed Integrating Pendulous Accelerometer
         /// Monitors vehicle velocity
@@ -203,74 +205,124 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         public Register INLINK;
 
-        public Processor(Memory ram)
+        #endregion
+
+        public Processor(MemoryMap memory)
         {
-            unswitchedErasable = ram;
+            this.memory = memory;
 
             // configure registers
 
             // main registers?
-            A = new Register(unswitchedErasable, 0x0);
-            LP = new Register(unswitchedErasable, 0x1);
-            Q = new Register(unswitchedErasable, 0x2);
-            EB = new Register(unswitchedErasable, 0x3);
-            FB = new Register(unswitchedErasable, 0x4);
-            Z = new Register(unswitchedErasable, 0x5);
-            BB = new Register(unswitchedErasable, 0x6);
+            A = new Register(memory.GetAddress(0x0));
+            LP = new Register(memory.GetAddress(0x1));
+            Q = new Register(memory.GetAddress(0x2));
+            EB = new Register(memory.GetAddress(0x3));
+            FB = new Register(memory.GetAddress(0x4));
+            Z = new Register(memory.GetAddress(0x5));
+            BB = new Register(memory.GetAddress(0x6));
 
-            unswitchedErasable[0x7] = 0; // this is always set to 0, TODO: need to hard code?
+            memory[0x7] = 0; // this is always set to 0, TODO: need to hard code?
 
             // interrupt helper registers
-            ARUPT = new Register(unswitchedErasable, 0x8);
-            LRUPT = new Register(unswitchedErasable, 0x9);
-            QRUPT = new Register(unswitchedErasable, 0xA);
+            ARUPT = new Register(memory.GetAddress(0x8));
+            LRUPT = new Register(memory.GetAddress(0x9));
+            QRUPT = new Register(memory.GetAddress(0xA));
             // 0XB, 0XC are spares. not used?
-            ZRUPT = new Register(unswitchedErasable, 0xD);
-            BBRUPT = new Register(unswitchedErasable, 0xE);
-            BRUPT = new Register(unswitchedErasable, 0xF);
+            ZRUPT = new Register(memory.GetAddress(0xD));
+            BBRUPT = new Register(memory.GetAddress(0xE));
+            BRUPT = new Register(memory.GetAddress(0xF));
 
             // editing registers
-            CYR = new Register(unswitchedErasable, 0x10);
-            SR = new Register(unswitchedErasable, 0x11);
-            CYL = new Register(unswitchedErasable, 0x12);
-            EDOP = new Register(unswitchedErasable, 0x13);
+            CYR = new Register(memory.GetAddress(0x10));
+            SR = new Register(memory.GetAddress(0x11));
+            CYL = new Register(memory.GetAddress(0x12));
+            EDOP = new Register(memory.GetAddress(0x13));
 
             // time registers
-            TIME2 = new Register(unswitchedErasable, 0x14);
-            TIME1 = new Register(unswitchedErasable, 0x15);
-            TIME3 = new Register(unswitchedErasable, 0x16);
-            TIME4 = new Register(unswitchedErasable, 0x17);
-            TIME5 = new Register(unswitchedErasable, 0x18);
-            TIME6 = new Register(unswitchedErasable, 0x19);
+            TIME2 = new Register(memory.GetAddress(0x14));
+            TIME1 = new Register(memory.GetAddress(0x15));
+            TIME3 = new Register(memory.GetAddress(0x16));
+            TIME4 = new Register(memory.GetAddress(0x17));
+            TIME5 = new Register(memory.GetAddress(0x18));
+            TIME6 = new Register(memory.GetAddress(0x19));
 
             // orientation registers
-            CDUX = new Register(unswitchedErasable, 0x1A);
-            CDUY = new Register(unswitchedErasable, 0x1B);
-            CDUZ = new Register(unswitchedErasable, 0x1C);
-            OPTY = new Register(unswitchedErasable, 0x1D);
-            OPTX = new Register(unswitchedErasable, 0x1E);
-            PIPAX = new Register(unswitchedErasable, 0x1F);
-            PIPAY = new Register(unswitchedErasable, 0x20);
-            PIPAZ = new Register(unswitchedErasable, 0x21);
+            CDUX = new Register(memory.GetAddress(0x1A));
+            CDUY = new Register(memory.GetAddress(0x1B));
+            CDUZ = new Register(memory.GetAddress(0x1C));
+            OPTY = new Register(memory.GetAddress(0x1D));
+            OPTX = new Register(memory.GetAddress(0x1E));
+            PIPAX = new Register(memory.GetAddress(0x1F));
+            PIPAY = new Register(memory.GetAddress(0x20));
+            PIPAZ = new Register(memory.GetAddress(0x21));
             // LM Only Pitch, Yaw, and Roll registers
 
-            INLINK = new Register(unswitchedErasable, 0x25);
+            INLINK = new Register(memory.GetAddress(0x25));
 
         }
 
         // try some instructions
-        
+
         /// <summary>
-        /// AD - 011
+        /// AD - 0110
+        /// 
+        /// Adds the value located in K to the accumulator
         /// </summary>
- 
         public void Add(ushort K)
         {
-            var value = unswitchedErasable[K];
-            A.Add(value);
-            
+            var value = memory[K];
+            A.Add(memory[K]);
+
             // value in K is re-written
-            unswitchedErasable[K] = value;
+            memory[K] = value;
+        }
+
+        /// <summary>
+        /// ADS - 0010 11
+        /// Adds the accumulator to an eraseable memory location and vice versa 
+        /// </summary>
+        /// <param name="K"></param>
+        public void AddToStorage(ushort K)
+        {
+            var value = memory[K];
+            A.Add(value);
+
+            memory[K] = A.Read();
+        }
+
+        public void Execute()
+        {
+            // get address of instruction to run
+            var address = memory.GetAddress(Z.Read());
+
+            // update Z
+            Z.Write((ushort)(Z.Read() + 1));
+
+            var code = address.Read() >> 12;
+            var operand = (ushort)(address.Read() & 0xFFF);
+
+            switch (code)
+            {
+                // Add
+                case 0x06:
+                    this.Add(operand);
+                    break;
+
+                // Quarter Codes
+                case 0x02:
+                    var quarterCode = operand >> 10;
+                    operand = (ushort)(operand & 0x3FF);
+
+                    switch (quarterCode)
+                    {
+                        case 0x02:
+                            this.AddToStorage(operand);
+                            break;
+                    }
+
+                    break;
+            }
         }
     }
 }

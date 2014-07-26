@@ -6,13 +6,13 @@ using System.Text;
 namespace Apollo.Virtual.AGC.Base
 {
     /// <summary>
-    /// 16 bit memory segment
+    /// 16 bit memory bank
     /// </summary>
-    class Memory
+    public class MemoryBank
     {
         private ushort[] m;
 
-        public Memory(uint size)
+        public MemoryBank(uint size)
         {
             m = new ushort[size];
         }

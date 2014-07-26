@@ -11,25 +11,23 @@ namespace Apollo.Virtual.AGC.Base
     /// 
     /// All registers are memory mapped
     /// </summary>
-    class Register
+    public class Register
     {
-        private Memory ram;
-        private uint address;
+        private MemoryAddress address;
 
-        public Register(Memory ram, uint address)
+        public Register(MemoryAddress address)
         {
-            this.ram = ram;
             this.address = address;
         }
 
         public virtual void Write(ushort value)
         {
-            ram[address] = value;
+            address.Write(value);
         }
 
         public virtual ushort Read()
         {
-            return ram[address];
+            return address.Read();
         }
 
         public void Add(ushort K)
