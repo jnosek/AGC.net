@@ -41,6 +41,12 @@
     <Compile Include="Base\MemoryAddress.cs" />
     <Compile Include="Base\Register.cs" />
     <Compile Include="Base\Computer.cs" />
+    <Compile Include="InstructionSet.cs" />
+    <Compile Include="Instructions\Add.cs" />
+    <Compile Include="Instructions\AddToStorage.cs" />
+    <Compile Include="Base\IInstruction.cs" />
+    <Compile Include="Base\InstructionList.cs" />
+    <Compile Include="Instructions\QuarterCode.cs" />
     <Compile Include="MemoryMap.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

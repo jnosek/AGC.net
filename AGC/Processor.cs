@@ -10,7 +10,9 @@ namespace Apollo.Virtual.AGC
 
     public class Processor
     {
-        private MemoryMap memory;
+        internal MemoryMap Memory;
+
+        private InstructionSet instructions;
 
         #region Register Definitions
 
@@ -209,7 +211,8 @@ namespace Apollo.Virtual.AGC
 
         public Processor(MemoryMap memory)
         {
-            this.memory = memory;
+            this.Memory = memory;
+            instructions = new InstructionSet(this);
 
             // configure registers
 
@@ -262,67 +265,19 @@ namespace Apollo.Virtual.AGC
 
         }
 
-        // try some instructions
-
-        /// <summary>
-        /// AD - 0110
-        /// 
-        /// Adds the value located in K to the accumulator
-        /// </summary>
-        public void Add(ushort K)
-        {
-            var value = memory[K];
-            A.Add(memory[K]);
-
-            // value in K is re-written
-            memory[K] = value;
-        }
-
-        /// <summary>
-        /// ADS - 0010 11
-        /// Adds the accumulator to an eraseable memory location and vice versa 
-        /// </summary>
-        /// <param name="K"></param>
-        public void AddToStorage(ushort K)
-        {
-            var value = memory[K];
-            A.Add(value);
-
-            memory[K] = A.Read();
-        }
 
         public void Execute()
         {
             // get address of instruction to run
-            var address = memory.GetAddress(Z.Read());
+            var address = Memory.GetAddress(Z.Read());
 
             // update Z
             Z.Write((ushort)(Z.Read() + 1));
 
-            var code = address.Read() >> 12;
-            var operand = (ushort)(address.Read() & 0xFFF);
+            var code = (ushort)(address.Read() >> 12);
+            var K = (ushort)(address.Read() & 0xFFF);
 
-            switch (code)
-            {
-                // Add
-                case 0x06:
-                    this.Add(operand);
-                    break;
-
-                // Quarter Codes
-                case 0x02:
-                    var quarterCode = operand >> 10;
-                    operand = (ushort)(operand & 0x3FF);
-
-                    switch (quarterCode)
-                    {
-                        case 0x02:
-                            this.AddToStorage(operand);
-                            break;
-                    }
-
-                    break;
-            }
+            instructions[code].Execute(K);
         }
     }
 }
