@@ -12,6 +12,15 @@ namespace Apollo.Virtual.AGC
         const uint FB_Address = 0x04;
 
         /// <summary>
+        /// Regisers to return at the following addresses
+        /// 
+        /// @0000 - @0061
+        /// 0x0 - 0x31
+        /// 0 - 49
+        /// </summary>
+        private IWord[] registers = new IWord[49];
+
+        /// <summary>
         /// Primary RAM
         /// 
         /// @0000 - @1377
@@ -74,26 +83,29 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         private MemoryBank ioChannels = new MemoryBank(512);
 
-        public ushort this[uint a]
+        public IWord this[ushort a]
         {
             get
             {
-                var address = GetAddress(a);
-                return address.Read();
+                return GetWord(a);
             }
             set
             {
-                var address = GetAddress(a);
-                address.Write(value);
+                GetWord(a).Write(value);
             }
         }
 
-        public MemoryAddress GetAddress(uint address)
+        public IWord GetWord(ushort address)
         {
-            //unswitchedErasable
-            if (address <= 0x2FF)
+            // registers
+            if (address <= 0x031)
             {
-                return new MemoryAddress(unswitchedErasable, address);
+                return registers[address];
+            }
+            //unswitchedErasable
+            else if (address <= 0x2FF)
+            {
+                return new ErasableMemory(new MemoryAddress(unswitchedErasable, address, address));
             }
             // switchedErasable
             else if (address <= 0x3FF)
@@ -102,7 +114,7 @@ namespace Apollo.Virtual.AGC
                 var bank = (unswitchedErasable[EB_Address] & 0x700) >> 8;
 
                 // retrieve bank, and adjust address by memory space offset
-                return new MemoryAddress(switchedErasable[bank], address - 0x300);
+                return new ErasableMemory(new MemoryAddress(switchedErasable[bank], address, (ushort)(address - 0x300)));
             }
             // commonFixed
             else if (address <= 0x7FF)
@@ -112,13 +124,22 @@ namespace Apollo.Virtual.AGC
 
                 // if we are in the super bit bank series
                 if(bank >= 32 && (ioChannels[7] & 0x40) > 0 )
-                    return new MemoryAddress(commonFixed[bank + 0x08], address - 0x400);
+                    return new ErasableMemory(new MemoryAddress(commonFixed[bank + 0x08], address, (ushort)(address - 0x400)));
                 else
-                    return new MemoryAddress(commonFixed[bank], address - 0x400);
+                    return new ErasableMemory(new MemoryAddress(commonFixed[bank], address, (ushort)(address - 0x400)));
             }
             // for now, return the 0 space address
             else 
-                return new MemoryAddress(unswitchedErasable, 0x07);
+                return new ErasableMemory(new MemoryAddress(unswitchedErasable, 0x07, 0x07));
+        }
+
+        internal RegisterType AddRegister<RegisterType>(RegisterType r, ushort address) where RegisterType : IWord, IRegister
+        {
+            registers[address] = r;
+
+            r.Memory = new MemoryAddress(unswitchedErasable, address, address);
+
+            return r;
         }
     }
 }

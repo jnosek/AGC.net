@@ -13,8 +13,8 @@ namespace AGC.dev
         {
             var computer = new Computer();
 
-            computer.Memory.GetAddress(0x300).Write(0x6301);
-            computer.Memory.GetAddress(0x301).Write(0x02);
+            computer.Memory.GetWord(0x300).Write(0x6301);
+            computer.Memory.GetWord(0x301).Write(0x02);
             computer.CPU.Z.Write(0x300);
             computer.CPU.Execute();
 

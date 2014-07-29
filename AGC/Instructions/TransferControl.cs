@@ -34,7 +34,7 @@ namespace Apollo.Virtual.AGC.Instructions
             // else process as a TC command
             {
                 // set Q to the next instruction, for when we return
-                CPU.Q.Write(CPU.Z.Read());
+                CPU.Q.Write(CPU.Z);
 
                 // set control to K
                 CPU.Z.Write(K);

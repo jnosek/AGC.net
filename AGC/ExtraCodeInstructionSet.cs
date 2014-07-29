@@ -16,7 +16,8 @@ namespace Apollo.Virtual.AGC
         {
             CPU = cpu;
 
-            Add(new Augment { CPU = CPU });
+            Add(new BranchZeroToFixed { CPU = CPU });
+            Add(new ExtraQuarterCode { CPU = CPU });
         }
 
         public new IInstruction this[ushort code]

@@ -8,22 +8,25 @@ namespace Apollo.Virtual.AGC.Base
     public class MemoryAddress
     {
         private MemoryBank m;
-        private uint address;
+        private ushort index;
 
-        public MemoryAddress(MemoryBank memory, uint address)
+        public ushort Address { get; private set; }
+
+        public MemoryAddress(MemoryBank memory, ushort address, ushort index)
         {
             this.m = memory;
-            this.address = address;
+            this.index = index;
+            this.Address = address;
         }
 
         public ushort Read()
         {
-            return m[address];
+            return m[index];
         }
 
         public void Write(ushort value)
         {
-            m[address] = value;
+            m[index] = value;
         }
     }
 }

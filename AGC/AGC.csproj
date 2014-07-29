@@ -37,9 +37,14 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\MemoryBank.cs" />
+    <Compile Include="Base\FixedMemory.cs" />
+    <Compile Include="Base\IRegister.cs" />
+    <Compile Include="Base\Word.cs" />
+    <Compile Include="Registers\FullRegister.cs" />
+    <Compile Include="Base\IWord.cs" />
     <Compile Include="Base\MemoryAddress.cs" />
-    <Compile Include="Base\Register.cs" />
+    <Compile Include="Base\MemoryBank.cs" />
+    <Compile Include="Base\ErasableMemory.cs" />
     <Compile Include="Base\Computer.cs" />
     <Compile Include="ExtraCodeInstructionSet.cs" />
     <Compile Include="InstructionSet.cs" />
@@ -48,11 +53,16 @@
     <Compile Include="Base\IInstruction.cs" />
     <Compile Include="Base\InstructionList.cs" />
     <Compile Include="Instructions\Augment.cs" />
+    <Compile Include="Instructions\BranchZeroToFixed.cs" />
+    <Compile Include="Instructions\ExtraQuarterCode.cs" />
     <Compile Include="Instructions\QuarterCode.cs" />
     <Compile Include="Instructions\TransferControl.cs" />
     <Compile Include="MemoryMap.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registers\Accumulator.cs" />
+    <Compile Include="Registers\ProgramCounter.cs" />
+    <Compile Include="Registers\Register.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

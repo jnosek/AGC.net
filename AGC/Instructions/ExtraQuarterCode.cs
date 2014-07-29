@@ -7,13 +7,17 @@ using System.Text;
 namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
-    /// ADS - 0010 11
-    /// QuaterCode Instruction
-    /// 
-    /// Adds the accumulator to an eraseable memory location and vice versa 
+    /// EQC - EX 0010
+    /// 10-bit memroy instructions in the extra code set
     /// </summary>
-    class AddToStorage : IInstruction
+    class ExtraQuarterCode: InstructionList, IInstruction
     {
+        public ExtraQuarterCode()
+            : base(3)
+        {
+            Add(new Augment { CPU = this.CPU });
+        }
+
         public ushort Code
         {
             get { return 0x02; }
@@ -23,10 +27,10 @@ namespace Apollo.Virtual.AGC.Instructions
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
-            CPU.A.Add(value);
+            var quarterCode = (ushort)(K >> 10);
+            K = (ushort)(K & 0x3FF);
 
-            CPU.Memory[K].Write(CPU.A);
+            base[quarterCode].Execute(K);
         }
     }
 }
