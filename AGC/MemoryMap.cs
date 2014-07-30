@@ -83,11 +83,11 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         private MemoryBank ioChannels = new MemoryBank(512);
 
-        public IWord this[ushort a]
+        public ushort this[ushort a]
         {
             get
             {
-                return GetWord(a);
+                return GetWord(a).Read();
             }
             set
             {
@@ -124,9 +124,14 @@ namespace Apollo.Virtual.AGC
 
                 // if we are in the super bit bank series
                 if(bank >= 32 && (ioChannels[7] & 0x40) > 0 )
-                    return new ErasableMemory(new MemoryAddress(commonFixed[bank + 0x08], address, (ushort)(address - 0x400)));
+                    return new FixedMemory(new MemoryAddress(commonFixed[bank + 0x08], address, (ushort)(address - 0x400)));
                 else
-                    return new ErasableMemory(new MemoryAddress(commonFixed[bank], address, (ushort)(address - 0x400)));
+                    return new FixedMemory(new MemoryAddress(commonFixed[bank], address, (ushort)(address - 0x400)));
+            }
+            // fixedFixed
+            else if (address <= 0xFFF)
+            {
+                return new FixedMemory(new MemoryAddress(fixedFixed, address, (ushort)(address - 0x800)));
             }
             // for now, return the 0 space address
             else 
@@ -140,6 +145,11 @@ namespace Apollo.Virtual.AGC
             r.Memory = new MemoryAddress(unswitchedErasable, address, address);
 
             return r;
+        }
+
+        public void LoadFixedRom(ushort[] data)
+        {
+            fixedFixed.Copy(data);
         }
     }
 }

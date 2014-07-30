@@ -18,23 +18,9 @@ namespace Apollo.Virtual.AGC.Base
             this.memory = memory;
         }
 
-        public void Write(IWord word)
+        public void Write(ushort value)
         {
-            // if 16-bit, apply overflow correction and write 15-bit value
-            if (word.Is16Bit)
-            {
-                uint value = word.Read();
-
-                // get lower 14 bits
-                uint lowerBits = value & 0x3FFF;
-
-                // move 16-th bit, into 15th position, isolate it, and set it in above value;
-                value = (value >> 1 & 0x4000) | lowerBits;
-
-                memory.Write((ushort)value);
-            }
-            else
-                memory.Write(word.Read());
+            memory.WriteAndOverflowCorrect(value);
         }
 
         public bool Is16Bit
@@ -50,7 +36,7 @@ namespace Apollo.Virtual.AGC.Base
 
         public ushort Read()
         {
-            return memory.Read();
+            return memory.ReadAndSignExtend();
         }
     }
 }

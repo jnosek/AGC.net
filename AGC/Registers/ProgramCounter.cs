@@ -15,24 +15,12 @@ namespace Apollo.Virtual.AGC.Registers
 
         public void Increment()
         {
-            uint value = memory.Read();
+            var value = memory.Read();
 
             // increment
             value++;
 
-            // only store lower 12 bits
-            memory.Write((ushort)(value & 0xFFF));
-        }
-
-        public bool Is16Bit
-        {
-            get { return false; }
-        }
-
-        public void Write(IWord word)
-        {
-            // only store lower 12 bits
-            memory.Write((ushort)(word.Read() & 0xFFF));
+            Write(value);
         }
 
         public void Write(ushort value)

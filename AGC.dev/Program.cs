@@ -12,13 +12,13 @@ namespace AGC.dev
         static void Main(string[] args)
         {
             var computer = new Computer();
+            var memory = computer.Memory;
 
-            computer.Memory.GetWord(0x300).Write(0x6301);
-            computer.Memory.GetWord(0x301).Write(0x02);
-            computer.CPU.Z.Write(0x300);
+            memory[0x800] = 0x6301;
+            memory[0x801] = 0x02;
             computer.CPU.Execute();
 
-            Console.WriteLine("A: {0}", computer.CPU.A.Read());
+            Console.WriteLine("A: {0}", memory[0x0]);
 
             Console.ReadKey();
         }

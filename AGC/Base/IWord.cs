@@ -7,10 +7,9 @@ namespace Apollo.Virtual.AGC.Base
 {
     public interface IWord
     {
-        bool Is16Bit { get; }
         ushort Address { get; }
 
         ushort Read();
-        void Write(IWord word);
+        void Write(ushort value);
     }
 }

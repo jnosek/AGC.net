@@ -26,7 +26,7 @@ namespace Apollo.Virtual.AGC.Instructions
             var value = CPU.Memory[K];
             CPU.A.Add(value);
 
-            CPU.Memory[K].Write(CPU.A);
+            CPU.Memory[K] = CPU.A.Read();
         }
     }
 }

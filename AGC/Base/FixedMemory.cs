@@ -14,12 +14,7 @@ namespace Apollo.Virtual.AGC.Base
             this.memory = memory;
         }
 
-        public bool Is16Bit
-        {
-            get { return false; }
-        }
-
-        public void Write(IWord word)
+        public void Write(ushort value)
         {
             throw new InvalidOperationException("Cannot write to a fixed memory location");
         }
@@ -31,7 +26,7 @@ namespace Apollo.Virtual.AGC.Base
 
         public ushort Read()
         {
-            return memory.Read();
+            return memory.ReadAndSignExtend();
         }
     }
 }

@@ -13,28 +13,9 @@ namespace Apollo.Virtual.AGC.Registers
     {
         protected MemoryAddress memory;
 
-        public bool Is16Bit
+        public void Write(ushort value)
         {
-            get { return true; }
-        }
-
-        public void Write(IWord word)
-        {
-            if (word.Is16Bit)
-                memory.Write(word.Read());
-            // if a 15-bit word, must sign extend it
-            else
-            {
-                uint value = word.Read();
-
-                // take lower 15-bits
-                value = value & 0x7FFF;
-
-                // shift left 1 and take 16th bit, combine with lower 15 bits
-                value = ((value << 1) & 0x8000) | value;
-
-                memory.Write((ushort)value);
-            }
+            memory.Write(value);
         }
 
         public ushort Address

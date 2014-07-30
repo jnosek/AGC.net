@@ -273,6 +273,9 @@ namespace Apollo.Virtual.AGC
             // LM Only Pitch, Yaw, and Roll registers
 
             INLINK = memory.AddRegister(new Register(), 0x25);
+
+            // prime Z to start at the boot interrupt
+            Z.Write(0x800);
         }
 
         public void Execute()
@@ -283,8 +286,11 @@ namespace Apollo.Virtual.AGC
             // update Z
             Z.Increment();
 
-            var code = (ushort)(address.Read() >> 12);
-            var K = (ushort)(address.Read() & 0xFFF);
+            // we only care about 15-bit instructions
+            var instruction = address.Read() & 0x7FFF;
+
+            var code = (ushort)(instruction >> 12);
+            var K = (ushort)(instruction & 0xFFF);
 
             // determine if this is an extra code instruction
             if (ExtraCodeFlag)

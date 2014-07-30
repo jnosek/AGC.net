@@ -20,13 +20,13 @@ namespace Apollo.Virtual.AGC.Instructions
 
         public void Execute(ushort K)
         {
-            var word = 
+            var value = 
                 // if positive, add 1
-                (K & 0x4000) == 0 ? new Word((ushort)(CPU.Memory[K].Read() + 1)) :
+                (K & 0x4000) == 0 ? (CPU.Memory[K] + 1) :
                 // else negative, subtract 1
-                new Word((ushort)(CPU.Memory[K].Read() - 1));
+                (CPU.Memory[K] - 1);
 
-            CPU.Memory[K].Write(word);
+            CPU.Memory[K] = (ushort)value;
         }
     }
 }

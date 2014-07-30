@@ -8,9 +8,11 @@ namespace Apollo.Virtual.AGC.Registers
 {
     class Accumulator : FullRegister
     {
-        public void Add(IWord w)
+        public void Add(ushort value)
         {
+            var sum = Read() + value;
 
+            this.Write((ushort)sum);
         }
     }
 }

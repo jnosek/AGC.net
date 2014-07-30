@@ -28,5 +28,10 @@ namespace Apollo.Virtual.AGC.Base
                 m[address] = value;
             }
         }
+
+        internal void Copy(ushort[] data)
+        {
+            Array.Copy(data, m, data.Length);
+        }
     }
 }
