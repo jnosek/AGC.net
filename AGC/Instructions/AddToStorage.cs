@@ -16,7 +16,7 @@ namespace Apollo.Virtual.AGC.Instructions
     {
         public ushort Code
         {
-            get { return 0x02; }
+            get { return 0x03; }
         }
 
         public Processor CPU { get; set; }

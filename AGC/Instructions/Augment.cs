@@ -8,6 +8,8 @@ namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// AUG - EX 0010 10
+    /// Increments a positive value in erasable memory by 1
+    /// Or decrements a negative value in erasable memory by -1
     /// </summary>
     class Augment: IInstruction
     {
@@ -20,13 +22,18 @@ namespace Apollo.Virtual.AGC.Instructions
 
         public void Execute(ushort K)
         {
-            var value = 
-                // if positive, add 1
-                (K & 0x4000) == 0 ? (CPU.Memory[K] + 1) :
-                // else negative, subtract 1
-                (CPU.Memory[K] - 1);
+            var value = CPU.Memory[K];
 
-            CPU.Memory[K] = (ushort)value;
+            // if negative
+            if((value & 0x8000) > 0)
+            {
+                CPU.Memory[K] = SinglePrecision.Add(value, SinglePrecision.To(-1));
+            }
+            // if positive
+            else
+            {
+                CPU.Memory[K] = SinglePrecision.Add(value, 1);
+            }
         }
     }
 }

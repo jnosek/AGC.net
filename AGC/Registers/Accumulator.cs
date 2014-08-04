@@ -10,7 +10,7 @@ namespace Apollo.Virtual.AGC.Registers
     {
         public void Add(ushort value)
         {
-            var sum = Read() + value;
+            uint sum = SinglePrecision.Add(Read(), value);
 
             // if we have overflow, most likely from subtracting negative numbers
             if((sum & 0x10000) > 0)

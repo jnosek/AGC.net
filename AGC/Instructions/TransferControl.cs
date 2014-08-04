@@ -32,6 +32,7 @@ namespace Apollo.Virtual.AGC.Instructions
                 CPU.ExtraCodeFlag = true;
             }
             // else process as a TC command
+            else
             {
                 // set Q to the next instruction, for when we return
                 CPU.Q.Write(CPU.Z.Read());

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="Instructions\Add.cs" />
+    <Compile Include="Instructions\Augment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

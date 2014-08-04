@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Base\FixedMemory.cs" />
     <Compile Include="Base\IRegister.cs" />
+    <Compile Include="Base\SinglePrecision.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Base\IWord.cs" />
     <Compile Include="Base\MemoryAddress.cs" />

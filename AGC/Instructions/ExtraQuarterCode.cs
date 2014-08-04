@@ -12,9 +12,10 @@ namespace Apollo.Virtual.AGC.Instructions
     /// </summary>
     class ExtraQuarterCode: InstructionList, IInstruction
     {
-        public ExtraQuarterCode()
+        public ExtraQuarterCode(Processor CPU)
             : base(3)
         {
+            this.CPU = CPU;
             Add(new Augment { CPU = this.CPU });
         }
 
