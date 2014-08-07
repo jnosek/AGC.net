@@ -7,29 +7,25 @@ using System.Text;
 namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
-    /// BZF - EX 0001
+    /// BZMF - EX 0110
     /// 
-    /// Jumps to a fixed memory location if the accumulator is 0
+    /// Jumps to a fixed memory location if the accumulator is 0 or negative
     /// </summary>
-    class BranchZeroToFixed : IInstruction
+    class BranchZeroOrMinusToFixed : IInstruction
     {
         public ushort Code
         {
-            get { return 0x01; }
+            get { return 0x06; }
         }
 
         public Processor CPU { get; set; }
 
         public void Execute(ushort K)
         {
-            // if in overflow, no jump
-            if(CPU.A.IsOverflow)
-                return;
-            
             var value = CPU.A.Read();
 
-            // if +0 or -0, then jump
-            if (value == 0 || value == SinglePrecision.NegativeZero)
+            // if +0 or negative, jump
+            if (value == 0 || (value & 0x8000) > 0)
                 CPU.Z.Write(K);
         }
     }

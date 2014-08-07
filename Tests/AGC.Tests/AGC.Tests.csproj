@@ -52,7 +52,11 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="Instructions\Add.cs" />
+    <Compile Include="Instructions\AddToStorage.cs" />
     <Compile Include="Instructions\Augment.cs" />
+    <Compile Include="Instructions\BranchZeroOrMinusToFixed.cs" />
+    <Compile Include="Instructions\BranchZeroToFixed.cs" />
+    <Compile Include="Instructions\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

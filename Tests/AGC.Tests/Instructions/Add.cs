@@ -18,13 +18,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = 10;
             Memory[0x201] = 15;
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -39,13 +39,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = SinglePrecision.To(-10);
             Memory[0x201] = SinglePrecision.To(-15);
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -60,13 +60,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = SinglePrecision.To(-10);
             Memory[0x201] = 15;
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -81,13 +81,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = 0xC000; // most negative number 15 bit number
             Memory[0x201] = SinglePrecision.To(-1);
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -105,13 +105,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = 0x3FFF; // most positive number 15 bit number
             Memory[0x201] = 1;
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -129,13 +129,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = 0xC000; // most negative number 15 bit number
             Memory[0x201] = SinglePrecision.To(-3);
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -153,13 +153,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = 0x3FFF; // most positive number 15 bit number
             Memory[0x201] = 3;
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -177,13 +177,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = SinglePrecision.NegativeZero;
             Memory[0x201] = 4;
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -201,13 +201,13 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = SinglePrecision.NegativeZero;
             Memory[0x201] = SinglePrecision.To(-4);
 
-            // insert add instructions
+            // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200,
                 0x06000 | 0x201
             });
 
-            // act - run the additions
+            // act - run the instructions
             CPU.Execute();
             CPU.Execute();
 
@@ -216,6 +216,30 @@ namespace AGC.Tests.Instructions
 
             // assert
             Assert.AreEqual(SinglePrecision.To(-4), Memory[0x202]);
+        }
+
+        [TestMethod]
+        public void Add1AndNegative1EqualsNegative0()
+        {
+            // arrange
+            Memory[0x200] = 0x01;
+            Memory[0x201] = SinglePrecision.To(-1);
+
+            // insert instructions
+            Memory.LoadFixedRom(new ushort[] {
+                0x06000 | 0x200,
+                0x06000 | 0x201
+            });
+
+            // act - run the instructions
+            CPU.Execute();
+            CPU.Execute();
+
+            //save acumulator value to a place in memory so we can view the overflow corrected value, for now
+            Memory[0x202] = Memory[0x0];
+
+            // assert
+            Assert.AreEqual(SinglePrecision.NegativeZero, Memory[0x202]);
         }
     }
 }

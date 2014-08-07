@@ -14,8 +14,10 @@ namespace Apollo.Virtual.AGC.Instructions
     /// </summary>
     class QuarterCode : InstructionList, IInstruction
     {
-        public QuarterCode() : base(3)
+        public QuarterCode(Processor CPU) : base(3)
         {
+            this.CPU = CPU;
+
             Add(new AddToStorage { CPU = this.CPU });
         }
 

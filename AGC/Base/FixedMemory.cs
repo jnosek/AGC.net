@@ -16,7 +16,7 @@ namespace Apollo.Virtual.AGC.Base
 
         public void Write(ushort value)
         {
-            throw new InvalidOperationException("Cannot write to a fixed memory location");
+            //throw new InvalidOperationException("Cannot write to a fixed memory location");
         }
 
         public ushort Address

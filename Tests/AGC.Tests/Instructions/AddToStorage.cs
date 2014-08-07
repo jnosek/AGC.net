@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class Augment : BaseTest
+    public class AddToStorage : BaseTest
     {
         [TestMethod]
-        public void AugmentPositiveNumber()
+        public void AddToStorageTwoPositiveNumbers()
         {
             // arrange
-            Memory[0x200] = 10;
+            Memory[0x000] = 10;
+            Memory[0x201] = 15;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x02800 | 0x200
+                0x02C00 | 0x201
             });
 
             // act - run the instructions
@@ -28,19 +28,20 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(11, Memory[0x200]);
+            Assert.AreEqual(25, Memory[0x0]);
+            Assert.AreEqual(25, Memory[0x201]);
         }
 
         [TestMethod]
-        public void AugmentNegativeNumber()
+        public void AddToStorageTwoNegativeNumbers()
         {
             // arrange
-            Memory[0x200] = SinglePrecision.To(-10);
+            Memory[0x000] = SinglePrecision.To(-10);
+            Memory[0x201] = SinglePrecision.To(-15);
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x02800 | 0x200
+                0x02C00 | 0x201
             });
 
             // act - run the instructions
@@ -48,7 +49,8 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(SinglePrecision.To(-11), Memory[0x200]);
+            Assert.AreEqual(SinglePrecision.To(-25), Memory[0x0]);
+            Assert.AreEqual(SinglePrecision.To(-25), Memory[0x201]);
         }
     }
 }
