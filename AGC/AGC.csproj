@@ -42,6 +42,9 @@
     <Compile Include="Base\SinglePrecision.cs" />
     <Compile Include="Instructions\BranchZeroOrMinusToFixed.cs" />
     <Compile Include="Instructions\ClearAndAdd.cs" />
+    <Compile Include="Instructions\QuarterCode5.cs" />
+    <Compile Include="Instructions\TransferToStorage.cs" />
+    <Compile Include="Registers\CycleRightRegister.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Base\IWord.cs" />
     <Compile Include="Base\MemoryAddress.cs" />
@@ -57,7 +60,7 @@
     <Compile Include="Instructions\Augment.cs" />
     <Compile Include="Instructions\BranchZeroToFixed.cs" />
     <Compile Include="Instructions\ExtraQuarterCode.cs" />
-    <Compile Include="Instructions\QuarterCode.cs" />
+    <Compile Include="Instructions\QuarterCode2.cs" />
     <Compile Include="Instructions\TransferControl.cs" />
     <Compile Include="MemoryMap.cs" />
     <Compile Include="Processor.cs" />

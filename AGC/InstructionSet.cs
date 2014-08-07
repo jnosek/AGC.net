@@ -17,8 +17,9 @@ namespace Apollo.Virtual.AGC
             CPU = cpu;
 
             Add(new TransferControl { CPU = CPU });
-            Add(new QuarterCode(CPU));
+            Add(new QuarterCode2(CPU));
             Add(new ClearAndAdd { CPU = CPU });
+            Add(new QuarterCode5(CPU));
             Add(new Add { CPU = CPU });
         }
 

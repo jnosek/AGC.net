@@ -12,9 +12,9 @@ namespace Apollo.Virtual.AGC.Instructions
     /// Operation on 10-bit address space operand restricted to eraseable memory
     /// Followed by 2-bit quarter code for instruction
     /// </summary>
-    class QuarterCode : InstructionList, IInstruction
+    class QuarterCode2 : InstructionList, IInstruction
     {
-        public QuarterCode(Processor CPU) : base(3)
+        public QuarterCode2(Processor CPU) : base(3)
         {
             this.CPU = CPU;
 

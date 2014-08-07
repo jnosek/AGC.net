@@ -100,7 +100,7 @@ namespace Apollo.Virtual.AGC
         /// Cycle Right Register, value written is automatically cycled right
         /// least significant bit (1), wrapping into bit 15
         /// </summary>
-        internal IWord CYR;
+        internal CycleRightRegister CYR;
 
         /// <summary>
         /// Shift Right Register, value writtin is automatically shifted right
@@ -248,7 +248,7 @@ namespace Apollo.Virtual.AGC
             BRUPT = memory.AddRegister(new Register(), 0xF);
 
             // editing registers
-            CYR = memory.GetWord(0x10);
+            CYR = memory.AddRegister(new CycleRightRegister(), 0x10);
             SR = memory.GetWord(0x11);
             CYL = memory.GetWord(0x12);
             EDOP = memory.GetWord(0x13);
