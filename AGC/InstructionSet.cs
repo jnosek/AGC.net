@@ -16,9 +16,11 @@ namespace Apollo.Virtual.AGC
 
             Add(new TransferControl());
             Add(new QuarterCode2(CPU));
-            Add(new ClearAndAdd());
             Add(new QuarterCode5(CPU));
+            
             Add(new Add());
+            Add(new ClearAndAdd());
+            Add(new CountCompareAndSkip());
         }
 
         public new IInstruction this[ushort code]
