@@ -36,8 +36,8 @@ namespace AGC.Tests.Instructions
         public void AddTwoNegativeNumbers()
         {
             // arrange
-            Memory[0x200] = SinglePrecision.To(-10);
-            Memory[0x201] = SinglePrecision.To(-15);
+            Memory[0x200] = (-10).ToOnesCompliment();
+            Memory[0x201] = (-15).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -50,14 +50,14 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(SinglePrecision.To(-25), Memory[0x0]);
+            Assert.AreEqual((-25).ToOnesCompliment(), Memory[0x0]);
         }
 
         [TestMethod]
         public void AddPostive1AndNegative1()
         {
             // arrange
-            Memory[0x200] = SinglePrecision.To(-10);
+            Memory[0x200] = (-10).ToOnesCompliment();
             Memory[0x201] = 15;
 
             // insert instructions
@@ -79,7 +79,7 @@ namespace AGC.Tests.Instructions
         {
             // arrange
             Memory[0x200] = 0xC000; // most negative number 15 bit number
-            Memory[0x201] = SinglePrecision.To(-1);
+            Memory[0x201] = OnesCompliment.NegativeOne;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -95,7 +95,7 @@ namespace AGC.Tests.Instructions
             Memory[0x202] = Memory[0x0];
 
             // assert
-            Assert.AreEqual(SinglePrecision.NegativeZero, Memory[0x202]);
+            Assert.AreEqual(OnesCompliment.NegativeZero, Memory[0x202]);
         }
 
         [TestMethod]
@@ -127,7 +127,7 @@ namespace AGC.Tests.Instructions
         {
             // arrange
             Memory[0x200] = 0xC000; // most negative number 15 bit number
-            Memory[0x201] = SinglePrecision.To(-3);
+            Memory[0x201] = (-3).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -143,7 +143,7 @@ namespace AGC.Tests.Instructions
             Memory[0x202] = Memory[0x0];
 
             // assert
-            Assert.AreEqual(SinglePrecision.To(-2), Memory[0x202]);
+            Assert.AreEqual((-2).ToOnesCompliment(), Memory[0x202]);
         }
 
         [TestMethod]
@@ -174,7 +174,7 @@ namespace AGC.Tests.Instructions
         public void AddNegativeZeroAndPositiveNumber()
         {
             // arrange
-            Memory[0x200] = SinglePrecision.NegativeZero;
+            Memory[0x200] = OnesCompliment.NegativeZero;
             Memory[0x201] = 4;
 
             // insert instructions
@@ -198,8 +198,8 @@ namespace AGC.Tests.Instructions
         public void AddNegativeZeroAndNegativeNumber()
         {
             // arrange
-            Memory[0x200] = SinglePrecision.NegativeZero;
-            Memory[0x201] = SinglePrecision.To(-4);
+            Memory[0x200] = OnesCompliment.NegativeZero;
+            Memory[0x201] = (-4).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -215,7 +215,7 @@ namespace AGC.Tests.Instructions
             Memory[0x202] = Memory[0x0];
 
             // assert
-            Assert.AreEqual(SinglePrecision.To(-4), Memory[0x202]);
+            Assert.AreEqual((-4).ToOnesCompliment(), Memory[0x202]);
         }
 
         [TestMethod]
@@ -223,7 +223,7 @@ namespace AGC.Tests.Instructions
         {
             // arrange
             Memory[0x200] = 0x01;
-            Memory[0x201] = SinglePrecision.To(-1);
+            Memory[0x201] = OnesCompliment.NegativeOne;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -239,7 +239,7 @@ namespace AGC.Tests.Instructions
             Memory[0x202] = Memory[0x0];
 
             // assert
-            Assert.AreEqual(SinglePrecision.NegativeZero, Memory[0x202]);
+            Assert.AreEqual(OnesCompliment.NegativeZero, Memory[0x202]);
         }
     }
 }

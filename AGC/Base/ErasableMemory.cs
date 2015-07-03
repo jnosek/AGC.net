@@ -5,38 +5,24 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Base
 {
-    class ErasableMemory : IWord
+    /// <summary>
+    /// 15 bit memory location that is readwrite
+    /// </summary>
+    class ErasableMemory : MemoryAddress, IWord
     {
-        protected MemoryAddress memory;
-
-        public ErasableMemory()
+        public ErasableMemory(ushort address, MemoryBank bank)
+            : base(address, bank)
         {
-        }
-
-        public ErasableMemory(MemoryAddress memory)
-        {
-            this.memory = memory;
         }
 
         public void Write(ushort value)
         {
-            memory.WriteAndOverflowCorrect(value);
-        }
-
-        public bool Is16Bit
-        {
-            get { return false; }
-        }
-
-
-        public ushort Address
-        {
-            get { return memory.Address; }
+            Set(value.OverflowCorrect());
         }
 
         public ushort Read()
         {
-            return memory.ReadAndSignExtend();
+            return Get().SignExtend();
         }
     }
 }

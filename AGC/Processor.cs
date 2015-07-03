@@ -35,13 +35,13 @@ namespace Apollo.Virtual.AGC
         /// The lower product after MP instructions
         /// also known as L
         /// </summary>
-        internal FullRegister LP;
+        internal IWord LP;
 
         /// <summary>
         ///  Remainder from the DV instruction, 
         ///  and the return address after TC instructions
         /// </summary>
-        internal FullRegister Q;
+        internal IWord Q;
 
         /// <summary>
         /// Erasable Bank Register
@@ -228,27 +228,27 @@ namespace Apollo.Virtual.AGC
             // configure registers
 
             // main registers?
-            A = memory.AddRegister(new Accumulator(), 0x0);
-            LP = memory.AddRegister(new FullRegister(), 0x01);
-            Q = memory.AddRegister(new FullRegister(), 0x02);
+            A = memory.AddRegister<Accumulator>();
+            LP = memory.AddRegister<FullRegister>(0x01);
+            Q = memory.AddRegister<FullRegister>(0x02);
             EB = memory.GetWord(0x3);
             FB = memory.GetWord(0x4);
-            Z = memory.AddRegister(new ProgramCounter(), 0x05);
+            Z = memory.AddRegister<ProgramCounter>();
             BB = memory.GetWord(0x6);
 
             //memory[0x7] = 0; // this is always set to 0, TODO: need to hard code?
 
             // interrupt helper registers
-            ARUPT = memory.AddRegister(new Register(), 0x8);
-            LRUPT = memory.AddRegister(new Register(), 0x9);
-            QRUPT = memory.AddRegister(new Register(), 0xA);
+            ARUPT = memory.AddRegister<ErasableMemory>(0x8);
+            LRUPT = memory.AddRegister<ErasableMemory>(0x9);
+            QRUPT = memory.AddRegister<ErasableMemory>(0xA);
             // 0XB, 0XC are spares. not used?
-            ZRUPT = memory.AddRegister(new Register(), 0xD);
-            BBRUPT = memory.AddRegister(new Register(), 0xE);
-            BRUPT = memory.AddRegister(new Register(), 0xF);
+            ZRUPT = memory.AddRegister<ErasableMemory>(0xD);
+            BBRUPT = memory.AddRegister<ErasableMemory>(0xE);
+            BRUPT = memory.AddRegister<ErasableMemory>(0xF);
 
             // editing registers
-            CYR = memory.AddRegister(new CycleRightRegister(), 0x10);
+            CYR = memory.AddRegister<CycleRightRegister>();
             SR = memory.GetWord(0x11);
             CYL = memory.GetWord(0x12);
             EDOP = memory.GetWord(0x13);
@@ -262,17 +262,17 @@ namespace Apollo.Virtual.AGC
             TIME6 = memory.GetWord(0x19);
 
             // orientation registers
-            CDUX = memory.AddRegister(new Register(), 0x1A);
-            CDUY = memory.AddRegister(new Register(), 0x1B);
-            CDUZ = memory.AddRegister(new Register(), 0x1C);
-            OPTY = memory.AddRegister(new Register(), 0x1D);
-            OPTX = memory.AddRegister(new Register(), 0x1E);
-            PIPAX = memory.AddRegister(new Register(), 0x1F);
-            PIPAY = memory.AddRegister(new Register(), 0x20);
-            PIPAZ = memory.AddRegister(new Register(), 0x21);
+            CDUX = memory.AddRegister<ErasableMemory>(0x1A);
+            CDUY = memory.AddRegister<ErasableMemory>(0x1B);
+            CDUZ = memory.AddRegister<ErasableMemory>(0x1C);
+            OPTY = memory.AddRegister<ErasableMemory>(0x1D);
+            OPTX = memory.AddRegister<ErasableMemory>(0x1E);
+            PIPAX = memory.AddRegister<ErasableMemory>(0x1F);
+            PIPAY = memory.AddRegister<ErasableMemory>(0x20);
+            PIPAZ = memory.AddRegister<ErasableMemory>(0x21);
             // LM Only Pitch, Yaw, and Roll registers
 
-            INLINK = memory.AddRegister(new Register(), 0x25);
+            INLINK = memory.AddRegister<ErasableMemory>(0x25);
 
             // prime Z to start at the boot interrupt
             Z.Write(0x800);

@@ -8,9 +8,14 @@ namespace Apollo.Virtual.AGC.Registers
 {
     class Accumulator : FullRegister
     {
+        public Accumulator(MemoryBank bank)
+            : base(0x0, bank)
+        {
+        }
+
         public void Add(ushort value)
         {
-            uint sum = SinglePrecision.Add(Read(), value);
+            uint sum = Get().Add(value);
 
             // if we have overflow, most likely from subtracting negative numbers
             if((sum & 0x10000) > 0)
@@ -20,7 +25,18 @@ namespace Apollo.Virtual.AGC.Registers
                 sum = sum & 0xFFFF;
             }
 
-            this.Write((ushort)sum);
+            Set(sum);
+        }
+
+        public bool IsOverflow
+        {
+            get
+            {
+                // look at bits 16 and 15 to see if they are different
+                var value = Get() & 0xC000;
+
+                return value == 0x8000 || value == 0x4000;
+            }
         }
     }
 }

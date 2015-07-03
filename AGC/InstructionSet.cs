@@ -9,18 +9,16 @@ namespace Apollo.Virtual.AGC
 {
     class InstructionSet : InstructionList
     {
-        private Processor CPU;
-        
         public InstructionSet(Processor cpu)
             :base(7)
         {
             CPU = cpu;
 
-            Add(new TransferControl { CPU = CPU });
+            Add(new TransferControl());
             Add(new QuarterCode2(CPU));
-            Add(new ClearAndAdd { CPU = CPU });
+            Add(new ClearAndAdd());
             Add(new QuarterCode5(CPU));
-            Add(new Add { CPU = CPU });
+            Add(new Add());
         }
 
         public new IInstruction this[ushort code]

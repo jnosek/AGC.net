@@ -6,28 +6,23 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class CycleRightRegister : IWord, IRegister
+    class CycleRightRegister : MemoryAddress, IWord
     {
-        MemoryAddress memory;
-
-        public ushort Address
+        public CycleRightRegister(MemoryBank bank)
+            : base(0x10, bank)
         {
-            get { return memory.Address; }
         }
 
         public ushort Read()
         {
-            return memory.ReadAndSignExtend();
+            return Get().SignExtend();
         }
 
         public void Write(ushort value)
         {
             // first overflow correct the value
-            memory.WriteAndOverflowCorrect(value);
+            value = value.OverflowCorrect();
 
-            // retreive value
-            value = memory.Read();
-            
             // get bit position 1, and move it to position 15
             var leastSignificateBit = (value & 0x1) << 14;
 
@@ -35,12 +30,7 @@ namespace Apollo.Virtual.AGC.Registers
             var bits = ((value >> 1) & 0x3FFF) | leastSignificateBit;
 
             // write the cycled value into memory
-            memory.Write((ushort) bits);
-        }
-
-        MemoryAddress IRegister.Memory
-        {
-            set { this.memory = value; }
+            Set(bits);
         }
     }
 }

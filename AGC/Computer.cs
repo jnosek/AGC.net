@@ -17,5 +17,10 @@ namespace Apollo.Virtual.AGC
             Memory = new MemoryMap();
             CPU = new Processor(Memory);
         }
+
+        public void Start()
+        {
+            CPU.Execute();
+        }
     }
 }

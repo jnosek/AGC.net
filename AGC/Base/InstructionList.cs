@@ -9,6 +9,8 @@ namespace Apollo.Virtual.AGC.Base
     {
         private IInstruction[] array;
 
+        public Processor CPU { get; set; }
+
         public InstructionList(int count)
         {
             array = new IInstruction[0];
@@ -21,7 +23,13 @@ namespace Apollo.Virtual.AGC.Base
 
         protected void Add(IInstruction instruction)
         {
+            instruction.CPU = CPU;
             this[instruction.Code] = instruction;
+        }
+
+        protected void Add(ExtraInstructionList list)
+        {
+            this[list.Code] = list;
         }
 
         public IInstruction this[ushort code]

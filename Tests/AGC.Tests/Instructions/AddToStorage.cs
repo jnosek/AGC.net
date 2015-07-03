@@ -36,8 +36,8 @@ namespace AGC.Tests.Instructions
         public void AddToStorageTwoNegativeNumbers()
         {
             // arrange
-            Memory[0x000] = SinglePrecision.To(-10);
-            Memory[0x201] = SinglePrecision.To(-15);
+            Memory[0x000] = (-10).ToOnesCompliment();
+            Memory[0x201] = (-15).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -49,8 +49,8 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(SinglePrecision.To(-25), Memory[0x0]);
-            Assert.AreEqual(SinglePrecision.To(-25), Memory[0x201]);
+            Assert.AreEqual((-25).ToOnesCompliment(), Memory[0x0]);
+            Assert.AreEqual((-25).ToOnesCompliment(), Memory[0x201]);
         }
     }
 }

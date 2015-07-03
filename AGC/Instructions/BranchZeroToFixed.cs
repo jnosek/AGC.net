@@ -29,7 +29,7 @@ namespace Apollo.Virtual.AGC.Instructions
             var value = CPU.A.Read();
 
             // if +0 or -0, then jump
-            if (value == 0 || value == SinglePrecision.NegativeZero)
+            if (value == 0 || value == OnesCompliment.NegativeZero)
                 CPU.Z.Write(K);
         }
     }

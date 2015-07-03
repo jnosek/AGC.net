@@ -9,16 +9,14 @@ namespace Apollo.Virtual.AGC
 {
     class ExtraCodeInstructionSet : InstructionList
     {
-        private Processor CPU;
-
         public ExtraCodeInstructionSet(Processor cpu)
             : base(7)
         {
             CPU = cpu;
 
-            Add(new BranchZeroToFixed { CPU = CPU });
+            Add(new BranchZeroToFixed());
             Add(new ExtraQuarterCode(CPU));
-            Add(new BranchZeroOrMinusToFixed { CPU = CPU });
+            Add(new BranchZeroOrMinusToFixed());
         }
 
         public new IInstruction this[ushort code]

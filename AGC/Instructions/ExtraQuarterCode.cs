@@ -10,23 +10,20 @@ namespace Apollo.Virtual.AGC.Instructions
     /// EQC - EX 0010
     /// 10-bit memroy instructions in the extra code set
     /// </summary>
-    class ExtraQuarterCode: InstructionList, IInstruction
+    class ExtraQuarterCode: ExtraInstructionList
     {
-        public ExtraQuarterCode(Processor CPU)
-            : base(3)
+        public ExtraQuarterCode(Processor cpu)
+            : base(cpu, 3)
         {
-            this.CPU = CPU;
-            Add(new Augment { CPU = this.CPU });
+            Add(new Augment());
         }
 
-        public ushort Code
+        public override ushort Code
         {
             get { return 0x02; }
         }
 
-        public Processor CPU { get; set; }
-
-        public void Execute(ushort K)
+        public override void Execute(ushort K)
         {
             var quarterCode = (ushort)(K >> 10);
             K = (ushort)(K & 0x3FF);

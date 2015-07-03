@@ -27,12 +27,12 @@ namespace Apollo.Virtual.AGC.Instructions
             // if negative
             if((value & 0x8000) > 0)
             {
-                CPU.Memory[K] = SinglePrecision.Add(value, SinglePrecision.To(-1));
+                CPU.Memory[K] = value.Add(OnesCompliment.NegativeOne);
             }
             // if positive
             else
             {
-                CPU.Memory[K] = SinglePrecision.Add(value, 1);
+                CPU.Memory[K] = value.Add(OnesCompliment.PositiveOne);
             }
         }
     }

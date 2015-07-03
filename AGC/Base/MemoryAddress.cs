@@ -5,54 +5,36 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Base
 {
-    public class MemoryAddress
+    public abstract class MemoryAddress
     {
-        private MemoryBank m;
-        private ushort index;
+        MemoryBank bank;
 
         public ushort Address { get; private set; }
 
-        public MemoryAddress(MemoryBank memory, ushort address, ushort index)
+        public MemoryAddress(ushort address, MemoryBank bank)
         {
-            this.m = memory;
-            this.index = index;
+            this.bank = bank;
             this.Address = address;
         }
 
-        public ushort Read()
+        protected ushort Get()
         {
-            return m[index];
+            return bank[Address];
         }
 
-        public void Write(ushort value)
+        protected void Set(ushort value)
         {
-            m[index] = value;
-        }
-        
-        public void WriteAndOverflowCorrect(ushort value)
-        {
-            uint newValue = value;
-
-            // get lower 14 bits
-            uint lowerBits = newValue & 0x3FFF;
-
-            // move 16-th bit, into 15th position, isolate it, and set it in above value;
-            newValue = (newValue >> 1 & 0x4000) | lowerBits;
-
-            Write((ushort)newValue);
+            bank[Address] = value;
         }
 
-        public ushort ReadAndSignExtend()
+        protected void Set(uint value)
         {
-            uint value = Read();
+            bank[Address] = (ushort)value;
+        }
 
-            // take lower 15-bits
-            value = value & 0x7FFF;
-
-            // shift left 1 and take 16th bit, combine with lower 15 bits
-            value = ((value << 1) & 0x8000) | value;
-
-            return (ushort)value;
+        protected void Set(int value)
+        {
+            bank[Address] = (ushort)value;
         }
     }
 }

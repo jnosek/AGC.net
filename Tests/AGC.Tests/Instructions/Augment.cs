@@ -35,7 +35,7 @@ namespace AGC.Tests.Instructions
         public void AugmentNegativeNumber()
         {
             // arrange
-            Memory[0x200] = SinglePrecision.To(-10);
+            Memory[0x200] = (-10).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -48,7 +48,7 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(SinglePrecision.To(-11), Memory[0x200]);
+            Assert.AreEqual((-11).ToOnesCompliment(), Memory[0x200]);
         }
     }
 }

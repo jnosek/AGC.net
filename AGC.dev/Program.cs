@@ -16,7 +16,7 @@ namespace AGC.dev
 
             memory[0x800] = 0x6301;
             memory[0x801] = 0x02;
-            computer.CPU.Execute();
+            computer.Start();
 
             Console.WriteLine("A: {0}", memory[0x0]);
 

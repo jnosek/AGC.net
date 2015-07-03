@@ -9,13 +9,16 @@ namespace Apollo.Virtual.AGC.Registers
     /// <summary>
     /// 12-bit register for the address of the next instruction
     /// </summary>
-    class ProgramCounter: IWord, IRegister
+    class ProgramCounter: MemoryAddress, IWord
     {
-        MemoryAddress memory;
+        public ProgramCounter(MemoryBank bank)
+            : base(0x05, bank)
+        {
+        }
 
         public void Increment()
         {
-            var value = memory.Read();
+            var value = Get();
 
             // increment
             value++;
@@ -26,22 +29,12 @@ namespace Apollo.Virtual.AGC.Registers
         public void Write(ushort value)
         {
             // only store lower 12 bits
-            memory.Write((ushort)(value & 0xFFF));
-        }
-
-        public ushort Address
-        {
-            get { return memory.Address; }
+            Set(value & 0xFFF);
         }
 
         public ushort Read()
         {
-            return memory.Read();
-        }
-
-        MemoryAddress IRegister.Memory
-        {
-            set { this.memory = value; }
+            return Get();
         }
     }
 }

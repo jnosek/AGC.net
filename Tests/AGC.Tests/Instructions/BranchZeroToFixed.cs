@@ -37,7 +37,7 @@ namespace AGC.Tests.Instructions
         public void BranchZeroToFixedNegativeZero()
         {
             // arrange
-            Memory[0x0] = SinglePrecision.NegativeZero;
+            Memory[0x0] = OnesCompliment.NegativeZero;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {

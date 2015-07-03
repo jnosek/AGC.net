@@ -7,8 +7,6 @@ namespace Apollo.Virtual.AGC.Base
 {
     public interface IWord
     {
-        ushort Address { get; }
-
         ushort Read();
         void Write(ushort value);
     }

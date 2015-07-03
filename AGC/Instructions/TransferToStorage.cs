@@ -39,7 +39,7 @@ namespace Apollo.Virtual.AGC.Instructions
                     CPU.A.Write(1);
                 // else negative overflow
                 else
-                    CPU.A.Write(SinglePrecision.To(-1));
+                    CPU.A.Write(OnesCompliment.NegativeOne);
 
                 CPU.Z.Increment();
             }
