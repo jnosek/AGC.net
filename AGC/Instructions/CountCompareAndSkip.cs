@@ -27,12 +27,12 @@ namespace Apollo.Virtual.AGC.Instructions
 
             // 1) compute the Diminished ABSolute value found at K and set in A
  
-            // if negative, XOR 1's to get ABS
+            // if negative, NOT 1's to get ABS
             var isNegative = (value & 0x8000) > 0;
-            var abs = isNegative ? value ^ 0xFFFF : value;
+            var abs = (ushort)(isNegative ? ~value : value);
 
             if (abs > 1)
-                CPU.A.Write((ushort)(abs - 1));
+                CPU.A.Write(abs.Add(OnesCompliment.NegativeOne));
             else
                 CPU.A.Write(0);
 

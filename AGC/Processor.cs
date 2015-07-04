@@ -35,7 +35,7 @@ namespace Apollo.Virtual.AGC
         /// The lower product after MP instructions
         /// also known as L
         /// </summary>
-        internal IWord LP;
+        internal IWord L;
 
         /// <summary>
         ///  Remainder from the DV instruction, 
@@ -229,7 +229,7 @@ namespace Apollo.Virtual.AGC
 
             // main registers?
             A = memory.AddRegister<Accumulator>();
-            LP = memory.AddRegister<FullRegister>(0x01);
+            L = memory.AddRegister<FullRegister>(0x01);
             Q = memory.AddRegister<FullRegister>(0x02);
             EB = memory.GetWord(0x3);
             FB = memory.GetWord(0x4);

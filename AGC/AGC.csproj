@@ -44,6 +44,7 @@
     <Compile Include="Base\OnesCompliment.cs" />
     <Compile Include="Instructions\BranchZeroOrMinusToFixed.cs" />
     <Compile Include="Instructions\ClearAndAdd.cs" />
+    <Compile Include="Instructions\ClearAndSubtract.cs" />
     <Compile Include="Instructions\CountCompareAndSkip.cs" />
     <Compile Include="Instructions\QuarterCode5.cs" />
     <Compile Include="Instructions\TransferToStorage.cs" />
