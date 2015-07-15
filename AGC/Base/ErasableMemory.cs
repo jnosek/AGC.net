@@ -17,12 +17,18 @@ namespace Apollo.Virtual.AGC.Base
 
         public void Write(ushort value)
         {
-            Set(value.OverflowCorrect());
+            var v = new OnesCompliment(value);
+            v.OverflowCorrect();
+
+            Set(v);
         }
 
         public ushort Read()
         {
-            return Get().SignExtend();
+            var v = new OnesCompliment(Get());
+            v.SignExtend();
+
+            return v;
         }
     }
 }

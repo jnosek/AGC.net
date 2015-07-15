@@ -22,17 +22,17 @@ namespace Apollo.Virtual.AGC.Instructions
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
+            var value = new SinglePrecision(CPU.Memory[K]);
 
             // if negative
-            if((value & 0x8000) > 0)
+            if(value.IsNegative)
             {
-                CPU.Memory[K] = value.Add(OnesCompliment.NegativeOne);
+                CPU.Memory[K] = value + OnesCompliment.NegativeOne;
             }
             // if positive
             else
             {
-                CPU.Memory[K] = value.Add(OnesCompliment.PositiveOne);
+                CPU.Memory[K] = value + OnesCompliment.PositiveOne;
             }
         }
     }

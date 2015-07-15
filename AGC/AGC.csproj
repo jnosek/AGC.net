@@ -37,11 +37,13 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\DoublePrecision.cs" />
     <Compile Include="Base\ExtraInstructionList.cs" />
     <Compile Include="Base\FixedMemory.cs" />
     <Compile Include="Base\FullRegister.cs" />
     <Compile Include="Base\MemoryBankOffset.cs" />
     <Compile Include="Base\OnesCompliment.cs" />
+    <Compile Include="Base\SinglePrecision.cs" />
     <Compile Include="Instructions\BranchZeroOrMinusToFixed.cs" />
     <Compile Include="Instructions\ClearAndAdd.cs" />
     <Compile Include="Instructions\ClearAndSubtract.cs" />

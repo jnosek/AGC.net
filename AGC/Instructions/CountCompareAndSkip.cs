@@ -23,16 +23,15 @@ namespace Apollo.Virtual.AGC.Instructions
         public void Execute(ushort K)
         {
             // retrieve value from memory
-            var value = CPU.Memory[K];
+            var value = new SinglePrecision(CPU.Memory[K]);
 
             // 1) compute the Diminished ABSolute value found at K and set in A
  
             // if negative, NOT 1's to get ABS
-            var isNegative = (value & 0x8000) > 0;
-            var abs = (ushort)(isNegative ? ~value : value);
+            var abs = value.IsNegative ? ~value : value;
 
             if (abs > 1)
-                CPU.A.Write(abs.Add(OnesCompliment.NegativeOne));
+                CPU.A.Write(abs + OnesCompliment.NegativeOne);
             else
                 CPU.A.Write(0);
 
@@ -44,17 +43,17 @@ namespace Apollo.Virtual.AGC.Instructions
             // if greater than +0 we do nothing, continue to next instruction as usual
 
             // if == +0 increment by 1
-            if (value == 0)
+            if (value.IsPositiveZero)
                 CPU.Z.Increment();
             // if == -0 increment by 3
-            else if(value == OnesCompliment.NegativeZero)
+            else if(value.IsNegativeZero)
             {
                 CPU.Z.Increment();
                 CPU.Z.Increment();
                 CPU.Z.Increment();
             }
             // if < 0 increment by 2
-            else if (isNegative)
+            else if (value.IsNegative)
             {
                 CPU.Z.Increment();
                 CPU.Z.Increment();

@@ -22,7 +22,10 @@ namespace Apollo.Virtual.AGC.Base
 
         public ushort Read()
         {
-            return Get().SignExtend();
+            var v = new OnesCompliment(Get());
+            v.SignExtend();
+
+            return v;
         }
     }
 }

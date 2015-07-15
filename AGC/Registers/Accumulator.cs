@@ -15,15 +15,7 @@ namespace Apollo.Virtual.AGC.Registers
 
         public void Add(ushort value)
         {
-            uint sum = Get().Add(value);
-
-            // if we have overflow, most likely from subtracting negative numbers
-            if((sum & 0x10000) > 0)
-            {
-                // we need to Single Precision correct the negative number by adding 1 and taking the lower 16 bits
-                sum = sum + 1;
-                sum = sum & 0xFFFF;
-            }
+            var sum = new SinglePrecision(value) + Get();
 
             Set(sum);
         }

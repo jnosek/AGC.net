@@ -15,13 +15,18 @@ namespace Apollo.Virtual.AGC.Registers
 
         public ushort Read()
         {
-            return Get().SignExtend();
+            var v = new OnesCompliment(Get());
+            v.SignExtend();
+            return v;
         }
 
         public void Write(ushort value)
         {
             // first overflow correct the value
-            value = value.OverflowCorrect();
+            var v = new OnesCompliment(value);
+            v.OverflowCorrect();
+
+            value = v;
 
             // get bit position 1, and move it to position 15
             var leastSignificateBit = (value & 0x1) << 14;
