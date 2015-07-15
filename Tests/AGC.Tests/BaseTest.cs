@@ -19,5 +19,10 @@ namespace AGC.Tests
             Memory = new MemoryMap();
             CPU = new Processor(Memory);
         }
+
+        protected ushort Instruction(ushort code, ushort operand)
+        {
+            return (ushort)((code << 12) | operand);
+        }
     }
 }

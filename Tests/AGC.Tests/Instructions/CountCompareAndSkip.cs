@@ -12,14 +12,14 @@ namespace AGC.Tests.Instructions
     public class CountCompareAndSkip : BaseTest
     {
         [TestMethod]
-        public void CCS_PositiveNumber()
+        public void CountCompareSkip_PositiveNumber()
         {
             // arrange
             Memory[0x200] = 10;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
-                0x01000 | 0x200
+                Instruction(0x01, 0x200)
             });
 
             // act
@@ -35,14 +35,14 @@ namespace AGC.Tests.Instructions
         }
 
         [TestMethod]
-        public void CCS_PositiveZero()
+        public void CountCompareSkip_PositiveZero()
         {
             // arrange
             Memory[0x200] = 0;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
-                0x01000 | 0x200
+                Instruction(0x01, 0x200)
             });
 
             // act
@@ -58,14 +58,14 @@ namespace AGC.Tests.Instructions
         }
 
         [TestMethod]
-        public void CCS_NegativeZero()
+        public void CountCompareSkip_NegativeZero()
         {
             // arrange
             Memory[0x200] = OnesCompliment.NegativeZero;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
-                0x01000 | 0x200
+                Instruction(0x01, 0x200)
             });
 
             // act
@@ -81,14 +81,14 @@ namespace AGC.Tests.Instructions
         }
 
         [TestMethod]
-        public void CCS_Negative()
+        public void CountCompareSkip_Negative()
         {
             // arrange
             Memory[0x200] = (-10).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
-                0x01000 | 0x200
+                Instruction(0x01, 0x200)
             });
 
             // act

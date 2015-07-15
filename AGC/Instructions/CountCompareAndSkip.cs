@@ -11,7 +11,7 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     /// The "Count, Compare, and Skip" instruction stores a variable from erasable memory into the accumulator 
     /// (which is decremented), and then performs one of several jumps based on the original value of the variable.
-    class CountCompareAndSkip : IInstruction
+    public class CountCompareAndSkip : IInstruction
     {
         public ushort Code
         {
