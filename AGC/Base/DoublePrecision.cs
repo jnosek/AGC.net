@@ -35,8 +35,9 @@ namespace Apollo.Virtual.AGC.Base
             else if (lsw.IsNegativeOverflow)
                 msw += OnesCompliment.NegativeOne;
 
+            // in case lsw is in overflow, correct it and extend it back to 16 bits
             lsw.OverflowCorrect();
-
+            lsw.SignExtend();
 
             return new DoublePrecision(msw, lsw);
         }
