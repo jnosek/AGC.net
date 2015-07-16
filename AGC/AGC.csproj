@@ -48,6 +48,7 @@
     <Compile Include="Instructions\ClearAndAdd.cs" />
     <Compile Include="Instructions\ClearAndSubtract.cs" />
     <Compile Include="Instructions\CountCompareAndSkip.cs" />
+    <Compile Include="Instructions\DoubleAddToStorage.cs" />
     <Compile Include="Instructions\QuarterCode5.cs" />
     <Compile Include="Instructions\TransferToStorage.cs" />
     <Compile Include="Registers\CycleRightRegister.cs" />

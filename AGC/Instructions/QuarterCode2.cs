@@ -16,6 +16,7 @@ namespace Apollo.Virtual.AGC.Instructions
     {
         public QuarterCode2(Processor cpu) : base(cpu, 3)
         {
+            Add(new DoubleAddToStorage());
             Add(new AddToStorage());
         }
 

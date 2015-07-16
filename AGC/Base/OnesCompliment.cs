@@ -8,6 +8,7 @@ namespace Apollo.Virtual.AGC.Base
     public class OnesCompliment
     {
         public const ushort NegativeZero = 0xFFFF;
+        public const ushort PositiveZero = 0x0000;
         public const ushort PositiveOne = 0x0001;
         public const ushort NegativeOne = 0xFFFE;
 

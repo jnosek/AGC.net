@@ -17,6 +17,22 @@ namespace Apollo.Virtual.AGC.Base
         {
         }
 
+        public bool IsPositiveOverflow
+        {
+            get
+            {
+                return (Value & 0xC000) == 0x4000;
+            }
+        }
+
+        public bool IsNegativeOverflow
+        {
+            get
+            {
+                return (Value & 0xC000) == 0x8000;
+            }
+        }
+
         /// <summary>
         /// Single Precision Addition
         /// </summary>
