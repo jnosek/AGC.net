@@ -40,6 +40,8 @@
     <Compile Include="Core\DoublePrecision.cs" />
     <Compile Include="Architecture\QuarterCodeInstructionList.cs" />
     <Compile Include="Core\FixedMemory.cs" />
+    <Compile Include="Architecture\Instructions\DoubleClearAndAdd.cs" />
+    <Compile Include="Architecture\ExtraQuarterCode3.cs" />
     <Compile Include="Registers\ErasableBankRegister.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Core\MemoryBankOffset.cs" />
