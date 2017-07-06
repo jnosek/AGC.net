@@ -229,7 +229,7 @@ namespace Apollo.Virtual.AGC
 
             // main registers?
             A = memory.AddRegister<Accumulator>();
-            L = memory.AddRegister<FullRegister>(0x01);
+            L = memory.AddRegister<ErasableMemory>(0x01);
             Q = memory.AddRegister<FullRegister>(0x02);
             EB = memory.AddRegister<ErasableBankRegister>();
             FB = memory.GetWord(0x4);
