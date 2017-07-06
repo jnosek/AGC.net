@@ -18,13 +18,5 @@ namespace Apollo.Virtual.AGC
             Add(new ExtraQuarterCode3());
             Add(new BranchZeroOrMinusToFixed());
         }
-
-        public new IInstruction this[ushort code]
-        {
-            get
-            {
-                return base[code];
-            }
-        }
     }
 }

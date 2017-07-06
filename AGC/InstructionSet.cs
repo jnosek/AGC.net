@@ -23,13 +23,5 @@ namespace Apollo.Virtual.AGC
             Add(new CountCompareAndSkip());
             Add(new ClearAndSubtract());
         }
-
-        public new IInstruction this[ushort code]
-        {
-            get
-            {
-                return base[code];
-            }
-        }
     }
 }

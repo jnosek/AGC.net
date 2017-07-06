@@ -40,6 +40,7 @@
     <Compile Include="Core\DoublePrecision.cs" />
     <Compile Include="Architecture\QuarterCodeInstructionList.cs" />
     <Compile Include="Core\FixedMemory.cs" />
+    <Compile Include="Registers\ErasableBankRegister.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Core\MemoryBankOffset.cs" />
     <Compile Include="Core\OnesCompliment.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers\Accumulator.cs" />
     <Compile Include="Registers\ProgramCounter.cs" />
+    <Compile Include="Registers\ShiftRightRegister.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

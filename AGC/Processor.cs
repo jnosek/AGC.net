@@ -231,7 +231,7 @@ namespace Apollo.Virtual.AGC
             A = memory.AddRegister<Accumulator>();
             L = memory.AddRegister<FullRegister>(0x01);
             Q = memory.AddRegister<FullRegister>(0x02);
-            EB = memory.GetWord(0x3);
+            EB = memory.AddRegister<ErasableBankRegister>();
             FB = memory.GetWord(0x4);
             Z = memory.AddRegister<ProgramCounter>();
             BB = memory.GetWord(0x6);
@@ -249,7 +249,7 @@ namespace Apollo.Virtual.AGC
 
             // editing registers
             CYR = memory.AddRegister<CycleRightRegister>();
-            SR = memory.GetWord(0x11);
+            SR = memory.AddRegister<ShiftRightRegister>();
             CYL = memory.GetWord(0x12);
             EDOP = memory.GetWord(0x13);
 

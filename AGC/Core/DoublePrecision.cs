@@ -5,7 +5,9 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Core
 {
-    // https://github.com/rburkey2005/virtualagc/blob/master/yaAGC/agc_engine.c
+    /// <summary>
+    /// https://github.com/rburkey2005/virtualagc/blob/master/yaAGC/agc_engine.c 
+    /// </summary>
     public class DoublePrecision
     {
         public SinglePrecision MostSignificantWord { get; protected set; }
