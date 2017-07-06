@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC.Instructions
+namespace Apollo.Virtual.AGC.Architecture.Instructions
 {
     /// <summary>
     /// AD - 0110

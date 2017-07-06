@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC.Instructions
+namespace Apollo.Virtual.AGC.Architecture.Instructions
 {
     /// <summary>
     /// DAS - 0010 00
@@ -25,6 +25,7 @@ namespace Apollo.Virtual.AGC.Instructions
         {
             // TODO: need to handle DDOUBL
 
+            // FIXME: is this supposed to be a subtraction?
             // find previous address
             var K0 = (ushort)(K - 1);
             

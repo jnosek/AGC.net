@@ -222,8 +222,8 @@ namespace Apollo.Virtual.AGC
         public Processor(MemoryMap memory)
         {
             this.Memory = memory;
-            instructions = new InstructionSet(this);
-            extraCodeInstructions = new ExtraCodeInstructionSet(this);
+            instructions = new InstructionSet();
+            extraCodeInstructions = new ExtraCodeInstructionSet();
 
             // configure registers
 
@@ -295,13 +295,19 @@ namespace Apollo.Virtual.AGC
             // determine if this is an extra code instruction
             if (ExtraCodeFlag)
             {
+                // reset CPU for instruction to execute
+                extraCodeInstructions[code].CPU = this;
                 extraCodeInstructions[code].Execute(K);
-                
+
                 // clear the extra code flag
                 ExtraCodeFlag = false;
             }
             else
+            {
+                // reset CPU for instruction to execute
+                instructions[code].CPU = this;
                 instructions[code].Execute(K);
+            }
         }
     }
 }

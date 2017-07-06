@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC.Instructions
+namespace Apollo.Virtual.AGC.Architecture.Instructions
 {
     /// <summary>
-    /// ADS - 0010 11
-    /// QuaterCode Instruction
+    /// CA - 0011
     /// 
-    /// Adds the accumulator to an eraseable memory location and vice versa 
+    /// Moves the contents of memory at location K into the accumulator
     /// </summary>
-    class AddToStorage : IInstruction
+    class ClearAndAdd : IInstruction
     {
         public ushort Code
         {
-            get { return 0x03; }
+            get { return 0x3; }
         }
 
         public Processor CPU { get; set; }
@@ -24,9 +23,12 @@ namespace Apollo.Virtual.AGC.Instructions
         public void Execute(ushort K)
         {
             var value = CPU.Memory[K];
-            CPU.A.Add(value);
 
-            CPU.Memory[K] = CPU.A.Read();
+            // set value in accumulator
+            CPU.A.Write(value);
+
+            // value in K is re-written
+            CPU.Memory[K] = value;
         }
     }
 }
