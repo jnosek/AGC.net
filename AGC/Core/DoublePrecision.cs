@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC.Base
+namespace Apollo.Virtual.AGC.Core
 {
     // https://github.com/rburkey2005/virtualagc/blob/master/yaAGC/agc_engine.c
     public class DoublePrecision

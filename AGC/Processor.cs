@@ -1,4 +1,4 @@
-﻿using Apollo.Virtual.AGC.Base;
+﻿using Apollo.Virtual.AGC.Core;
 using Apollo.Virtual.AGC.Registers;
 using System;
 using System.Collections.Generic;

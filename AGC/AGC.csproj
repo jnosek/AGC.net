@@ -37,13 +37,13 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\DoublePrecision.cs" />
-    <Compile Include="Base\ExtraInstructionList.cs" />
-    <Compile Include="Base\FixedMemory.cs" />
-    <Compile Include="Base\FullRegister.cs" />
-    <Compile Include="Base\MemoryBankOffset.cs" />
-    <Compile Include="Base\OnesCompliment.cs" />
-    <Compile Include="Base\SinglePrecision.cs" />
+    <Compile Include="Core\DoublePrecision.cs" />
+    <Compile Include="Core\ExtraInstructionList.cs" />
+    <Compile Include="Core\FixedMemory.cs" />
+    <Compile Include="Registers\FullRegister.cs" />
+    <Compile Include="Core\MemoryBankOffset.cs" />
+    <Compile Include="Core\OnesCompliment.cs" />
+    <Compile Include="Core\SinglePrecision.cs" />
     <Compile Include="Instructions\BranchZeroOrMinusToFixed.cs" />
     <Compile Include="Instructions\ClearAndAdd.cs" />
     <Compile Include="Instructions\ClearAndSubtract.cs" />
@@ -52,17 +52,17 @@
     <Compile Include="Instructions\QuarterCode5.cs" />
     <Compile Include="Instructions\TransferToStorage.cs" />
     <Compile Include="Registers\CycleRightRegister.cs" />
-    <Compile Include="Base\IWord.cs" />
-    <Compile Include="Base\MemoryAddress.cs" />
-    <Compile Include="Base\MemoryBank.cs" />
-    <Compile Include="Base\ErasableMemory.cs" />
+    <Compile Include="Core\IWord.cs" />
+    <Compile Include="Core\MemoryAddress.cs" />
+    <Compile Include="Core\MemoryBank.cs" />
+    <Compile Include="Core\ErasableMemory.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="ExtraCodeInstructionSet.cs" />
     <Compile Include="InstructionSet.cs" />
     <Compile Include="Instructions\Add.cs" />
     <Compile Include="Instructions\AddToStorage.cs" />
-    <Compile Include="Base\IInstruction.cs" />
-    <Compile Include="Base\InstructionList.cs" />
+    <Compile Include="Core\IInstruction.cs" />
+    <Compile Include="Core\InstructionList.cs" />
     <Compile Include="Instructions\Augment.cs" />
     <Compile Include="Instructions\BranchZeroToFixed.cs" />
     <Compile Include="Instructions\ExtraQuarterCode.cs" />

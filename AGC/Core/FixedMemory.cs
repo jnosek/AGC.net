@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC.Base
+namespace Apollo.Virtual.AGC.Core
 {
     /// <summary>
-    /// 15 bit memory location that is readwrite
+    /// 15 bit memory location that is readonly
     /// </summary>
-    class ErasableMemory : MemoryAddress, IWord
+    class FixedMemory : MemoryAddress, IWord
     {
-        public ErasableMemory(ushort address, MemoryBank bank)
+        public FixedMemory(ushort address, MemoryBank bank)
             : base(address, bank)
         {
         }
 
         public void Write(ushort value)
         {
-            var v = new OnesCompliment(value);
-            v.OverflowCorrect();
-
-            Set(v);
+            //throw new InvalidOperationException("Cannot write to a fixed memory location");
         }
 
         public ushort Read()

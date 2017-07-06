@@ -1,4 +1,4 @@
-﻿using Apollo.Virtual.AGC.Base;
+﻿using Apollo.Virtual.AGC.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
