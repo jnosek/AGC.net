@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class FullRegister : MemoryAddress, IWord
+    class FullRegister : MemoryWord, IWord
     {
         public FullRegister(ushort address, MemoryBank bank)
             : base(address, bank)

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC
+namespace Apollo.Virtual.AGC.Architecture
 {
     class ExtraQuarterCode4 : QuarterCodeInstructionList
     {

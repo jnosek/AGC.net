@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Core
+﻿namespace Apollo.Virtual.AGC.Core
 {
     /// <summary>
     /// 15 bit memory location that is readwrite
     /// </summary>
-    class ErasableMemory : MemoryAddress, IWord
+    class ErasableMemory : MemoryWord, IWord
     {
         public ErasableMemory(ushort address, MemoryBank bank)
             : base(address, bank)

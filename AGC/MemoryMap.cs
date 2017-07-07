@@ -148,33 +148,15 @@ namespace Apollo.Virtual.AGC
         /// <typeparam name="RegisterType"></typeparam>
         /// <param name="address"></param>
         /// <returns></returns>
-        internal RegisterType AddRegister<RegisterType>() where RegisterType : MemoryAddress, IWord
-        {
-            // reflectively get constructor that takes memory bank and call it
-            var constructor = typeof(RegisterType).GetConstructor(new[] { typeof(MemoryBank) });
-
-            var r = constructor.Invoke(new[] {unswitchedErasable}) as RegisterType;
-            
-            // add to memory space and return the object created
-            registers[r.Address] = r;
-            return r;
-        }
-
-        /// <summary>
-        /// Creates a given register type mapped to the unswitchedErasable bank and adds it to the memory space to be returned for their given address
-        /// </summary>
-        /// <typeparam name="RegisterType"></typeparam>
-        /// <param name="address"></param>
-        /// <returns></returns>
-        internal RegisterType AddRegister<RegisterType>(ushort address) where RegisterType : MemoryAddress, IWord
+        internal RegisterType AddRegister<RegisterType>(ushort address) where RegisterType : MemoryWord, IWord
         {
             // reflectively get constructor that takes memory bank and call it
             var constructor = typeof(RegisterType).GetConstructor(new[] { typeof(ushort), typeof(MemoryBank) });
 
-            var r = constructor.Invoke(new Object[] { address, unswitchedErasable }) as RegisterType;
+            var r = constructor.Invoke(new object[] { address, unswitchedErasable }) as RegisterType;
 
             // add to memory space and return the object created
-            registers[r.Address] = r;
+            registers[address] = r;
             return r;
         }
 

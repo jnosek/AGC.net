@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class ErasableBankRegister : MemoryAddress, IWord
+    class ErasableBankRegister : MemoryWord, IWord
     {
-        public ErasableBankRegister(MemoryBank bank) : 
-            base(0x03, bank)
+        public ErasableBankRegister(ushort address, MemoryBank bank)
+            : base(address, bank)
         {
         }
 

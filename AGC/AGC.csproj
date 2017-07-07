@@ -37,6 +37,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Architecture\ExtraQuarterCode4.cs" />
     <Compile Include="Architecture\Instructions\Compliment.cs" />
     <Compile Include="Architecture\Instructions\DoubleClearAndSubtract.cs" />
     <Compile Include="Architecture\Instructions\DoubleCompliment.cs" />
@@ -45,7 +46,6 @@
     <Compile Include="Core\FixedMemory.cs" />
     <Compile Include="Architecture\Instructions\DoubleClearAndAdd.cs" />
     <Compile Include="Architecture\ExtraQuarterCode3.cs" />
-    <Compile Include="ExtraQuarterCode4.cs" />
     <Compile Include="Registers\ErasableBankRegister.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Core\MemoryBankOffset.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="Architecture\Instructions\TransferToStorage.cs" />
     <Compile Include="Registers\CycleRightRegister.cs" />
     <Compile Include="Core\IWord.cs" />
-    <Compile Include="Core\MemoryAddress.cs" />
+    <Compile Include="Core\MemoryWord.cs" />
     <Compile Include="Core\MemoryBank.cs" />
     <Compile Include="Core\ErasableMemory.cs" />
     <Compile Include="Computer.cs" />

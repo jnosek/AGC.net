@@ -228,28 +228,28 @@ namespace Apollo.Virtual.AGC
             // configure registers
 
             // main registers?
-            A = memory.AddRegister<Accumulator>();
+            A = memory.AddRegister<Accumulator>(0x00);
             L = memory.AddRegister<ErasableMemory>(0x01);
             Q = memory.AddRegister<FullRegister>(0x02);
-            EB = memory.AddRegister<ErasableBankRegister>();
+            EB = memory.AddRegister<ErasableBankRegister>(0x03);
             FB = memory.GetWord(0x4);
-            Z = memory.AddRegister<ProgramCounter>();
-            BB = memory.GetWord(0x6);
+            Z = memory.AddRegister<ProgramCounter>(0x05);
+            BB = memory.GetWord(0x06);
 
             //memory[0x7] = 0; // this is always set to 0, TODO: need to hard code?
 
             // interrupt helper registers
-            ARUPT = memory.AddRegister<ErasableMemory>(0x8);
-            LRUPT = memory.AddRegister<ErasableMemory>(0x9);
-            QRUPT = memory.AddRegister<ErasableMemory>(0xA);
+            ARUPT = memory.AddRegister<ErasableMemory>(0x08);
+            LRUPT = memory.AddRegister<ErasableMemory>(0x09);
+            QRUPT = memory.AddRegister<ErasableMemory>(0x0A);
             // 0XB, 0XC are spares. not used?
-            ZRUPT = memory.AddRegister<ErasableMemory>(0xD);
-            BBRUPT = memory.AddRegister<ErasableMemory>(0xE);
-            BRUPT = memory.AddRegister<ErasableMemory>(0xF);
+            ZRUPT = memory.AddRegister<ErasableMemory>(0x0D);
+            BBRUPT = memory.AddRegister<ErasableMemory>(0x0E);
+            BRUPT = memory.AddRegister<ErasableMemory>(0x0F);
 
             // editing registers
-            CYR = memory.AddRegister<CycleRightRegister>();
-            SR = memory.AddRegister<ShiftRightRegister>();
+            CYR = memory.AddRegister<CycleRightRegister>(0x10);
+            SR = memory.AddRegister<ShiftRightRegister>(0x11);
             CYL = memory.GetWord(0x12);
             EDOP = memory.GetWord(0x13);
 

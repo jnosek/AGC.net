@@ -8,8 +8,8 @@ namespace Apollo.Virtual.AGC.Registers
 {
     class Accumulator : FullRegister
     {
-        public Accumulator(MemoryBank bank)
-            : base(0x0, bank)
+        public Accumulator(ushort address, MemoryBank bank)
+            : base(address, bank)
         {
         }
 

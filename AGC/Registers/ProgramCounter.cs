@@ -9,10 +9,10 @@ namespace Apollo.Virtual.AGC.Registers
     /// <summary>
     /// 12-bit register for the address of the next instruction
     /// </summary>
-    class ProgramCounter: MemoryAddress, IWord
+    class ProgramCounter: MemoryWord, IWord
     {
-        public ProgramCounter(MemoryBank bank)
-            : base(0x05, bank)
+        public ProgramCounter(ushort address, MemoryBank bank)
+            : base(address, bank)
         {
         }
 

@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class ShiftRightRegister : MemoryAddress, IWord
+    class ShiftRightRegister : MemoryWord, IWord
     {
-        public ShiftRightRegister(MemoryBank bank) 
-            : base(0x11, bank)
+        public ShiftRightRegister(ushort address, MemoryBank bank)
+            : base(address, bank)
         {
         }
 

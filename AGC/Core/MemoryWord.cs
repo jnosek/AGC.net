@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Core
+﻿namespace Apollo.Virtual.AGC.Core
 {
-    public abstract class MemoryAddress
+    public abstract class MemoryWord
     {
         MemoryBank bank;
 
         public ushort Address { get; private set; }
 
-        public MemoryAddress(ushort address, MemoryBank bank)
+        public MemoryWord(ushort address, MemoryBank bank)
         {
             this.bank = bank;
             this.Address = address;
