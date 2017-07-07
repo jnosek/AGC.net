@@ -41,7 +41,7 @@
     <Compile Include="Architecture\Instructions\Compliment.cs" />
     <Compile Include="Architecture\Instructions\DoubleClearAndSubtract.cs" />
     <Compile Include="Architecture\Instructions\DoubleCompliment.cs" />
-    <Compile Include="Core\DoublePrecision.cs" />
+    <Compile Include="Math\DoublePrecision.cs" />
     <Compile Include="Architecture\QuarterCodeInstructionList.cs" />
     <Compile Include="Core\FixedMemory.cs" />
     <Compile Include="Architecture\Instructions\DoubleClearAndAdd.cs" />
@@ -50,7 +50,7 @@
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Core\MemoryBankOffset.cs" />
     <Compile Include="Core\OnesCompliment.cs" />
-    <Compile Include="Core\SinglePrecision.cs" />
+    <Compile Include="Math\SinglePrecision.cs" />
     <Compile Include="Architecture\Instructions\BranchZeroOrMinusToFixed.cs" />
     <Compile Include="Architecture\Instructions\ClearAndAdd.cs" />
     <Compile Include="Architecture\Instructions\ClearAndSubtract.cs" />

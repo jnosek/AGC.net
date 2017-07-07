@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Apollo.Virtual.AGC.Core;
 
-namespace Apollo.Virtual.AGC.Core
+namespace Apollo.Virtual.AGC.Math
 {
     /// <summary>
     /// https://github.com/rburkey2005/virtualagc/blob/master/yaAGC/agc_engine.c 
