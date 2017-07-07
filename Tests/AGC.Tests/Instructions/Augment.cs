@@ -12,7 +12,7 @@ namespace AGC.Tests.Instructions
     public class Augment : BaseTest
     {
         [TestMethod]
-        public void AugmentPositiveNumber()
+        public void Augment_PositiveNumber()
         {
             // arrange
             Memory[0x200] = 10;
@@ -32,7 +32,7 @@ namespace AGC.Tests.Instructions
         }
 
         [TestMethod]
-        public void AugmentNegativeNumber()
+        public void Augment_NegativeNumber()
         {
             // arrange
             Memory[0x200] = (-10).ToOnesCompliment();
@@ -49,6 +49,26 @@ namespace AGC.Tests.Instructions
 
             // assert
             Assert.AreEqual((-11).ToOnesCompliment(), Memory[0x200]);
+        }
+
+        [TestMethod]
+        public void Augment_16BitRegister()
+        {
+            // arrange
+            Memory[0x00] = 0x4001; // 15-bit positive value
+
+            // insert instructions
+            Memory.LoadFixedRom(new ushort[] {
+                0x00006, // EXTEND instruction
+                0x02800 | 0x000
+            });
+
+            // act - run the instructions
+            CPU.Execute();
+            CPU.Execute();
+
+            // assert
+            Assert.AreEqual(0x4002, Memory[0x000]);
         }
     }
 }
