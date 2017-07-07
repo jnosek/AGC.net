@@ -1,4 +1,4 @@
-﻿namespace Apollo.Virtual.AGC.Core
+﻿namespace Apollo.Virtual.AGC.Memory
 {
     public abstract class MemoryWord
     {

@@ -1,8 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC
 {
@@ -40,14 +36,14 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         private MemoryBank[] switchedErasable = new MemoryBank[] 
         {
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
-            new MemoryBankOffset(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
+            new MemoryBank(256, 0x300),
         };
 
         /// <summary>
@@ -61,7 +57,7 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         private MemoryBank[] commonFixed = new MemoryBank[]
         {
-            new MemoryBankOffset(1024, 0x400)
+            new MemoryBank(1024, 0x400)
         };
 
         /// <summary>
@@ -72,7 +68,7 @@ namespace Apollo.Virtual.AGC
         /// 0x800 - 0xFFF
         /// 2048 - 4095
         /// </summary>
-        private MemoryBank fixedFixed = new MemoryBankOffset(2048, 0x800);
+        private MemoryBank fixedFixed = new MemoryBank(2048, 0x800);
 
         /// <summary>
         /// Input and Output Channels

@@ -1,21 +1,20 @@
-﻿namespace Apollo.Virtual.AGC.Core
+﻿using Apollo.Virtual.AGC.Core;
+
+namespace Apollo.Virtual.AGC.Memory
 {
     /// <summary>
-    /// 15 bit memory location that is readwrite
+    /// 15 bit memory location that is readonly
     /// </summary>
-    class ErasableMemory : MemoryWord, IWord
+    class FixedMemory : MemoryWord, IWord
     {
-        public ErasableMemory(ushort address, MemoryBank bank)
+        public FixedMemory(ushort address, MemoryBank bank)
             : base(address, bank)
         {
         }
 
         public void Write(ushort value)
         {
-            var v = new OnesCompliment(value);
-            v.OverflowCorrect();
-
-            Set(v);
+            //throw new InvalidOperationException("Cannot write to a fixed memory location");
         }
 
         public ushort Read()

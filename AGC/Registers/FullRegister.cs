@@ -1,8 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC.Registers
 {
