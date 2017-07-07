@@ -61,6 +61,7 @@
     <Compile Include="Instructions\CountCompareAndSkip.cs" />
     <Compile Include="Instructions\DoubleAddToStorage.cs" />
     <Compile Include="Instructions\DoubleClearAndAdd.cs" />
+    <Compile Include="Instructions\DoubleClearAndSubtract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers\CycleRightRegister.cs" />
     <Compile Include="Registers\ErasableBankRegister.cs" />

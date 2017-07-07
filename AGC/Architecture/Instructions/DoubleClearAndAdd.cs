@@ -1,10 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Architecture.Instructions
+﻿namespace Apollo.Virtual.AGC.Architecture.Instructions
 {
     /// <summary>
     /// DCA - EX 0011 00
@@ -15,10 +9,7 @@ namespace Apollo.Virtual.AGC.Architecture.Instructions
     {
         public ushort Code
         {
-            get
-            {
-                return 0x0;
-            }
+            get { return 0x0; }
         }
 
         public Processor CPU { get; set; }
@@ -34,7 +25,7 @@ namespace Apollo.Virtual.AGC.Architecture.Instructions
             // rewrite K0
             CPU.Memory[K0] = CPU.Memory[K0];
 
-            // move most significant work into A
+            // move most significant word into A
             CPU.A.Write(CPU.Memory[K1]);
 
             // rewrite K1

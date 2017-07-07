@@ -16,6 +16,7 @@ namespace Apollo.Virtual.AGC
             Add(new BranchZeroToFixed());
             Add(new ExtraQuarterCode2());
             Add(new ExtraQuarterCode3());
+            Add(new ExtraQuarterCode4());
             Add(new BranchZeroOrMinusToFixed());
         }
     }

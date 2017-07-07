@@ -34,7 +34,9 @@ namespace Apollo.Virtual.AGC.Architecture.Instructions
 
             // if not the A register, re-write value to K
             if (K != CPU.A.Address)
+            {
                 CPU.Memory[K] = value;
+            }
         }
     }
 }
