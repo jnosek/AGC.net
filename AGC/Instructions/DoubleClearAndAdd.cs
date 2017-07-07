@@ -1,4 +1,4 @@
-﻿namespace Apollo.Virtual.AGC.Architecture.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// DCA - EX 0011 00

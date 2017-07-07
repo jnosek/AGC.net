@@ -4,28 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Apollo.Virtual.AGC.Architecture.Instructions
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
-    /// CA - 0011
+    /// AD - 0110
     /// 
-    /// Moves the contents of memory at location K into the accumulator
+    /// Adds the value located in K to the accumulator
     /// </summary>
-    class ClearAndAdd : IInstruction
+    class Add : IInstruction
     {
-        public ushort Code
-        {
-            get { return 0x3; }
-        }
-
         public Processor CPU { get; set; }
+
+        public ushort Code { get { return 0x06; } }
 
         public void Execute(ushort K)
         {
             var value = CPU.Memory[K];
-
-            // set value in accumulator
-            CPU.A.Write(value);
+            CPU.A.Add(CPU.Memory[K]);
 
             // value in K is re-written
             CPU.Memory[K] = value;

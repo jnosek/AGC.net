@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Architecture
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     abstract class QuarterCodeInstructionList : InstructionList, IInstruction
     {

@@ -1,7 +1,7 @@
 ﻿using Apollo.Virtual.AGC.Core;
 using Apollo.Virtual.AGC.Math;
 
-namespace Apollo.Virtual.AGC.Architecture.Instructions
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// CCS - 0001

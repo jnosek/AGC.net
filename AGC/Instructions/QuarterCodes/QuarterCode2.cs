@@ -1,11 +1,4 @@
-﻿using Apollo.Virtual.AGC.Architecture.Instructions;
-using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Architecture
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// QC - 0010

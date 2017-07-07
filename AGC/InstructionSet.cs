@@ -1,10 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Apollo.Virtual.AGC.Architecture;
-using Apollo.Virtual.AGC.Architecture.Instructions;
+﻿using Apollo.Virtual.AGC.Instructions;
 
 namespace Apollo.Virtual.AGC
 {
