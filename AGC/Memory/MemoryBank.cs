@@ -1,37 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Apollo.Virtual.AGC.Core
+namespace Apollo.Virtual.AGC.Memory
 {
     /// <summary>
-    /// 16 bit memory bank
+    /// Memory bank that is implemented using a 16-bit (ushort) array
+    /// can be configured with a static offset
     /// </summary>
     public class MemoryBank
     {
-        private ushort[] m;
+        private ushort[] bank;
+        private uint offset;
 
         public MemoryBank(uint size)
+            : this(size, 0)
         {
-            m = new ushort[size];
+        }
+
+        public MemoryBank(uint size, uint offset)
+        {
+            bank = new ushort[size];
+            this.offset = offset;
         }
 
         public virtual ushort this[uint address]
         {
             get
             {
-                return m[address];
+                return bank[address - offset];
             }
             set
             {
-                m[address] = value;
+                bank[address - offset] = value;
             }
         }
 
         internal void Copy(ushort[] data)
         {
-            Array.Copy(data, m, data.Length);
+            Array.Copy(data, bank, data.Length);
         }
     }
 }

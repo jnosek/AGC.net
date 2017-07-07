@@ -46,6 +46,8 @@
     <Compile Include="Memory\FixedMemory.cs" />
     <Compile Include="Instructions\DoubleClearAndAdd.cs" />
     <Compile Include="Instructions\QuarterCodes\ExtraQuarterCode3.cs" />
+    <Compile Include="Memory\IWord.cs" />
+    <Compile Include="Memory\MemoryBank.cs" />
     <Compile Include="Registers\ErasableBankRegister.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="Core\OnesCompliment.cs" />
@@ -58,9 +60,7 @@
     <Compile Include="Instructions\QuarterCodes\QuarterCode5.cs" />
     <Compile Include="Instructions\TransferToStorage.cs" />
     <Compile Include="Registers\CycleRightRegister.cs" />
-    <Compile Include="Memory\IWord.cs" />
     <Compile Include="Memory\MemoryWord.cs" />
-    <Compile Include="Memory\MemoryBank.cs" />
     <Compile Include="Memory\ErasableMemory.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="ExtraCodeInstructionSet.cs" />
