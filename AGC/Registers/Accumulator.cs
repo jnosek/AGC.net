@@ -1,5 +1,4 @@
-﻿using Apollo.Virtual.AGC.Math;
-using Apollo.Virtual.AGC.Memory;
+﻿using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC.Registers
 {
@@ -10,11 +9,11 @@ namespace Apollo.Virtual.AGC.Registers
         {
         }
 
-        public void Add(ushort value)
+        public void Add(OnesCompliment value)
         {
-            var sum = new SinglePrecision(value) + Get();
+            var sum = value + Read();
 
-            Set(sum);
+            Write(sum);
         }
 
         public bool IsOverflow
@@ -22,7 +21,7 @@ namespace Apollo.Virtual.AGC.Registers
             get
             {
                 // look at bits 16 and 15 to see if they are different
-                var value = Get() & 0xC000;
+                var value = Read() & 0xC000;
 
                 return value == 0x8000 || value == 0x4000;
             }

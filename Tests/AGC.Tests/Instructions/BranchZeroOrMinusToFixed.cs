@@ -1,10 +1,5 @@
-﻿using Apollo.Virtual.AGC.Core;
+﻿using Apollo.Virtual.AGC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.Tests.Instructions
 {
@@ -12,10 +7,10 @@ namespace AGC.Tests.Instructions
     public class BranchZeroOrMinusToFixed : BaseTest
     {
         [TestMethod]
-        public void BranchZeroOrMinusToFixedPositiveZero()
+        public void BranchZeroOrMinusToFixed_PositiveZero()
         {
             // arrange
-            Memory[0x0] = 0;
+            Memory[0x0] = OnesCompliment.PositiveZero;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -30,11 +25,11 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            Assert.AreEqual(0x400, Memory[0x005]);
+            CustomAssert.AreEqual(0x400, Memory[0x005]);
         }
 
         [TestMethod]
-        public void BranchZeroOrMinusToFixedNegativeZero()
+        public void BranchZeroOrMinusToFixed_NegativeZero()
         {
             // arrange
             Memory[0x0] = OnesCompliment.NegativeZero;
@@ -52,14 +47,14 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            Assert.AreEqual(0x500, Memory[0x005]);
+            CustomAssert.AreEqual(0x500, Memory[0x005]);
         }
 
         [TestMethod]
-        public void BranchZeroOrMinusToFixedNegative()
+        public void BranchZeroOrMinusToFixed_Negative()
         {
             // arrange
-            Memory[0x0] = (-5).ToOnesCompliment();
+            Memory[0x0] = (~5).ToOnesCompliment();  // -5
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -74,14 +69,14 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            Assert.AreEqual(0x500, Memory[0x005]);
+            CustomAssert.AreEqual(0x500, Memory[0x005]);
         }
 
         [TestMethod]
-        public void BranchZeroOrMinusToFixedNoJump()
+        public void BranchZeroOrMinusToFixed_NoJump()
         {
             // arrange
-            Memory[0x0] = 5;
+            Memory[0x0] = (5).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -96,7 +91,7 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            Assert.AreEqual(0x802, Memory[0x005]);
+            CustomAssert.AreEqual(0x802, Memory[0x005]);
         }
     }
 }

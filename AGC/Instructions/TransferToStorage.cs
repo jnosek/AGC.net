@@ -1,10 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// TS - 0101 10
@@ -36,10 +30,14 @@ namespace Apollo.Virtual.AGC.Instructions
             {
                 // test for 01-- ---- ---- ---- (positive overflow)
                 if ((CPU.A.Read() & 0x4000) > 0)
-                    CPU.A.Write(1);
+                {
+                    CPU.A.Write(OnesCompliment.PositiveOne);
+                }
                 // else negative overflow
                 else
+                {
                     CPU.A.Write(OnesCompliment.NegativeOne);
+                }
 
                 CPU.Z.Increment();
             }

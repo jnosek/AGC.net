@@ -1,5 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Math;
 
 namespace Apollo.Virtual.AGC.Instructions
 {
@@ -19,7 +18,7 @@ namespace Apollo.Virtual.AGC.Instructions
 
         public void Execute(ushort K)
         {
-            var value = new SinglePrecision(CPU.Memory[K]);
+            var value = CPU.Memory[K];
 
             // if negative
             if(value.IsNegative)

@@ -1,10 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// TC - 0000
@@ -38,7 +32,7 @@ namespace Apollo.Virtual.AGC.Instructions
                 CPU.Q.Write(CPU.Z.Read());
 
                 // set control to K
-                CPU.Z.Write(K);
+                CPU.Z.Write(new OnesCompliment(K));
 
                 // clear the extra code flag
                 CPU.ExtraCodeFlag = false;

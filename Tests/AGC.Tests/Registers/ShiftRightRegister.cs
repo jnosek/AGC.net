@@ -1,10 +1,5 @@
-﻿using Apollo.Virtual.AGC.Core;
+﻿using Apollo.Virtual.AGC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.Tests.Registers
 {
@@ -15,7 +10,7 @@ namespace AGC.Tests.Registers
         public void ShiftRight_Default()
         {
             // arrange
-            Memory[0x200] = 0x202;
+            Memory[0x200] = (0x202).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -28,14 +23,14 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0x0101, Memory[0x11]);
+            CustomAssert.AreEqual(0x0101, Memory[0x11]);
         }
 
         [TestMethod]
         public void ShiftRight_ClearLSB()
         {
             // arrange
-            Memory[0x200] = 0x201;
+            Memory[0x200] = (0x201).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -48,14 +43,14 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0x0100, Memory[0x11]);
+            CustomAssert.AreEqual(0x0100, Memory[0x11]);
         }
 
         [TestMethod]
         public void ShiftRight_DuplicateMSB()
         {
             // arrange
-            Memory[0x200] = 0xC000; // sign extended 0x4000 value
+            Memory[0x200] = (0xC000).ToOnesCompliment(); // sign extended 0x4000 value
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -69,7 +64,7 @@ namespace AGC.Tests.Registers
 
             // assert
             // sign extended 0x6000 value
-            Assert.AreEqual(0xE000, Memory[0x11]);
+            CustomAssert.AreEqual(0xE000, Memory[0x11]);
         }
     }
 }

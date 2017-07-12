@@ -1,26 +1,19 @@
-﻿using Apollo.Virtual.AGC.Core;
-using Apollo.Virtual.AGC.Memory;
+﻿using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class ErasableBankRegister : MemoryWord, IWord
+    class ErasableBankRegister : MemoryWord
     {
         public ErasableBankRegister(ushort address, MemoryBank bank)
             : base(address, bank)
         {
         }
 
-        public ushort Read()
+        public override void Write(OnesCompliment value)
         {
-            var v = new OnesCompliment(Get());
-            v.SignExtend();
-            return v;
-        }
-
-        public void Write(ushort value)
-        {
+            var maskedValue = value & 0x0700;
             // can only set the 3 bits for the erasable memory bank selection
-            Set(value & 0x0700);
+            WriteRaw(maskedValue);
         }
     }
 }

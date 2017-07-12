@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Apollo.Virtual.AGC;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace AGC.Tests.Registers
         public void CycleRight_OneWrapAround()
         {
             // arrange
-            Memory[0x200] = 51;
+            Memory[0x200] = (51).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -27,14 +28,14 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0xC019, Memory[0x10]);
+            CustomAssert.AreEqual(0xC019, Memory[0x10]);
         }
 
         [TestMethod]
         public void CycleRight_ZeroWrapAround()
         {
             // arrange
-            Memory[0x200] = 50;
+            Memory[0x200] = (50).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -47,7 +48,7 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0X19, Memory[0x10]);
+            CustomAssert.AreEqual(0X19, Memory[0x10]);
         }
     }
 }

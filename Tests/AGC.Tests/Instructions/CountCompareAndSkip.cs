@@ -1,10 +1,5 @@
-﻿using Apollo.Virtual.AGC.Core;
+﻿using Apollo.Virtual.AGC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.Tests.Instructions
 {
@@ -15,7 +10,7 @@ namespace AGC.Tests.Instructions
         public void CountCompareSkip_PositiveNumber()
         {
             // arrange
-            Memory[0x200] = 10;
+            Memory[0x200] = (10).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -28,17 +23,17 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check that number was decremented
-            Assert.AreEqual(9, Memory[0x0]);
+            CustomAssert.AreEqual(9, Memory[0x0]);
 
             // check that program counter advanced 1
-            Assert.AreEqual(0x801, Memory[0x05]);
+            CustomAssert.AreEqual(0x801, Memory[0x05]);
         }
 
         [TestMethod]
         public void CountCompareSkip_PositiveZero()
         {
             // arrange
-            Memory[0x200] = 0;
+            Memory[0x200] = OnesCompliment.PositiveZero;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -51,10 +46,10 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check that number was not decremented
-            Assert.AreEqual(0, Memory[0x0]);
+            CustomAssert.AreEqual(0, Memory[0x0]);
 
             // check that program counter advanced 2
-            Assert.AreEqual(0x802, Memory[0x05]);
+            CustomAssert.AreEqual(0x802, Memory[0x05]);
         }
 
         [TestMethod]
@@ -74,17 +69,17 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check that number was set to positive 0
-            Assert.AreEqual(0, Memory[0x0]);
+            CustomAssert.AreEqual(0, Memory[0x0]);
 
             // check that program counter advanced 4
-            Assert.AreEqual(0x804, Memory[0x05]);
+            CustomAssert.AreEqual(0x804, Memory[0x05]);
         }
 
         [TestMethod]
         public void CountCompareSkip_Negative()
         {
             // arrange
-            Memory[0x200] = (-10).ToOnesCompliment();
+            Memory[0x200] = (~10).ToOnesCompliment(); // -10
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -97,10 +92,10 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check that number ABS - 1
-            Assert.AreEqual(9, Memory[0x0]);
+            CustomAssert.AreEqual(9, Memory[0x0]);
 
             // check that program counter advanced 3
-            Assert.AreEqual(0x803, Memory[0x05]);
+            CustomAssert.AreEqual(0x803, Memory[0x05]);
         }
 
         // TODO: added +0 and -0 tests

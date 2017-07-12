@@ -1,10 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// BZMF - EX 0110
@@ -26,7 +20,7 @@ namespace Apollo.Virtual.AGC.Instructions
 
             // if +0 or negative, jump
             if (value == 0 || (value & 0x8000) > 0)
-                CPU.Z.Write(K);
+                CPU.Z.Write(new OnesCompliment(K));
         }
     }
 }

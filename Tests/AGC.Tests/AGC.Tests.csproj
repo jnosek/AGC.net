@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="CustomAssert.cs" />
     <Compile Include="Instructions\Add.cs" />
     <Compile Include="Instructions\AddToStorage.cs" />
     <Compile Include="Instructions\Augment.cs" />

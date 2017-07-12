@@ -1,19 +1,17 @@
-﻿using Apollo.Virtual.AGC.Core;
-
-namespace Apollo.Virtual.AGC.Math
+﻿namespace Apollo.Virtual.AGC.Math
 {
     /// <summary>
     /// https://github.com/rburkey2005/virtualagc/blob/master/yaAGC/agc_engine.c 
     /// </summary>
     public class DoublePrecision
     {
-        public SinglePrecision MostSignificantWord { get; protected set; }
-        public SinglePrecision LeastSignificantWord { get; protected set; }
+        public OnesCompliment MostSignificantWord { get; protected set; }
+        public OnesCompliment LeastSignificantWord { get; protected set; }
 
-        public DoublePrecision(ushort most, ushort least)
+        public DoublePrecision(OnesCompliment most, OnesCompliment least)
         {
-            MostSignificantWord = new SinglePrecision(most);
-            LeastSignificantWord = new SinglePrecision(least);
+            MostSignificantWord = most;
+            LeastSignificantWord = least;
         }
 
         /// <summary>
@@ -35,8 +33,10 @@ namespace Apollo.Virtual.AGC.Math
                 msw += OnesCompliment.NegativeOne;
 
             // in case lsw is in overflow, correct it and extend it back to 16 bits
-            lsw.OverflowCorrect();
-            lsw.SignExtend();
+            
+            // TODO: shoudl this be done with DP value is stored in memory?
+            //lsw.OverflowCorrect();
+            //lsw.SignExtend();
 
             return new DoublePrecision(msw, lsw);
         }

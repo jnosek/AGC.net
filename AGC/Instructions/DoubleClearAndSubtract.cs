@@ -19,13 +19,13 @@
             var K1 = (ushort)(K0 - 1);
 
             // compliment least significant word into L
-            CPU.L.Write((ushort)~CPU.Memory[K0]);
+            CPU.L.Write(~CPU.Memory[K0]);
 
             // rewrite K0
             CPU.Memory[K0] = CPU.Memory[K0];
 
             // compliment most significant word into A
-            CPU.A.Write((ushort)~CPU.Memory[K1]);
+            CPU.A.Write(~CPU.Memory[K1]);
 
             // rewrite K1
             CPU.Memory[K1] = CPU.Memory[K1];

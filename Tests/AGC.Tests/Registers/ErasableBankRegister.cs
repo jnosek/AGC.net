@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Apollo.Virtual.AGC;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Registers
 {
@@ -9,7 +10,7 @@ namespace AGC.Tests.Registers
         public void ErasableBank_SetWithinMask()
         {
             // arrange
-            Memory[0x200] = 0x0200;
+            Memory[0x200] = (0x0200).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -22,14 +23,14 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0x0200, Memory[0x3]);
+            CustomAssert.AreEqual(0x0200, Memory[0x3]);
         }
 
         [TestMethod]
         public void ErasableBank_SetOutsideMask()
         {
             // arrange
-            Memory[0x200] = 0x0002;
+            Memory[0x200] = (0x0002).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -42,7 +43,7 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0x0, Memory[0x3]);
+            CustomAssert.AreEqual(0x0, Memory[0x3]);
         }
     }
 }

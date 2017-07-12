@@ -1,10 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// CS - 0100
@@ -30,7 +24,7 @@ namespace Apollo.Virtual.AGC.Instructions
             var value = CPU.Memory[K];
 
             // write the compliment to the accumulator
-            CPU.A.Write((ushort)~value);
+            CPU.A.Write(~value);
 
             // if not the A register, re-write value to K
             if (K != CPU.A.Address)

@@ -1,9 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Apollo.Virtual.AGC;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
@@ -14,8 +10,8 @@ namespace AGC.Tests.Instructions
         public void DoubleClearAndSubstract_Default()
         {
             // arrange
-            Memory[0x200] = 0x020;
-            Memory[0x201] = 0x040;
+            Memory[0x200] = (0x020).ToOnesCompliment();
+            Memory[0x201] = (0x040).ToOnesCompliment();
 
             // insert instructions and test data
             Memory.LoadFixedRom(new ushort[] {
@@ -30,8 +26,8 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check value in accumulator and L
-            Assert.AreEqual(0xFFDF, Memory[0x0]);
-            Assert.AreEqual(0xFFBF, Memory[0x1]);
+            CustomAssert.AreEqual(0xFFDF, Memory[0x0]);
+            CustomAssert.AreEqual(0xFFBF, Memory[0x1]);
         }
 
         [TestMethod]
@@ -40,10 +36,10 @@ namespace AGC.Tests.Instructions
             // arrange
 
             // writing int CYR will cause it to cycle right
-            Memory[0x010] = 0x002;
+            Memory[0x010] = (0x002).ToOnesCompliment();
 
             // writing into SR will cause it to shift right
-            Memory[0x011] = 0x004;
+            Memory[0x011] = (0x004).ToOnesCompliment();
 
             // insert instructions and test data
             Memory.LoadFixedRom(new ushort[] {
@@ -58,14 +54,14 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check value in accumulator and L
-            Assert.AreEqual(0xFFFE, Memory[0x0]);
-            Assert.AreEqual(0xFFFD, Memory[0x1]);
+            CustomAssert.AreEqual(0xFFFE, Memory[0x0]);
+            CustomAssert.AreEqual(0xFFFD, Memory[0x1]);
 
             // check value in CYR was cycled
-            Assert.AreEqual(0xC000, Memory[0x10]);
+            CustomAssert.AreEqual(0xC000, Memory[0x10]);
 
             // check value in SR was shifted
-            Assert.AreEqual(0x0001, Memory[0x11]);
+            CustomAssert.AreEqual(0x0001, Memory[0x11]);
         }
 
         /// <summary>
@@ -75,7 +71,7 @@ namespace AGC.Tests.Instructions
         public void DoubleClearAndSubstract_LRegister()
         {
             // arrange
-            Memory[0x002] = 0x020;
+            Memory[0x002] = (0x020).ToOnesCompliment();
 
             // insert instructions and test data
             Memory.LoadFixedRom(new ushort[] {
@@ -90,8 +86,8 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check value in accumulator and L
-            Assert.AreEqual(0x0020, Memory[0x0]);
-            Assert.AreEqual(0xFFDF, Memory[0x1]);
+            CustomAssert.AreEqual(0x0020, Memory[0x0]);
+            CustomAssert.AreEqual(0xFFDF, Memory[0x1]);
         }
 
         /// <summary>
@@ -101,8 +97,8 @@ namespace AGC.Tests.Instructions
         public void DoubleClearAndSubstract_QRegister()
         {
             // arrange
-            Memory[0x002] = 0xF000;
-            Memory[0x003] = 0x0200;
+            Memory[0x002] = (0xF000).ToOnesCompliment();
+            Memory[0x003] = (0x0200).ToOnesCompliment();
 
             // insert instructions and test data
             Memory.LoadFixedRom(new ushort[] {
@@ -117,8 +113,8 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check value in accumulator and L
-            Assert.AreEqual(0x0FFF, Memory[0x0]);
-            Assert.AreEqual(0xFDFF, Memory[0x1]);
+            CustomAssert.AreEqual(0x0FFF, Memory[0x0]);
+            CustomAssert.AreEqual(0xFDFF, Memory[0x1]);
         }
     }
 }

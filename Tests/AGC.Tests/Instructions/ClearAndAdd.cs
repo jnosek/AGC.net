@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Apollo.Virtual.AGC;
 
 namespace AGC.Tests.Instructions
 {
@@ -7,7 +8,7 @@ namespace AGC.Tests.Instructions
     public class ClearAndAdd : BaseTest
     {
         [TestMethod]
-        public void ClearAndAddFixedMemory()
+        public void ClearAndAdd_FixedMemory()
         {
             // arrange
             
@@ -23,14 +24,14 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for value in the accumulator
-            Assert.AreEqual(10, Memory[0x0]);
+            CustomAssert.AreEqual(10, Memory[0x0]);
         }
 
         [TestMethod]
-        public void ClearAndAddEraseableMemory()
+        public void ClearAndAdd_EraseableMemory()
         {
             // arrange
-            Memory[0x200] = 10;
+            Memory[0x200] = (10).ToOnesCompliment();
 
             // insert instructions and test data
             Memory.LoadFixedRom(new ushort[] {
@@ -43,7 +44,7 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for value in the accumulator
-            Assert.AreEqual(10, Memory[0x0]);
+            CustomAssert.AreEqual(10, Memory[0x0]);
         }
     }
 }

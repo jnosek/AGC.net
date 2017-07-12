@@ -1,22 +1,23 @@
 ﻿namespace Apollo.Virtual.AGC.Memory
 {
     /// <summary>
-    /// 15 bit memory location that is readonly
+    /// Full 16-bit memory word, for special registers
+    /// Does not overflow correct
     /// </summary>
-    class FixedMemory : MemoryWord
+    class MemoryWord16 : MemoryWord
     {
-        public FixedMemory(ushort address, MemoryBank bank)
+        public MemoryWord16(ushort address, MemoryBank bank)
             : base(address, bank)
         {
         }
 
         /// <summary>
-        /// cannot write to fixed memory
+        /// Write the full 16 bits into memory without overflow correction
         /// </summary>
         /// <param name="value"></param>
         public override void Write(OnesCompliment value)
         {
-            //throw new InvalidOperationException("Cannot write to a fixed memory location");
+            WriteRaw(value.NativeValue);
         }
     }
 }

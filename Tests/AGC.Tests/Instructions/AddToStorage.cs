@@ -1,10 +1,5 @@
-﻿using Apollo.Virtual.AGC.Core;
+﻿using Apollo.Virtual.AGC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.Tests.Instructions
 {
@@ -12,11 +7,11 @@ namespace AGC.Tests.Instructions
     public class AddToStorage : BaseTest
     {
         [TestMethod]
-        public void AddToStorageTwoPositiveNumbers()
+        public void AddToStorage_TwoPositiveNumbers()
         {
             // arrange
-            Memory[0x000] = 10;
-            Memory[0x201] = 15;
+            Memory[0x000] = (10).ToOnesCompliment();
+            Memory[0x201] = (15).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -28,16 +23,16 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(25, Memory[0x0]);
-            Assert.AreEqual(25, Memory[0x201]);
+            CustomAssert.AreEqual(25, Memory[0x0]);
+            CustomAssert.AreEqual(25, Memory[0x201]);
         }
 
         [TestMethod]
-        public void AddToStorageTwoNegativeNumbers()
+        public void AddToStorage_TwoNegativeNumbers()
         {
             // arrange
-            Memory[0x000] = (-10).ToOnesCompliment();
-            Memory[0x201] = (-15).ToOnesCompliment();
+            Memory[0x000] = (~10).ToOnesCompliment(); // -10
+            Memory[0x201] = (~15).ToOnesCompliment(); // -15
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -49,8 +44,8 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual((-25).ToOnesCompliment(), Memory[0x0]);
-            Assert.AreEqual((-25).ToOnesCompliment(), Memory[0x201]);
+            CustomAssert.AreEqual(~25, Memory[0x0]);   // -25
+            CustomAssert.AreEqual(~25, Memory[0x201]); // -25
         }
     }
 }

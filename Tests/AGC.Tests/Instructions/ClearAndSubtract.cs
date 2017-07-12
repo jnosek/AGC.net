@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Apollo.Virtual.AGC;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace AGC.Tests.Instructions
     public class ClearAndSubtract : BaseTest
     {
         [TestMethod]
-        public void ClearAndSubtractAccumulator()
+        public void ClearAndSubtract_Accumulator()
         {
             // arrange
-            Memory[0x0] = 0x0101;
+            Memory[0x0] = (0x0101).ToOnesCompliment();
 
             Memory.LoadFixedRom(new ushort[] {
                 0x4000
@@ -25,14 +26,14 @@ namespace AGC.Tests.Instructions
 
             // assert
 
-            Assert.AreEqual(0xFEFE, Memory[0x0]);
+            CustomAssert.AreEqual(0xFEFE, Memory[0x0]);
         }
 
         [TestMethod]
-        public void ClearAndSubtractMemory()
+        public void ClearAndSubtract_Memory()
         {
             // arrange
-            Memory[0x200] = 0xF0F0;
+            Memory[0x200] = (0xF0F0).ToOnesCompliment();
 
             Memory.LoadFixedRom(new ushort[] {
                 0x4000 | 0x0200
@@ -42,7 +43,7 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0x0F0F, Memory[0x0]);
+            CustomAssert.AreEqual(0x0F0F, Memory[0x0]);
         }
     }
 }

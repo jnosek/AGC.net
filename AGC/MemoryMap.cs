@@ -14,7 +14,7 @@ namespace Apollo.Virtual.AGC
         /// 0x0 - 0x31
         /// 0 - 49
         /// </summary>
-        private IWord[] registers = new IWord[49];
+        private MemoryWord[] registers = new MemoryWord[49];
 
         /// <summary>
         /// Primary RAM
@@ -79,7 +79,7 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         private MemoryBank ioChannels = new MemoryBank(512);
 
-        public ushort this[ushort a]
+        public OnesCompliment this[ushort a]
         {
             get
             {
@@ -144,7 +144,7 @@ namespace Apollo.Virtual.AGC
         /// <typeparam name="RegisterType"></typeparam>
         /// <param name="address"></param>
         /// <returns></returns>
-        internal RegisterType AddRegister<RegisterType>(ushort address) where RegisterType : MemoryWord, IWord
+        internal RegisterType AddRegister<RegisterType>(ushort address) where RegisterType : MemoryWord
         {
             // reflectively get constructor that takes memory bank and call it
             var constructor = typeof(RegisterType).GetConstructor(new[] { typeof(ushort), typeof(MemoryBank) });

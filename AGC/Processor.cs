@@ -271,13 +271,13 @@ namespace Apollo.Virtual.AGC
             INLINK = memory.AddRegister<ErasableMemory>(0x25);
 
             // prime Z to start at the boot interrupt
-            Z.Write(0x800);
+            Z.Write(new OnesCompliment(0x800));
         }
 
         public void Execute()
         {
             // get address of instruction to run
-            var address = Memory.GetWord(Z.Read());
+            var address = Memory.GetWord(Z.Read().NativeValue);
 
             // update Z
             Z.Increment();

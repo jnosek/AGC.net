@@ -1,9 +1,5 @@
 ﻿using Apollo.Virtual.AGC;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.dev
 {
@@ -14,8 +10,8 @@ namespace AGC.dev
             var computer = new Computer();
             var memory = computer.Memory;
 
-            memory[0x800] = 0x6301;
-            memory[0x801] = 0x02;
+            memory[0x800] = (0x6301).ToOnesCompliment();
+            memory[0x801] = (0x02).ToOnesCompliment();
             computer.Start();
 
             Console.WriteLine("A: {0}", memory[0x0]);

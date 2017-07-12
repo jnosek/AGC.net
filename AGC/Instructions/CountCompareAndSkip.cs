@@ -1,5 +1,4 @@
-﻿using Apollo.Virtual.AGC.Core;
-using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Math;
 
 namespace Apollo.Virtual.AGC.Instructions
 {
@@ -20,17 +19,12 @@ namespace Apollo.Virtual.AGC.Instructions
         public void Execute(ushort K)
         {
             // retrieve value from memory
-            var value = new SinglePrecision(CPU.Memory[K]);
+            var value = CPU.Memory[K];
 
             // 1) compute the Diminished ABSolute value found at K and set in A
- 
-            // if negative, NOT 1's to get ABS
-            var abs = value.IsNegative ? ~value : value;
 
-            if (abs > 1)
-                CPU.A.Write(abs + OnesCompliment.NegativeOne);
-            else
-                CPU.A.Write(0);
+            var dabs = value.GetDiminishedAbsoluteValue();
+            CPU.A.Write(dabs);
 
             // 2) K is edited
             CPU.Memory[K] = value;

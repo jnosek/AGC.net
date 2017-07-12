@@ -1,10 +1,5 @@
-﻿using Apollo.Virtual.AGC.Core;
+﻿using Apollo.Virtual.AGC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.Tests.Instructions
 {
@@ -15,7 +10,7 @@ namespace AGC.Tests.Instructions
         public void Augment_PositiveNumber()
         {
             // arrange
-            Memory[0x200] = 10;
+            Memory[0x200] = (10).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -28,14 +23,14 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(11, Memory[0x200]);
+            CustomAssert.AreEqual(11, Memory[0x200]);
         }
 
         [TestMethod]
         public void Augment_NegativeNumber()
         {
             // arrange
-            Memory[0x200] = (-10).ToOnesCompliment();
+            Memory[0x200] = (~10).ToOnesCompliment();  // -10
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -48,14 +43,14 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual((-11).ToOnesCompliment(), Memory[0x200]);
+            CustomAssert.AreEqual(~11, Memory[0x200]); // -11
         }
 
         [TestMethod]
         public void Augment_16BitRegister()
         {
             // arrange
-            Memory[0x00] = 0x4001; // 15-bit positive value
+            Memory[0x00] = (0x4001).ToOnesCompliment(); // 15-bit positive value
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -68,7 +63,7 @@ namespace AGC.Tests.Instructions
             CPU.Execute();
 
             // assert
-            Assert.AreEqual(0x4002, Memory[0x000]);
+            CustomAssert.AreEqual(0x4002, Memory[0x000]);
         }
     }
 }
