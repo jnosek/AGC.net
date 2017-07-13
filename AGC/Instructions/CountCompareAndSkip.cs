@@ -24,10 +24,15 @@ namespace Apollo.Virtual.AGC.Instructions
             // 1) compute the Diminished ABSolute value found at K and set in A
 
             var dabs = value.GetDiminishedAbsoluteValue();
-            CPU.A.Write(dabs);
 
-            // 2) K is edited
+
+            // 2) K is edited, then write dabs to A
+            // we do it in this order in case K is the A register (which is common for loops)
+            // that way if K is an editing register, 
+            // it is adjust accordingly, 
+            // but the computed value is A is preserved
             CPU.Memory[K] = value;
+            CPU.A.Write(dabs);
 
             // 3) branch upon original value of K
 

@@ -49,6 +49,14 @@ namespace Apollo.Virtual.AGC
             }
         }
 
+        public bool IsPositive
+        {
+            get
+            {
+                return (NativeValue & 0x8000) == 0;
+            }
+        }
+
         public bool IsPositiveOverflow
         {
             get
@@ -170,10 +178,12 @@ namespace Apollo.Virtual.AGC
         public OnesCompliment GetDiminishedAbsoluteValue()
         {
             // if negative, NOT 1's to get ABS
-            ushort abs = IsNegative ? (ushort)~NativeValue : NativeValue;
+            ushort absNative = IsNegative ? (ushort)~NativeValue : NativeValue;
 
-            if (abs > 1)
-                return new OnesCompliment(abs) + NegativeOne;
+            var abs = new OnesCompliment(absNative);
+
+            if (abs.IsPositive && abs != PositiveZero)
+                return abs + NegativeOne;
             else
                 return PositiveZero;
         }
