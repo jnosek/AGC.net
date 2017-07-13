@@ -37,6 +37,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Double.cs" />
     <Compile Include="Instructions\Diminish.cs" />
     <Compile Include="Instructions\DoublePrecisionDouble.cs" />
     <Compile Include="Instructions\QuarterCodes\ExtraQuarterCode4.cs" />

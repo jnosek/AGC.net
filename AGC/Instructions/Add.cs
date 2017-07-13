@@ -14,10 +14,13 @@
         public void Execute(ushort K)
         {
             var value = CPU.Memory[K];
-            CPU.A.Add(CPU.Memory[K]);
 
             // value in K is re-written
+            // we do this first for the case of the DOUBLE instruction,
+            // where K is the A register
             CPU.Memory[K] = value;
+
+            CPU.A.Add(value);
         }
     }
 }

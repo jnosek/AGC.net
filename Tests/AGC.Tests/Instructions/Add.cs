@@ -236,5 +236,23 @@ namespace AGC.Tests.Instructions
             // assert
             Assert.AreEqual(OnesCompliment.NegativeZero, Memory[0x202]);
         }
+
+        [TestMethod]
+        public void Add_Double()
+        {
+            // arrange
+            Memory[0x000] = new OnesCompliment(2);
+
+            // insert instructions
+            Memory.LoadFixedRom(new ushort[] {
+                0x06000 | 0x000
+            });
+
+            // act - run the instructions
+            CPU.Execute();
+
+            // assert
+            CustomAssert.AreEqual(4, Memory[0x000]);
+        }
     }
 }
