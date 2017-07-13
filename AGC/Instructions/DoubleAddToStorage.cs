@@ -31,9 +31,8 @@ namespace Apollo.Virtual.AGC.Instructions
             // create sum
             var sum = dp1 + dp2;
 
-            // store result in memory
-            CPU.Memory[K1] = sum.MostSignificantWord;
-            CPU.Memory[K0] = sum.LeastSignificantWord;
+            // calculate A and L result values first,
+            // this handles the case for when K0 is the L register 
 
             // L always cleared to +0
             CPU.L.Write(OnesCompliment.PositiveZero);
@@ -45,6 +44,10 @@ namespace Apollo.Virtual.AGC.Instructions
                 CPU.A.Write(OnesCompliment.NegativeOne);
             else
                 CPU.A.Write(OnesCompliment.PositiveZero);
+
+            // store result in memory
+            CPU.Memory[K1] = sum.MostSignificantWord;
+            CPU.Memory[K0] = sum.LeastSignificantWord;
         }
     }
 }

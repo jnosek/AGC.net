@@ -149,5 +149,24 @@ namespace AGC.Tests.Instructions
             Assert.AreEqual(OnesCompliment.PositiveZero, Memory[0x000]);
             Assert.AreEqual(OnesCompliment.PositiveZero, Memory[0x001]);
         }
+
+        [TestMethod]
+        public void DoubleAddToStorage_DoublePrecisionDouble()
+        {
+            // arrange
+            Memory[0x0] = OnesCompliment.PositiveZero;
+            Memory[0x1] = OnesCompliment.PositiveOne;
+
+            Memory.LoadFixedRom(new ushort[] {
+                Instruction(0x02, 0x001)
+            });
+
+            // act
+            CPU.Execute();
+
+            // assert
+            CustomAssert.AreEqual(OnesCompliment.PositiveZero, Memory[0x000]);
+            CustomAssert.AreEqual(2, Memory[0x001]);
+        }
     }
 }
