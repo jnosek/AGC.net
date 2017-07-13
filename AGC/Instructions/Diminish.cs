@@ -1,15 +1,15 @@
 ﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
-    /// AUG - EX 0010 10
-    /// Increments a positive value in erasable memory by 1
-    /// Or decrements a negative value in erasable memory by -1
+    /// DIM - EX 0010 11
+    /// Decrements a positive non-zero value in an erasable-memory location in-place,
+    /// Or increments a negative non-zero value.
     /// </summary>
-    class Augment: IInstruction
+    class Diminish : IInstruction
     {
         public ushort Code
         {
-            get { return 0x02; }
+            get { return 0x03; }
         }
 
         public Processor CPU { get; set; }
@@ -21,12 +21,12 @@
             // if negative
             if(value.IsNegative)
             {
-                CPU.Memory[K] = value + OnesCompliment.NegativeOne;
+                CPU.Memory[K] = value + OnesCompliment.PositiveOne;
             }
-            // if positive
+            // is positive
             else
             {
-                CPU.Memory[K] = value + OnesCompliment.PositiveOne;
+                CPU.Memory[K] = value + OnesCompliment.NegativeOne;
             }
         }
     }

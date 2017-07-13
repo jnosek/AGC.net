@@ -10,6 +10,7 @@
         public ExtraQuarterCode2()
         {
             Add(new Augment());
+            Add(new Diminish());
         }
 
         public override ushort Code

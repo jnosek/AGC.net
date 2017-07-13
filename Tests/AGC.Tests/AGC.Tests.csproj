@@ -60,6 +60,7 @@
     <Compile Include="Instructions\ClearAndAdd.cs" />
     <Compile Include="Instructions\ClearAndSubtract.cs" />
     <Compile Include="Instructions\CountCompareAndSkip.cs" />
+    <Compile Include="Instructions\Diminish.cs" />
     <Compile Include="Instructions\DoubleAddToStorage.cs" />
     <Compile Include="Instructions\DoubleClearAndAdd.cs" />
     <Compile Include="Instructions\DoubleClearAndSubtract.cs" />
