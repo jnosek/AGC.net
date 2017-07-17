@@ -20,6 +20,21 @@
             return new OnesCompliment(bank[Address]);
         }
 
+        protected ushort ReadRaw()
+        {
+            return bank[Address];
+        }
+
+        /// <summary>
+        /// read a value at a specific address within the same memory bank
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        protected ushort ReadRaw(ushort address)
+        {
+            return bank[address];
+        }
+
         /// <summary>
         /// 15-bit writes are overflow corrected from 16-bit values
         /// </summary>
@@ -43,6 +58,16 @@
         protected void WriteRaw(int value)
         {
             bank[Address] = (ushort)value;
+        }
+
+        /// <summary>
+        /// write a value at a specific address within the same memory bank
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="address"></param>
+        protected void WriteRaw(int value, ushort address)
+        {
+            bank[address] = (ushort)value;
         }
 
         protected static ushort OverflowCorrect(ushort value)

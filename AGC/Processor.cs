@@ -228,9 +228,9 @@ namespace Apollo.Virtual.AGC
             L = memory.AddRegister<ErasableMemory>(0x01);
             Q = memory.AddRegister<FullRegister>(0x02);
             EB = memory.AddRegister<ErasableBankRegister>(0x03);
-            FB = memory.GetWord(0x4);
+            FB = memory.AddRegister<FixedBankRegister>(0x4);
             Z = memory.AddRegister<ProgramCounter>(0x05);
-            BB = memory.GetWord(0x06);
+            BB = memory.AddRegister<BothBanksRegister>(0x06);
 
             //memory[0x7] = 0; // this is always set to 0, TODO: need to hard code?
 

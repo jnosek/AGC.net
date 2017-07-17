@@ -4,18 +4,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AGC.Tests.Registers
 {
     [TestClass]
-    public class ErasableBankRegister : BaseTest
+    public class FixedBankRegister : BaseTest
     {
         [TestMethod]
-        public void ErasableBank_SetWithinMask()
+        public void FixedBankRegister_SetWithinMask()
         {
             // arrange
-            Memory[0x200] = (0x0200).ToOnesCompliment();
+            Memory[0x200] = (0x0800).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200, // add to the accumulator
-                0x05800 | 0x03  // transfer to storage, the EB register
+                0x05800 | 0x04  // transfer to storage, the FB register
             });
 
             // act - run the instructions
@@ -23,22 +23,23 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            CustomAssert.AreEqual(0x0200, Memory[0x3]);
+            CustomAssert.AreEqual(0x0800, Memory[0x4]);
 
             // check BB register
-            CustomAssert.AreEqual(0x0002, Memory[0x6]);
+            CustomAssert.AreEqual(0x0800, Memory[0x6]);
         }
 
         [TestMethod]
-        public void ErasableBank_SetOutsideMask()
+        public void FixedBankRegister_SetOutsideMask()
         {
             // arrange
+
             Memory[0x200] = (0x0002).ToOnesCompliment();
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
                 0x06000 | 0x200, // add to the accumulator
-                0x05800 | 0x03  // transfer to storage, the EB register
+                0x05800 | 0x04  // transfer to storage, the FB register
             });
 
             // act - run the instructions
@@ -46,7 +47,7 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            CustomAssert.AreEqual(0x0, Memory[0x3]);
+            CustomAssert.AreEqual(0x0000, Memory[0x4]);
 
             // check BB register
             CustomAssert.AreEqual(0x0000, Memory[0x6]);

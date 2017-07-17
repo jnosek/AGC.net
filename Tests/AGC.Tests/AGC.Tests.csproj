@@ -64,9 +64,12 @@
     <Compile Include="Instructions\DoubleAddToStorage.cs" />
     <Compile Include="Instructions\DoubleClearAndAdd.cs" />
     <Compile Include="Instructions\DoubleClearAndSubtract.cs" />
+    <Compile Include="Instructions\DoubleExchange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registers\BothBanksRegister.cs" />
     <Compile Include="Registers\CycleRightRegister.cs" />
     <Compile Include="Registers\ErasableBankRegister.cs" />
+    <Compile Include="Registers\FixedBankRegister.cs" />
     <Compile Include="Registers\ShiftRightRegister.cs" />
   </ItemGroup>
   <ItemGroup>

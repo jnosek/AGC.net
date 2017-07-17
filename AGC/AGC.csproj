@@ -52,7 +52,9 @@
     <Compile Include="Memory\IWord.cs" />
     <Compile Include="Memory\MemoryBank.cs" />
     <Compile Include="Memory\MemoryWord16.cs" />
+    <Compile Include="Registers\BothBanksRegister.cs" />
     <Compile Include="Registers\ErasableBankRegister.cs" />
+    <Compile Include="Registers\FixedBankRegister.cs" />
     <Compile Include="Registers\FullRegister.cs" />
     <Compile Include="OnesCompliment.cs" />
     <Compile Include="Instructions\BranchZeroOrMinusToFixed.cs" />
