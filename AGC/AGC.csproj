@@ -39,7 +39,10 @@
   <ItemGroup>
     <Compile Include="Double.cs" />
     <Compile Include="Instructions\Diminish.cs" />
+    <Compile Include="Instructions\DoubleExchange.cs" />
     <Compile Include="Instructions\DoublePrecisionDouble.cs" />
+    <Compile Include="Instructions\DoubleTransferControlSwitchingBothBanks.cs" />
+    <Compile Include="Instructions\DoubleTransferControlSwitchingFBank.cs" />
     <Compile Include="Instructions\QuarterCodes\ExtraQuarterCode4.cs" />
     <Compile Include="Instructions\Compliment.cs" />
     <Compile Include="Instructions\DoubleClearAndSubtract.cs" />

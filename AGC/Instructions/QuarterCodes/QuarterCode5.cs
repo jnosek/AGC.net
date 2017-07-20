@@ -11,6 +11,7 @@
         public QuarterCode5()
         {
             Add(new TransferToStorage());
+            Add(new DoubleExchange());
         }
 
         public override ushort Code

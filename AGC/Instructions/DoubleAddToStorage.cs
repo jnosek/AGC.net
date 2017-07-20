@@ -19,8 +19,6 @@ namespace Apollo.Virtual.AGC.Instructions
 
         public void Execute(ushort K0)
         {
-            // TODO: need to handle DDOUBL
-
             // find previous address
             var K1 = (ushort)(K0 - 1);
             
