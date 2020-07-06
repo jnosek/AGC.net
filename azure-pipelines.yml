@@ -4,10 +4,6 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-variables:
-- name: 'configuration'
-  value: 'Release'
-
 trigger:
 - main
 
@@ -19,9 +15,9 @@ steps:
   displayName: 'Build'
   inputs:
     command: 'build'
-    arguments: '-C {{ variables.configuration }}'
+    arguments: '--configuration $(build.configuration)'
 - task: DotNetCoreCLI@2
   displayName: 'Test'
   inputs:
     command: 'build'
-    arguments: '-C {{ variables.configuration }}'
+    arguments: '--configuration $(build.configuration)'
