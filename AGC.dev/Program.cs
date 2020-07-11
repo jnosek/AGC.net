@@ -1,4 +1,5 @@
 ﻿using Apollo.Virtual.AGC;
+using Apollo.Virtual.AGC.Math;
 using System;
 
 namespace AGC.dev

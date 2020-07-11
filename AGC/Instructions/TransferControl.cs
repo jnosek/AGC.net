@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Instructions
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// TC - 0000

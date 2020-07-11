@@ -1,4 +1,5 @@
 ﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Apollo.Virtual.AGC.Memory;
 using Apollo.Virtual.AGC.Registers;
 
@@ -26,7 +27,7 @@ namespace Apollo.Virtual.AGC
         /// <summary>
         /// Accumulator
         /// </summary>
-        internal Accumulator A;
+        internal AccumulatorRegister A;
 
         /// <summary>
         /// The lower product after MP instructions
@@ -225,7 +226,7 @@ namespace Apollo.Virtual.AGC
             // configure registers
 
             // main registers?
-            A = memory.MapRegister<Accumulator>(0x00);
+            A = memory.MapRegister<AccumulatorRegister>(0x00);
             L = memory.MapRegister<ErasableMemory>(0x01);
             Q = memory.MapRegister<FullRegister>(0x02);
             EB = memory.MapRegister<ErasableBankRegister>(0x03);

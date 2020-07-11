@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Instructions
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// AUG - EX 0010 10

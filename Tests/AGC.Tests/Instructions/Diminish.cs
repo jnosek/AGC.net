@@ -1,10 +1,5 @@
-﻿using Apollo.Virtual.AGC;
+﻿using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGC.Tests.Instructions
 {

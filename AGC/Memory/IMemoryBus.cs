@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Memory
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Memory
 {
     public interface IMemoryBus
     {

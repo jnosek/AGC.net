@@ -1,4 +1,4 @@
-﻿using Apollo.Virtual.AGC;
+﻿using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Registers
