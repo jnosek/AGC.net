@@ -7,22 +7,24 @@
     /// </summary>
     class ClearAndAdd : IInstruction
     {
-        public ushort Code
+        public ClearAndAdd(Processor cpu)
         {
-            get { return 0x3; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x3;
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
+            var value = cpu.Memory[K];
 
             // set value in accumulator
-            CPU.A.Write(value);
+            cpu.A.Write(value);
 
             // value in K is re-written
-            CPU.Memory[K] = value;
+            cpu.Memory[K] = value;
         }
     }
 }

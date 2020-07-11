@@ -9,17 +9,19 @@ namespace Apollo.Virtual.AGC.Instructions
     /// (which is decremented), and then performs one of several jumps based on the original value of the variable.
     public class CountCompareAndSkip : IInstruction
     {
-        public ushort Code
+        public CountCompareAndSkip(Processor cpu)
         {
-            get { return 0x01; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x1;
 
         public void Execute(ushort K)
         {
             // retrieve value from memory
-            var value = CPU.Memory[K];
+            var value = cpu.Memory[K];
 
             // 1) compute the Diminished ABSolute value found at K and set in A
 
@@ -31,8 +33,8 @@ namespace Apollo.Virtual.AGC.Instructions
             // that way if K is an editing register, 
             // it is adjust accordingly, 
             // but the computed value is A is preserved
-            CPU.Memory[K] = value;
-            CPU.A.Write(dabs);
+            cpu.Memory[K] = value;
+            cpu.A.Write(dabs);
 
             // 3) branch upon original value of K
 
@@ -40,19 +42,19 @@ namespace Apollo.Virtual.AGC.Instructions
 
             // if == +0 increment by 1
             if (value.IsPositiveZero)
-                CPU.Z.Increment();
+                cpu.Z.Increment();
             // if == -0 increment by 3
             else if(value.IsNegativeZero)
             {
-                CPU.Z.Increment();
-                CPU.Z.Increment();
-                CPU.Z.Increment();
+                cpu.Z.Increment();
+                cpu.Z.Increment();
+                cpu.Z.Increment();
             }
             // if < 0 increment by 2
             else if (value.IsNegative)
             {
-                CPU.Z.Increment();
-                CPU.Z.Increment();
+                cpu.Z.Increment();
+                cpu.Z.Increment();
             }
         }
     }

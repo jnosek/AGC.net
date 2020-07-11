@@ -8,19 +8,21 @@
     /// </summary>
     class AddToStorage : IInstruction
     {
-        public ushort Code
+        public AddToStorage(Processor cpu)
         {
-            get { return 0x03; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x2_3;        
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
-            CPU.A.Add(value);
+            var value = cpu.Memory[K];
+            cpu.A.Add(value);
 
-            CPU.Memory[K] = CPU.A.Read();
+            cpu.Memory[K] = cpu.A.Read();
         }
     }
 }

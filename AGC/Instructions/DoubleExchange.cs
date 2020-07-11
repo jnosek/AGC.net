@@ -7,12 +7,14 @@
     /// </summary>
     class DoubleExchange : IInstruction
     {
-        public ushort Code
+        public DoubleExchange(Processor cpu)
         {
-            get { return 0x01; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x00_1;
 
         public void Execute(ushort K0)
         {
@@ -20,13 +22,13 @@
             var K1 = (ushort)(K0 - 1);
 
             // swap L
-            var k0Value = CPU.Memory[K0];
-            CPU.Memory[K0] = CPU.L.Read();
-            CPU.L.Write(k0Value);
+            var k0Value = cpu.Memory[K0];
+            cpu.Memory[K0] = cpu.L.Read();
+            cpu.L.Write(k0Value);
 
             // swap A 
-            var k1Value = CPU.Memory[K1];
-            CPU.Memory[K1] = CPU.A.Read();
+            var k1Value = cpu.Memory[K1];
+            cpu.Memory[K1] = cpu.A.Read();
 
             // if K1 is L, then K0 is Q
             // Q is a full 16 bits, that was transfered into L and needs to be tranfered into A
@@ -34,12 +36,12 @@
             // so use k0Value
             if(K1 == 0x1)
             {
-                CPU.A.Write(k0Value);
+                cpu.A.Write(k0Value);
             }
             // else just write regular value
             else
             {
-                CPU.A.Write(k1Value);
+                cpu.A.Write(k1Value);
             }
         }
     }

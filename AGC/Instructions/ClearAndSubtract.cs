@@ -12,24 +12,26 @@
     /// </summary>
     class ClearAndSubtract : IInstruction
     {
-        public ushort Code
+        public ClearAndSubtract(Processor cpu)
         {
-            get { return 0x4; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x4;
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
+            var value = cpu.Memory[K];
 
             // write the compliment to the accumulator
-            CPU.A.Write(~value);
+            cpu.A.Write(~value);
 
             // if not the A register, re-write value to K
-            if (K != CPU.A.Address)
+            if (K != cpu.A.Address)
             {
-                CPU.Memory[K] = value;
+                cpu.Memory[K] = value;
             }
         }
     }

@@ -7,12 +7,14 @@
     /// </summary>
     class DoubleClearAndAdd : IInstruction
     {
-        public ushort Code
+        public DoubleClearAndAdd(Processor cpu)
         {
-            get { return 0x0; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x00_0;
 
         public void Execute(ushort K0)
         {
@@ -20,16 +22,16 @@
             var K1 = (ushort)(K0 - 1);
 
             // move least significant word into L
-            CPU.L.Write(CPU.Memory[K0]);
+            cpu.L.Write(cpu.Memory[K0]);
 
             // rewrite K0
-            CPU.Memory[K0] = CPU.Memory[K0];
+            cpu.Memory[K0] = cpu.Memory[K0];
 
             // move most significant word into A
-            CPU.A.Write(CPU.Memory[K1]);
+            cpu.A.Write(cpu.Memory[K1]);
 
             // rewrite K1
-            CPU.Memory[K1] = CPU.Memory[K1];
+            cpu.Memory[K1] = cpu.Memory[K1];
         }
     }
 }

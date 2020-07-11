@@ -7,26 +7,28 @@
     /// </summary>
     class Diminish : IInstruction
     {
-        public ushort Code
+        public Diminish(Processor cpu)
         {
-            get { return 0x03; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x00_3;
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
+            var value = cpu.Memory[K];
 
             // if negative
             if(value.IsNegative)
             {
-                CPU.Memory[K] = value + OnesCompliment.PositiveOne;
+                cpu.Memory[K] = value + OnesCompliment.PositiveOne;
             }
             // is positive
             else
             {
-                CPU.Memory[K] = value + OnesCompliment.NegativeOne;
+                cpu.Memory[K] = value + OnesCompliment.NegativeOne;
             }
         }
     }

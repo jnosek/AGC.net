@@ -1,55 +1,56 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace Apollo.Virtual.AGC.Instructions
 {
-    class InstructionList
+    class InstructionList : IEnumerable
     {
-        private IInstruction[] array;
+        private readonly IInstruction[] array;
 
-        public InstructionList(int count)
+        /// <summary>
+        /// Add a list of instructions to a list indexed based on code
+        /// </summary>
+        /// <param name="instructions"></param>
+        public InstructionList(IEnumerable<IInstruction> instructions)
         {
-            array = new IInstruction[0];
+            var maxInstructionCode = instructions.Max(s => s.Code);
+            array = new IInstruction[maxInstructionCode];
+
+            foreach(var instruction in instructions)
+            {
+                array[instruction.Code] = instruction;
+            }
         }
 
-        public InstructionList()
-            : this(0)
+        /// <summary>
+        /// Add a dictionary of instructions to a list indexed based on dictionary key code
+        /// </summary>
+        /// <param name="instructions"></param>
+        public InstructionList(IDictionary<ushort, IInstruction> instructions)
         {
-        }
+            var maxInstructionCode = instructions.Keys.Max();
+            array = new IInstruction[maxInstructionCode];
 
-        protected void Add(IInstruction instruction)
-        {
-            this[instruction.Code] = instruction;
+            foreach (var keyValuePair in instructions)
+            {
+                array[keyValuePair.Key] = keyValuePair.Value;
+            }
         }
 
         public IInstruction this[ushort code]
         {
             get
             {
-                if (code > array.Length - 1)
-                    throw new IndexOutOfRangeException();
+                Debug.Assert(code < array.Length);
 
                 return array[code];
             }
-            set
-            {
-                if(code > array.Length - 1)
-                Array.Resize(ref array, code + 1);
-
-                array[code] = value;
-            }
         }
 
-        public void Clear()
-        {
-            array = new IInstruction[0];
-        }
+        IEnumerator IEnumerable.GetEnumerator() => array.GetEnumerator();
 
-        public int Count
-        {
-            get { return array.Length; }
-        }
+        public int Count => array.Length;
     }
 }
