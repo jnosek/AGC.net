@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Instructions
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// BZF - EX 0001
@@ -7,24 +9,26 @@
     /// </summary>
     class BranchZeroToFixed : IInstruction
     {
-        public ushort Code
+        public BranchZeroToFixed(Processor cpu)
         {
-            get { return 0x01; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x1;
 
         public void Execute(ushort K)
         {
             // if in overflow, no jump
-            if(CPU.A.IsOverflow)
+            if(cpu.A.IsOverflow)
                 return;
             
-            var value = CPU.A.Read();
+            var value = cpu.A.Read();
 
             // if +0 or -0, then jump
             if (value == 0 || value == OnesCompliment.NegativeZero)
-                CPU.Z.Write(new OnesCompliment(K));
+                cpu.Z.Write(new OnesCompliment(K));
         }
     }
 }

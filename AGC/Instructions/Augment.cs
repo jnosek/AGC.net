@@ -1,32 +1,37 @@
-﻿namespace Apollo.Virtual.AGC.Instructions
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// AUG - EX 0010 10
     /// Increments a positive value in erasable memory by 1
     /// Or decrements a negative value in erasable memory by -1
     /// </summary>
-    class Augment: IInstruction
+    class Augment: IQuarterCodeInstruction
     {
-        public ushort Code
+        public Augment(Processor cpu)
         {
-            get { return 0x02; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x2;
+        public ushort QuarterCode => 0x2;
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
+            var value = cpu.Memory[K];
 
             // if negative
             if(value.IsNegative)
             {
-                CPU.Memory[K] = value + OnesCompliment.NegativeOne;
+                cpu.Memory[K] = value + OnesCompliment.NegativeOne;
             }
             // if positive
             else
             {
-                CPU.Memory[K] = value + OnesCompliment.PositiveOne;
+                cpu.Memory[K] = value + OnesCompliment.PositiveOne;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Apollo.Virtual.AGC.Memory;
+﻿using Apollo.Virtual.AGC.Math;
+using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC.Registers
 {

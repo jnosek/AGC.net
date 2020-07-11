@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Apollo.Virtual.AGC;
 
 namespace AGC.Tests.Instructions
 {

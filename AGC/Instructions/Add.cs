@@ -7,20 +7,25 @@
     /// </summary>
     class Add : IInstruction
     {
-        public Processor CPU { get; set; }
+        public Add(Processor cpu)
+        {
+            this.cpu = cpu;
+        }
 
-        public ushort Code { get { return 0x06; } }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x6;
 
         public void Execute(ushort K)
         {
-            var value = CPU.Memory[K];
+            var value = cpu.Memory[K];
 
             // value in K is re-written
             // we do this first for the case of the DOUBLE instruction,
             // where K is the A register
-            CPU.Memory[K] = value;
+            cpu.Memory[K] = value;
 
-            CPU.A.Add(value);
+            cpu.A.Add(value);
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using Apollo.Virtual.AGC.Memory;
+﻿using Apollo.Virtual.AGC.Math;
+using Apollo.Virtual.AGC.Memory;
+using System;
+using System.Diagnostics;
 
 namespace Apollo.Virtual.AGC
 {
-    public class MemoryMap
+    public class MemoryMap : IMemoryBus
     {
         const uint EB_Address = 0x03;
         const uint FB_Address = 0x04;
@@ -34,7 +37,7 @@ namespace Apollo.Virtual.AGC
         /// 
         /// Divided into 8 (E0 - E7) banks controlled by register EB or BB
         /// </summary>
-        private MemoryBank[] switchedErasable = new MemoryBank[] 
+        private MemoryBank[] switchedErasable = new MemoryBank[]
         {
             new MemoryBank(256, 0x300),
             new MemoryBank(256, 0x300),
@@ -79,19 +82,15 @@ namespace Apollo.Virtual.AGC
         /// </summary>
         private MemoryBank ioChannels = new MemoryBank(512);
 
+        public int MaxAddress => throw new NotImplementedException();
+
         public OnesCompliment this[ushort a]
         {
-            get
-            {
-                return GetWord(a).Read();
-            }
-            set
-            {
-                GetWord(a).Write(value);
-            }
+            get => GetWord(a).Read();
+            set => GetWord(a).Write(value);
         }
 
-        public IWord GetWord(ushort address)
+        private IWord GetWord(ushort address)
         {
             // registers
             if (address <= 0x031)
@@ -100,7 +99,7 @@ namespace Apollo.Virtual.AGC
             int bank = 0;
 
             // look at bits in address to determine appropriate bank and memory type
-            switch(address & 0xF00)
+            switch (address & 0xF00)
             {
                 case 0x000:
                 case 0x100:
@@ -144,10 +143,12 @@ namespace Apollo.Virtual.AGC
         /// <typeparam name="RegisterType"></typeparam>
         /// <param name="address"></param>
         /// <returns></returns>
-        internal RegisterType AddRegister<RegisterType>(ushort address) where RegisterType : MemoryWord
+        RegisterType IMemoryBus.MapRegister<RegisterType>(ushort address)
         {
             // reflectively get constructor that takes memory bank and call it
             var constructor = typeof(RegisterType).GetConstructor(new[] { typeof(ushort), typeof(MemoryBank) });
+
+            Debug.Assert(constructor != null, $"Register of type {typeof(RegisterType).Name} does not have usable constructor");
 
             var r = constructor.Invoke(new object[] { address, unswitchedErasable }) as RegisterType;
 

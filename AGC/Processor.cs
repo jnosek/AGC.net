@@ -1,4 +1,6 @@
-﻿using Apollo.Virtual.AGC.Memory;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
+using Apollo.Virtual.AGC.Memory;
 using Apollo.Virtual.AGC.Registers;
 
 namespace Apollo.Virtual.AGC
@@ -10,10 +12,10 @@ namespace Apollo.Virtual.AGC
     /// </summary>
     public class Processor
     {
-        internal MemoryMap Memory;
+        internal IMemoryBus Memory;
 
-        private InstructionSet instructions;
-        private ExtraCodeInstructionSet extraCodeInstructions;
+        private readonly InstructionList standardInstructions;
+        private readonly InstructionList extraCodeInstructions;
 
         /// <summary>
         /// used to allow more than 8 instruction codes
@@ -25,7 +27,7 @@ namespace Apollo.Virtual.AGC
         /// <summary>
         /// Accumulator
         /// </summary>
-        internal Accumulator A;
+        internal AccumulatorRegister A;
 
         /// <summary>
         /// The lower product after MP instructions
@@ -215,60 +217,60 @@ namespace Apollo.Virtual.AGC
 
         #endregion
 
-        public Processor(MemoryMap memory)
+        public Processor(IMemoryBus memory)
         {
             this.Memory = memory;
-            instructions = new InstructionSet();
-            extraCodeInstructions = new ExtraCodeInstructionSet();
+            standardInstructions = StandardInstructions.Build(this);
+            extraCodeInstructions = ExtraInstructions.Build(this);
 
             // configure registers
 
             // main registers?
-            A = memory.AddRegister<Accumulator>(0x00);
-            L = memory.AddRegister<ErasableMemory>(0x01);
-            Q = memory.AddRegister<FullRegister>(0x02);
-            EB = memory.AddRegister<ErasableBankRegister>(0x03);
-            FB = memory.AddRegister<FixedBankRegister>(0x4);
-            Z = memory.AddRegister<ProgramCounter>(0x05);
-            BB = memory.AddRegister<BothBanksRegister>(0x06);
+            A = memory.MapRegister<AccumulatorRegister>(0x00);
+            L = memory.MapRegister<ErasableMemory>(0x01);
+            Q = memory.MapRegister<FullRegister>(0x02);
+            EB = memory.MapRegister<ErasableBankRegister>(0x03);
+            FB = memory.MapRegister<FixedBankRegister>(0x4);
+            Z = memory.MapRegister<ProgramCounter>(0x05);
+            BB = memory.MapRegister<BothBanksRegister>(0x06);
 
             //memory[0x7] = 0; // this is always set to 0, TODO: need to hard code?
 
             // interrupt helper registers
-            ARUPT = memory.AddRegister<ErasableMemory>(0x08);
-            LRUPT = memory.AddRegister<ErasableMemory>(0x09);
-            QRUPT = memory.AddRegister<ErasableMemory>(0x0A);
+            ARUPT = memory.MapRegister<ErasableMemory>(0x08);
+            LRUPT = memory.MapRegister<ErasableMemory>(0x09);
+            QRUPT = memory.MapRegister<ErasableMemory>(0x0A);
             // 0XB, 0XC are spares. not used?
-            ZRUPT = memory.AddRegister<ErasableMemory>(0x0D);
-            BBRUPT = memory.AddRegister<ErasableMemory>(0x0E);
-            BRUPT = memory.AddRegister<ErasableMemory>(0x0F);
+            ZRUPT = memory.MapRegister<ErasableMemory>(0x0D);
+            BBRUPT = memory.MapRegister<ErasableMemory>(0x0E);
+            BRUPT = memory.MapRegister<ErasableMemory>(0x0F);
 
             // editing registers
-            CYR = memory.AddRegister<CycleRightRegister>(0x10);
-            SR = memory.AddRegister<ShiftRightRegister>(0x11);
-            CYL = memory.GetWord(0x12);
-            EDOP = memory.GetWord(0x13);
+            CYR = memory.MapRegister<CycleRightRegister>(0x10);
+            SR = memory.MapRegister<ShiftRightRegister>(0x11);
+            CYL = memory.MapRegister<ErasableMemory>(0x12); // temp
+            EDOP = memory.MapRegister<ErasableMemory>(0x13); // temp
 
             // time registers
-            TIME2 = memory.GetWord(0x14);
-            TIME1 = memory.GetWord(0x15);
-            TIME3 = memory.GetWord(0x16);
-            TIME4 = memory.GetWord(0x17);
-            TIME5 = memory.GetWord(0x18);
-            TIME6 = memory.GetWord(0x19);
+            TIME2 = memory.MapRegister<ErasableMemory>(0x14);  // temp
+            TIME1 = memory.MapRegister<ErasableMemory>(0x15);  // temp
+            TIME3 = memory.MapRegister<ErasableMemory>(0x16);  // temp
+            TIME4 = memory.MapRegister<ErasableMemory>(0x17);  // temp
+            TIME5 = memory.MapRegister<ErasableMemory>(0x18);  // temp
+            TIME6 = memory.MapRegister<ErasableMemory>(0x19);  // temp
 
             // orientation registers
-            CDUX = memory.AddRegister<ErasableMemory>(0x1A);
-            CDUY = memory.AddRegister<ErasableMemory>(0x1B);
-            CDUZ = memory.AddRegister<ErasableMemory>(0x1C);
-            OPTY = memory.AddRegister<ErasableMemory>(0x1D);
-            OPTX = memory.AddRegister<ErasableMemory>(0x1E);
-            PIPAX = memory.AddRegister<ErasableMemory>(0x1F);
-            PIPAY = memory.AddRegister<ErasableMemory>(0x20);
-            PIPAZ = memory.AddRegister<ErasableMemory>(0x21);
+            CDUX = memory.MapRegister<ErasableMemory>(0x1A);
+            CDUY = memory.MapRegister<ErasableMemory>(0x1B);
+            CDUZ = memory.MapRegister<ErasableMemory>(0x1C);
+            OPTY = memory.MapRegister<ErasableMemory>(0x1D);
+            OPTX = memory.MapRegister<ErasableMemory>(0x1E);
+            PIPAX = memory.MapRegister<ErasableMemory>(0x1F);
+            PIPAY = memory.MapRegister<ErasableMemory>(0x20);
+            PIPAZ = memory.MapRegister<ErasableMemory>(0x21);
             // LM Only Pitch, Yaw, and Roll registers
 
-            INLINK = memory.AddRegister<ErasableMemory>(0x25);
+            INLINK = memory.MapRegister<ErasableMemory>(0x25);
 
             // prime Z to start at the boot interrupt
             Z.Write(new OnesCompliment(0x800));
@@ -277,14 +279,17 @@ namespace Apollo.Virtual.AGC
         public void Execute()
         {
             // get address of instruction to run
-            var address = Memory.GetWord(Z.Read().NativeValue);
+            ushort address = Z.Read().NativeValue;
 
             // update Z
             Z.Increment();
 
+            // get instruction
+            ushort instruction = Memory[address].NativeValue;
             // we only care about 15-bit instructions
-            var instruction = address.Read() & 0x7FFF;
+            instruction &= 0x7FFF;
 
+            // decode instruction
             var code = (ushort)(instruction >> 12);
             var K = (ushort)(instruction & 0xFFF);
 
@@ -292,7 +297,6 @@ namespace Apollo.Virtual.AGC
             if (ExtraCodeFlag)
             {
                 // reset CPU for instruction to execute
-                extraCodeInstructions[code].CPU = this;
                 extraCodeInstructions[code].Execute(K);
 
                 // clear the extra code flag
@@ -301,8 +305,7 @@ namespace Apollo.Virtual.AGC
             else
             {
                 // reset CPU for instruction to execute
-                instructions[code].CPU = this;
-                instructions[code].Execute(K);
+                standardInstructions[code].Execute(K);
             }
         }
     }

@@ -3,7 +3,6 @@
     public class Computer
     {
         public MemoryMap Memory;
-        
         public Processor CPU;
 
         public Computer()

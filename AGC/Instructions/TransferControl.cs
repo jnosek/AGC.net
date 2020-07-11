@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Instructions
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// TC - 0000
@@ -9,33 +11,35 @@
     /// </summary>
     class TransferControl : IInstruction
     {
-        const ushort EXTEND = 0x06;
-
-        public ushort Code
+        public TransferControl(Processor cpu)
         {
-            get { return 0x00; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        const ushort EXTEND = 0x06;
+
+        private readonly Processor cpu;
+
+        public ushort Code => 0x00;
 
         public void Execute(ushort K)
         {
             // if this is an extend instruction, set the extra code flag
             if (K == EXTEND)
             {
-                CPU.ExtraCodeFlag = true;
+                cpu.ExtraCodeFlag = true;
             }
             // else process as a TC command
             else
             {
                 // set Q to the next instruction, for when we return
-                CPU.Q.Write(CPU.Z.Read());
+                cpu.Q.Write(cpu.Z.Read());
 
                 // set control to K
-                CPU.Z.Write(new OnesCompliment(K));
+                cpu.Z.Write(new OnesCompliment(K));
 
                 // clear the extra code flag
-                CPU.ExtraCodeFlag = false;
+                cpu.ExtraCodeFlag = false;
             }
         }
     }

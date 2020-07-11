@@ -8,14 +8,17 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     ///  A double-precision (DP) add of the A,L register pair to a pair of variables in erasable memory
     /// </summary>
-    class DoubleAddToStorage : IInstruction
+    class DoubleAddToStorage : IQuarterCodeInstruction
     {
-        public ushort Code
+        public DoubleAddToStorage(Processor cpu)
         {
-            get { return 0x00; }
+            this.cpu = cpu;
         }
 
-        public Processor CPU { get; set; }
+        private readonly Processor cpu;
+
+        public ushort Code => 0x2;
+        public ushort QuarterCode => 0x0;
 
         public void Execute(ushort K0)
         {
@@ -23,8 +26,8 @@ namespace Apollo.Virtual.AGC.Instructions
             var K1 = (ushort)(K0 - 1);
             
             // read DP values from registers and memroy
-            var dp1 = new DoublePrecision(CPU.A.Read(), CPU.L.Read());
-            var dp2 = new DoublePrecision(CPU.Memory[K1], CPU.Memory[K0]);
+            var dp1 = new DoublePrecision(cpu.A.Read(), cpu.L.Read());
+            var dp2 = new DoublePrecision(cpu.Memory[K1], cpu.Memory[K0]);
 
             // create sum
             var sum = dp1 + dp2;
@@ -33,19 +36,19 @@ namespace Apollo.Virtual.AGC.Instructions
             // this handles the case for when K0 is the L register 
 
             // L always cleared to +0
-            CPU.L.Write(OnesCompliment.PositiveZero);
+            cpu.L.Write(OnesCompliment.PositiveZero);
 
             // A set based upon overflow
             if(sum.MostSignificantWord.IsPositiveOverflow)
-                CPU.A.Write(OnesCompliment.PositiveOne);
+                cpu.A.Write(OnesCompliment.PositiveOne);
             else if(sum.MostSignificantWord.IsNegativeOverflow)
-                CPU.A.Write(OnesCompliment.NegativeOne);
+                cpu.A.Write(OnesCompliment.NegativeOne);
             else
-                CPU.A.Write(OnesCompliment.PositiveZero);
+                cpu.A.Write(OnesCompliment.PositiveZero);
 
             // store result in memory
-            CPU.Memory[K1] = sum.MostSignificantWord;
-            CPU.Memory[K0] = sum.LeastSignificantWord;
+            cpu.Memory[K1] = sum.MostSignificantWord;
+            cpu.Memory[K0] = sum.LeastSignificantWord;
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using Apollo.Virtual.AGC.Memory;
+﻿using Apollo.Virtual.AGC.Math;
+using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class Accumulator : FullRegister
+    class AccumulatorRegister : FullRegister
     {
-        public Accumulator(ushort address, MemoryBank bank)
+        public AccumulatorRegister(ushort address, MemoryBank bank)
             : base(address, bank)
         {
         }

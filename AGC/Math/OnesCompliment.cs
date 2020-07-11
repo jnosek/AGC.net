@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Apollo.Virtual.AGC
+namespace Apollo.Virtual.AGC.Math
 {
     /// <summary>
     /// This is the base numeric system used by the computer 

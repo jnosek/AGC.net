@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Memory
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Memory
 {
     /// <summary>
     /// Default 15-bit ones compliment memory word
