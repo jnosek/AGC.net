@@ -5,7 +5,7 @@
     /// Decrements a positive non-zero value in an erasable-memory location in-place,
     /// Or increments a negative non-zero value.
     /// </summary>
-    class Diminish : IInstruction
+    class Diminish : IQuarterCodeInstruction
     {
         public Diminish(Processor cpu)
         {
@@ -14,7 +14,8 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x00_3;
+        public ushort Code => 0x2;
+        public ushort QuarterCode => 0x3;
 
         public void Execute(ushort K)
         {

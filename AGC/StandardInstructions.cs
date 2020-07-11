@@ -7,11 +7,11 @@ namespace Apollo.Virtual.AGC
         public static InstructionList Build(Processor cpu) =>
             new InstructionList(new IInstruction[] {
                 new TransferControl(cpu),
-                new QuarterCodeInstructionList(0x02, new IInstruction[] {
+                new QuarterCodeInstructionList(new IQuarterCodeInstruction[] {
                     new DoubleAddToStorage(cpu),
                     new AddToStorage(cpu)
                 }),
-                new QuarterCodeInstructionList(0x05, new IInstruction[]{
+                new QuarterCodeInstructionList(new IQuarterCodeInstruction[]{
                     new TransferToStorage(cpu),
                     new DoubleExchange(cpu)
                 }),

@@ -6,7 +6,7 @@
     /// 
     /// Adds the accumulator to an eraseable memory location and vice versa 
     /// </summary>
-    class AddToStorage : IInstruction
+    class AddToStorage : IQuarterCodeInstruction
     {
         public AddToStorage(Processor cpu)
         {
@@ -15,7 +15,8 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x2_3;        
+        public ushort Code => 0x2;
+        public ushort QuarterCode => 0x3;
 
         public void Execute(ushort K)
         {

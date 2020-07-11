@@ -8,7 +8,7 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     ///  A double-precision (DP) add of the A,L register pair to a pair of variables in erasable memory
     /// </summary>
-    class DoubleAddToStorage : IInstruction
+    class DoubleAddToStorage : IQuarterCodeInstruction
     {
         public DoubleAddToStorage(Processor cpu)
         {
@@ -17,7 +17,8 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x00_0;
+        public ushort Code => 0x2;
+        public ushort QuarterCode => 0x0;
 
         public void Execute(ushort K0)
         {

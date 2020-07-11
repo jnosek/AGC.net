@@ -1,7 +1,6 @@
-﻿using Apollo.Virtual.AGC;
-using Apollo.Virtual.AGC.Instructions;
+﻿using Apollo.Virtual.AGC.Instructions;
 
-namespace AGC
+namespace Apollo.Virtual.AGC
 {
     static class ExtraInstructions
     {
@@ -9,14 +8,14 @@ namespace AGC
             new InstructionList(new IInstruction[]
             {
                 new BranchZeroToFixed(cpu),
-                new QuarterCodeInstructionList(0x02, new IInstruction[] {
+                new QuarterCodeInstructionList(new IQuarterCodeInstruction[] {
                     new Augment(cpu),
                     new Diminish(cpu)
                 }),
-                new QuarterCodeInstructionList(0x02, new IInstruction[] {
+                new QuarterCodeInstructionList(new IQuarterCodeInstruction[] {
                     new DoubleClearAndAdd(cpu)
                 }),
-                new QuarterCodeInstructionList(0x04, new IInstruction[] {
+                new QuarterCodeInstructionList(new IQuarterCodeInstruction[] {
                     new DoubleClearAndSubtract(cpu)
                 }),
                 new BranchZeroOrMinusToFixed(cpu)

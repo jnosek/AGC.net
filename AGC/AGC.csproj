@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
+		<RootNamespace>Apollo.Virtual.AGC</RootNamespace>
+		<AssemblyName>AGC</AssemblyName>
 	</PropertyGroup>
 
 </Project>

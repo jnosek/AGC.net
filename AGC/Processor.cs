@@ -1,5 +1,4 @@
-﻿using AGC;
-using Apollo.Virtual.AGC.Instructions;
+﻿using Apollo.Virtual.AGC.Instructions;
 using Apollo.Virtual.AGC.Memory;
 using Apollo.Virtual.AGC.Registers;
 
@@ -289,6 +288,7 @@ namespace Apollo.Virtual.AGC
             // we only care about 15-bit instructions
             instruction &= 0x7FFF;
 
+            // decode instruction
             var code = (ushort)(instruction >> 12);
             var K = (ushort)(instruction & 0xFFF);
 

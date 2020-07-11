@@ -5,7 +5,7 @@
     /// Increments a positive value in erasable memory by 1
     /// Or decrements a negative value in erasable memory by -1
     /// </summary>
-    class Augment: IInstruction
+    class Augment: IQuarterCodeInstruction
     {
         public Augment(Processor cpu)
         {
@@ -14,7 +14,8 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x00_2;
+        public ushort Code => 0x2;
+        public ushort QuarterCode => 0x2;
 
         public void Execute(ushort K)
         {

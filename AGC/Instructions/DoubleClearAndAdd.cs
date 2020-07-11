@@ -5,7 +5,7 @@
     /// 
     /// The "Double Clear and Add" instruction moves the contents of a pair of memory locations into the A,L register pair.
     /// </summary>
-    class DoubleClearAndAdd : IInstruction
+    class DoubleClearAndAdd : IQuarterCodeInstruction
     {
         public DoubleClearAndAdd(Processor cpu)
         {
@@ -14,7 +14,8 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x00_0;
+        public ushort Code => 0x3;
+        public ushort QuarterCode => 0x0;
 
         public void Execute(ushort K0)
         {

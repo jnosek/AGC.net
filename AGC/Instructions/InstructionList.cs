@@ -15,7 +15,7 @@ namespace Apollo.Virtual.AGC.Instructions
         /// <param name="instructions"></param>
         public InstructionList(IEnumerable<IInstruction> instructions)
         {
-            var maxInstructionCode = instructions.Max(s => s.Code);
+            var maxInstructionCode = instructions.Max(s => s.Code) + 1;
             array = new IInstruction[maxInstructionCode];
 
             foreach(var instruction in instructions)
@@ -25,17 +25,17 @@ namespace Apollo.Virtual.AGC.Instructions
         }
 
         /// <summary>
-        /// Add a dictionary of instructions to a list indexed based on dictionary key code
+        /// Add a list of quarter code instructions to a list indexed based on quarter code
         /// </summary>
         /// <param name="instructions"></param>
-        public InstructionList(IDictionary<ushort, IInstruction> instructions)
+        public InstructionList(IEnumerable<IQuarterCodeInstruction> instructions)
         {
-            var maxInstructionCode = instructions.Keys.Max();
+            var maxInstructionCode = instructions.Max(s => s.QuarterCode) + 1;
             array = new IInstruction[maxInstructionCode];
 
-            foreach (var keyValuePair in instructions)
+            foreach (var instruction in instructions)
             {
-                array[keyValuePair.Key] = keyValuePair.Value;
+                array[instruction.QuarterCode] = instruction;
             }
         }
 

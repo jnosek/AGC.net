@@ -11,7 +11,7 @@
     ///     or -1 for negative overflow
     ///     and the program counter is advanced again
     /// </summary>
-    class TransferToStorage : IInstruction
+    class TransferToStorage : IQuarterCodeInstruction
     {
         public TransferToStorage(Processor cpu)
         {
@@ -20,7 +20,8 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x00_2;
+        public ushort Code => 0x5;
+        public ushort QuarterCode => 0x2;
 
         public void Execute(ushort K)
         {

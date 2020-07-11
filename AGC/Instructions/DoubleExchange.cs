@@ -5,7 +5,7 @@
     /// Exchanges the double-precision (DP) value in the register-pair A,L 
     /// with a value stored in the erasable memory variable pair K,K+1.
     /// </summary>
-    class DoubleExchange : IInstruction
+    class DoubleExchange : IQuarterCodeInstruction
     {
         public DoubleExchange(Processor cpu)
         {
@@ -14,7 +14,8 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x00_1;
+        public ushort Code => 0x5;
+        public ushort QuarterCode => 0x1;
 
         public void Execute(ushort K0)
         {
