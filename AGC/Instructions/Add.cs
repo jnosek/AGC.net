@@ -5,8 +5,13 @@
     /// 
     /// Adds the value located in K to the accumulator
     /// </summary>
-    class Add : IInstruction
+    public class Add : IInstruction
     {
+        private const ushort _code = 0x6;
+        private const ushort _instruction = _code << 12;
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+        
         public Add(Processor cpu)
         {
             this.cpu = cpu;
@@ -14,9 +19,9 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x6;
+        ushort IInstruction.Code => _code;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             var value = cpu.Memory[K];
 

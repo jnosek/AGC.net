@@ -1,6 +1,7 @@
 ﻿using Apollo.Virtual.AGC.Math;
 using Apollo.Virtual.AGC.Memory;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Apollo.Virtual.AGC

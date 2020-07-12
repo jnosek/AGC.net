@@ -1,6 +1,4 @@
-﻿using Apollo.Virtual.AGC.Math;
-
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// CCS - 0001
@@ -9,6 +7,11 @@ namespace Apollo.Virtual.AGC.Instructions
     /// (which is decremented), and then performs one of several jumps based on the original value of the variable.
     public class CountCompareAndSkip : IInstruction
     {
+        public const ushort _code = 0x1;
+        public const ushort _instruction = _code << 12;
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public CountCompareAndSkip(Processor cpu)
         {
             this.cpu = cpu;
@@ -16,9 +19,9 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x1;
+        ushort IInstruction.Code => _code;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             // retrieve value from memory
             var value = cpu.Memory[K];

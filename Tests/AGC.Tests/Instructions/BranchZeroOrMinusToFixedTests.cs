@@ -1,31 +1,30 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class BranchZeroOrMinusToFixed : BaseTest
+    public class BranchZeroOrMinusToFixedTests : BaseTest
     {
+        private static readonly ushort[] baseProgram = new[] {
+            Extend.Instruction,
+            BranchZeroOrMinusToFixed.Encode(0x500)
+        };
+
         [TestMethod]
         public void BranchZeroOrMinusToFixed_PositiveZero()
         {
             // arrange
             Memory[0x0] = OnesCompliment.PositiveZero;
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x06000 | 0x400 // instruction and address in fixed memory
-            });
-
             // act - run the instructions
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(baseProgram);
 
             // assert
 
             // check for address to jump to in Z register
-            CustomAssert.AreEqual(0x400, Memory[0x005]);
+            CustomAssert.AreEqual(0x500, Memory[0x005]);
         }
 
         [TestMethod]
@@ -34,15 +33,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x0] = OnesCompliment.NegativeZero;
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x06000 | 0x500 // instruction and address in fixed memory
-            });
-
             // act - run the instructions
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(baseProgram);
 
             // assert
 
@@ -56,15 +48,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x0] = (~5).ToOnesCompliment();  // -5
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x06000 | 0x500 // instruction and address in fixed memory
-            });
-
             // act - run the instructions
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(baseProgram);
 
             // assert
 
@@ -78,15 +63,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x0] = (5).ToOnesCompliment();
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x06000 | 0x500 // instruction and address in fixed memory
-            });
-
             // act - run the instructions
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(baseProgram);
 
             // assert
 

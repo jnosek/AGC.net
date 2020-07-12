@@ -7,8 +7,13 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     /// Jumps to a fixed memory location if the accumulator is 0 or negative
     /// </summary>
-    class BranchZeroOrMinusToFixed : IInstruction
+    public class BranchZeroOrMinusToFixed : IInstruction
     {
+        private const ushort _code = 0x6;
+        private const ushort _instruction = _code << 12;
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public BranchZeroOrMinusToFixed(Processor cpu)
         {
             this.cpu = cpu;
@@ -16,9 +21,9 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x6;
+        ushort IInstruction.Code => _code;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             var value = cpu.A.Read();
 

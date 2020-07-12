@@ -5,8 +5,13 @@
     /// 
     /// Moves the contents of memory at location K into the accumulator
     /// </summary>
-    class ClearAndAdd : IInstruction
+    public class ClearAndAdd : IInstruction
     {
+        public const ushort _code = 0x3;
+        private const ushort _instruction = _code << 12;
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public ClearAndAdd(Processor cpu)
         {
             this.cpu = cpu;
@@ -14,9 +19,9 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x3;
+        ushort IInstruction.Code => _code;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             var value = cpu.Memory[K];
 

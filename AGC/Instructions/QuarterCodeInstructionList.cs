@@ -21,12 +21,15 @@ namespace Apollo.Virtual.AGC.Instructions
         public void Execute(ushort K)
         {
             var quarterCode = DecodeQuarterCode(K);
-            K = (ushort)(K & 0x3FF);
+            K = DecodedOperand(K);
 
             base[quarterCode].Execute(K);
         }
 
         private static ushort DecodeQuarterCode(ushort instruction) =>
             (ushort)(instruction >> 10 & 0x3);
+
+        private static ushort DecodedOperand(ushort instruction) =>
+            (ushort)(instruction & 0x3FF);
     }
 }

@@ -286,12 +286,13 @@ namespace Apollo.Virtual.AGC
 
             // get instruction
             ushort instruction = Memory[address].NativeValue;
+
             // we only care about 15-bit instructions
-            instruction &= 0x7FFF;
+            instruction = MaskInstruction(instruction);
 
             // decode instruction
-            var code = (ushort)(instruction >> 12);
-            var K = (ushort)(instruction & 0xFFF);
+            var code = DecodeCode(instruction);
+            var K = DecodeOperand(instruction);
 
             // determine if this is an extra code instruction
             if (ExtraCodeFlag)
@@ -308,6 +309,15 @@ namespace Apollo.Virtual.AGC
                 standardInstructions[code].Execute(K);
             }
         }
+
+        private static ushort MaskInstruction(ushort instruction) =>
+            (ushort)(instruction & 0x7FFF);
+
+        private static ushort DecodeCode(ushort instruction) =>
+            (ushort)(instruction >> 12);
+
+        private static ushort DecodeOperand(ushort instruction) =>
+            (ushort)(instruction & 0xFFF);
     }
 }
 

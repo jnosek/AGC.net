@@ -9,23 +9,23 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     /// Also functions as EXTEND command when K is 0x06
     /// </summary>
-    class TransferControl : IInstruction
+    public class TransferControl : IInstruction
     {
+        private const ushort _code = 0x0;
+
         public TransferControl(Processor cpu)
         {
             this.cpu = cpu;
         }
 
-        const ushort EXTEND = 0x06;
-
         private readonly Processor cpu;
 
-        public ushort Code => 0x00;
+        ushort IInstruction.Code => _code;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             // if this is an extend instruction, set the extra code flag
-            if (K == EXTEND)
+            if (K == Extend.Instruction)
             {
                 cpu.ExtraCodeFlag = true;
             }

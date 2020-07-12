@@ -1,11 +1,14 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class AddToStorage : BaseTest
+    public class AddToStorageTests : BaseTest
     {
+        private static readonly ushort instruction = AddToStorage.Encode(0x201);
+
         [TestMethod]
         public void AddToStorage_TwoPositiveNumbers()
         {
@@ -13,14 +16,8 @@ namespace AGC.Tests.Instructions
             Memory[0x000] = (10).ToOnesCompliment();
             Memory[0x201] = (15).ToOnesCompliment();
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x02C00 | 0x201
-            });
-
             // act - run the instructions
-            CPU.Execute();
-            CPU.Execute();
+            RunInstruction(instruction);
 
             // assert
             CustomAssert.AreEqual(25, Memory[0x0]);
@@ -34,14 +31,8 @@ namespace AGC.Tests.Instructions
             Memory[0x000] = (~10).ToOnesCompliment(); // -10
             Memory[0x201] = (~15).ToOnesCompliment(); // -15
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x02C00 | 0x201
-            });
-
             // act - run the instructions
-            CPU.Execute();
-            CPU.Execute();
+            RunInstruction(instruction);
 
             // assert
             CustomAssert.AreEqual(~25, Memory[0x0]);   // -25

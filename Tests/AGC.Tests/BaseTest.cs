@@ -20,6 +20,23 @@ namespace AGC.Tests
             CPU = new Processor(Memory);
         }
 
+        protected void RunProgram(ushort[] program)
+        {
+            // insert instructions
+            Memory.LoadFixedRom(program);
+
+            // act - run the instructions
+            CPU.Execute(program.Length);
+        }
+
+        protected void RunInstruction(ushort instruction)
+        {
+            Memory.LoadFixedRom(new[] { instruction });
+
+            // act - run the instructions
+            CPU.Execute();
+        }
+
         protected ushort Instruction(ushort code, ushort operand)
         {
             return (ushort)((code << 12) | operand);

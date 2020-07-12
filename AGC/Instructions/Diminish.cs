@@ -7,8 +7,14 @@ namespace Apollo.Virtual.AGC.Instructions
     /// Decrements a positive non-zero value in an erasable-memory location in-place,
     /// Or increments a negative non-zero value.
     /// </summary>
-    class Diminish : IQuarterCodeInstruction
+    public class Diminish : IQuarterCodeInstruction
     {
+        private const ushort _code = 0x2;
+        private const ushort _quarterCode = 0x3; 
+        private const ushort _instruction = (_code << 12) | (_quarterCode << 10);
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public Diminish(Processor cpu)
         {
             this.cpu = cpu;
@@ -16,10 +22,10 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x2;
-        public ushort QuarterCode => 0x3;
+        ushort IInstruction.Code => _code;
+        ushort IQuarterCodeInstruction.QuarterCode => _quarterCode;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             var value = cpu.Memory[K];
 

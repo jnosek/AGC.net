@@ -1,23 +1,24 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class ClearAndAdd : BaseTest
+    public class ClearAndAddTests : BaseTest
     {
         [TestMethod]
         public void ClearAndAdd_FixedMemory()
         {
             // arrange
-            
+
             // insert instructions and test data
             Memory.LoadFixedRom(new ushort[] {
-                0x03000 | 0x801, // CA instruction and address
+                ClearAndAdd.Encode(0x801), // CA instruction and address
                 10 //value
             });
 
-            // act - run the instructions
+            // act - run only one instruction
             CPU.Execute();
 
             // assert
@@ -32,13 +33,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x200] = (10).ToOnesCompliment();
 
-            // insert instructions and test data
-            Memory.LoadFixedRom(new ushort[] {
-                0x03000 | 0x200 // CA instruction and address
-            });
-
             // act - run the instructions
-            CPU.Execute();
+            RunInstruction(ClearAndAdd.Encode(0x200));
 
             // assert
 

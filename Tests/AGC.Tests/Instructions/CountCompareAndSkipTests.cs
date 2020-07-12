@@ -1,10 +1,11 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class CountCompareAndSkip : BaseTest
+    public class CountCompareAndSkipTests : BaseTest
     {
         [TestMethod]
         public void CountCompareSkip_PositiveNumber()
@@ -12,13 +13,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x200] = (10).ToOnesCompliment();
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x200)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x200));
 
             // assert
 
@@ -35,13 +31,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x200] = OnesCompliment.PositiveZero;
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x200)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x200));
 
             // assert
 
@@ -58,13 +49,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x200] = OnesCompliment.NegativeZero;
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x200)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x200));
 
             // assert
 
@@ -81,13 +67,8 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x200] = (~10).ToOnesCompliment(); // -10
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x200)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x200));
 
             // assert
 
@@ -108,13 +89,8 @@ namespace AGC.Tests.Instructions
             // set A to 1 with positive overflow
             Memory[0x000] = new OnesCompliment(0x4000 | 1);
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x000) // CCS A
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x000));
 
             // assert
 
@@ -133,13 +109,8 @@ namespace AGC.Tests.Instructions
             // set A to 0 with positive overflow
             Memory[0x000] = new OnesCompliment(0x4000 | 0);
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x000) // CCS A
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x000));
 
             // assert
 
@@ -158,13 +129,8 @@ namespace AGC.Tests.Instructions
             // set A to -2 with negative overflow
             Memory[0x000] = ((~2) & 0xBFFF).ToOnesCompliment();
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x01, 0x000) // CCS A
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(CountCompareAndSkip.Encode(0x000));
 
             // assert
 

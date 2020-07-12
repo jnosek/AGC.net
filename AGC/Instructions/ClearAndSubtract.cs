@@ -10,8 +10,13 @@
     /// The "Complement the Contents of A" bitwise complements the accumulator
     /// Assembles as CS A
     /// </summary>
-    class ClearAndSubtract : IInstruction
+    public class ClearAndSubtract : IInstruction
     {
+        private const ushort _code = 0x4;
+        private const ushort _instruction = _code << 12;
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public ClearAndSubtract(Processor cpu)
         {
             this.cpu = cpu;
@@ -19,9 +24,9 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x4;
+        ushort IInstruction.Code => _code;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             var value = cpu.Memory[K];
 
