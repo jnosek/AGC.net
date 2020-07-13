@@ -18,7 +18,7 @@ namespace Apollo.Virtual.AGC
         /// 0x0 - 0x31
         /// 0 - 49
         /// </summary>
-        private MemoryWord[] registers = new MemoryWord[49];
+        private readonly MemoryWord[] registers = new MemoryWord[49];
 
         /// <summary>
         /// Primary RAM
@@ -27,7 +27,7 @@ namespace Apollo.Virtual.AGC
         /// 0x0 - 0x2FF
         /// 0 - 767
         /// </summary>
-        private MemoryBank unswitchedErasable = new MemoryBank(768);
+        private readonly MemoryBank unswitchedErasable = new MemoryBank(768);
 
         /// <summary>
         /// RAM
@@ -38,7 +38,7 @@ namespace Apollo.Virtual.AGC
         /// 
         /// Divided into 8 (E0 - E7) banks controlled by register EB or BB
         /// </summary>
-        private MemoryBank[] switchedErasable = new MemoryBank[]
+        private readonly MemoryBank[] switchedErasable = new MemoryBank[]
         {
             new MemoryBank(256, 0x300),
             new MemoryBank(256, 0x300),
@@ -59,7 +59,7 @@ namespace Apollo.Virtual.AGC
         /// 
         /// Divided into 32 banks controlled by register FB or BB, and the super-bank bit in i/o channel 7 (FEB)
         /// </summary>
-        private MemoryBank[] commonFixed = new MemoryBank[]
+        private readonly MemoryBank[] commonFixed = new MemoryBank[]
         {
             new MemoryBank(1024, 0x400)
         };
@@ -72,7 +72,7 @@ namespace Apollo.Virtual.AGC
         /// 0x800 - 0xFFF
         /// 2048 - 4095
         /// </summary>
-        private MemoryBank fixedFixed = new MemoryBank(2048, 0x800);
+        private readonly MemoryBank fixedFixed = new MemoryBank(2048, 0x800);
 
         /// <summary>
         /// Input and Output Channels
@@ -81,7 +81,7 @@ namespace Apollo.Virtual.AGC
         /// 0x0 - 0x1FF
         /// 0 - 511
         /// </summary>
-        private MemoryBank ioChannels = new MemoryBank(512);
+        private readonly MemoryBank ioChannels = new MemoryBank(512);
 
         public int MaxAddress => throw new NotImplementedException();
 
