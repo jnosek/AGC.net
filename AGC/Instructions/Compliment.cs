@@ -1,6 +1,7 @@
 ﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
+    /// COM
     /// CS A - 0100_0000_0000_0000
     /// 
     /// The "Complement the Contents of A" bitwise complements the accumulator

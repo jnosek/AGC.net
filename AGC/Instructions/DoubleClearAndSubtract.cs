@@ -5,8 +5,14 @@
     /// 
     /// The "Double Clear and Subtract" instruction moves the 1's-complement (i.e., the negative) of the contents of a pair of memory locations into the A,L register pair.
     /// </summary>
-    class DoubleClearAndSubtract : IQuarterCodeInstruction
+    public class DoubleClearAndSubtract : IQuarterCodeInstruction
     {
+        private const ushort _code = 0x4;
+        private const ushort _quarterCode = 0x0;
+        private const ushort _instruction = (_code << 12) | (_quarterCode << 10);
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public DoubleClearAndSubtract(Processor cpu)
         {
             this.cpu = cpu;
@@ -14,10 +20,10 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x4;
-        public ushort QuarterCode => 0x0;
+        ushort IInstruction.Code => _code;
+        ushort IQuarterCodeInstruction.QuarterCode => _quarterCode;
 
-        public void Execute(ushort K0)
+        void IInstruction.Execute(ushort K0)
         {
             var K1 = (ushort)(K0 - 1);
 

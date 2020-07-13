@@ -1,10 +1,11 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class DoubleExchange : BaseTest
+    public class DoubleExchangeTests : BaseTest
     {
         [TestMethod]
         public void DoubleExchange_DefaultSwap()
@@ -18,13 +19,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = (3).ToOnesCompliment();
             Memory[0x201] = (4).ToOnesCompliment();
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x05400 | 0x201
-            });
-
             // act - run the instruction
-            CPU.Execute();
+            RunInstruction(DoubleExchange.Encode(0x201));
 
             // assert
             CustomAssert.AreEqual(3, Memory[0x0]);
@@ -43,13 +39,8 @@ namespace AGC.Tests.Instructions
 
             Memory[0x006] = OnesCompliment.PositiveZero;
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x05400 | 0x006
-            });
-
             // act - run the instruction
-            CPU.Execute();
+            RunInstruction(DoubleTransferControlSwitchingBothBanks.Instruction);
 
             // assert
 
@@ -74,13 +65,8 @@ namespace AGC.Tests.Instructions
 
             Memory[0x004] = OnesCompliment.PositiveZero;
 
-            // insert instructions
-            Memory.LoadFixedRom(new ushort[] {
-                0x05400 | 0x005
-            });
-
             // act - run the instruction
-            CPU.Execute();
+            RunInstruction(DoubleTransferControlSwitchingFBank.Instruction);
 
             // assert
 
@@ -110,13 +96,8 @@ namespace AGC.Tests.Instructions
             Memory[0x002] = (0x8001).ToOnesCompliment();
             Memory[0x003] = (0x0400).ToOnesCompliment();
 
-            Memory.LoadFixedRom(new ushort[]
-            {
-                0x05400 | 0x003
-            });
-
-            // act
-            CPU.Execute();
+            // act - run the instruction
+            RunInstruction(DoubleExchange.Encode(0x003));
 
             // assert
 
@@ -135,13 +116,8 @@ namespace AGC.Tests.Instructions
             Memory[0x001] = (0x000D).ToOnesCompliment();
             Memory[0x002] = (0x8001).ToOnesCompliment();
 
-            Memory.LoadFixedRom(new ushort[]
-            {
-                0x05400 | 0x002
-            });
-
-            // act
-            CPU.Execute();
+            // act - run the instruction
+            RunInstruction(DoubleExchange.Encode(0x002));
 
             // assert
 

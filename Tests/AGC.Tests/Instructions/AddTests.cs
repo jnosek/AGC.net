@@ -180,9 +180,7 @@ namespace AGC.Tests.Instructions
             Memory[0x000] = new OnesCompliment(2);
 
             // act - run the instructions
-            RunProgram(new ushort[] {
-                Add.Encode(0x000)
-            });
+            RunInstruction(Double.Instruction);
 
             // assert
             CustomAssert.AreEqual(4, Memory[0x000]);

@@ -1,11 +1,32 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class DoubleClearAndSubtract : BaseTest
+    public class DoubleClearAndSubtractTests : BaseTest
     {
+        [TestMethod]
+        public void DoubleClearAndSubstract_DoubleCompliment()
+        {
+            // arrange
+            Memory[0x0] = (0x020).ToOnesCompliment();
+            Memory[0x1] = (0x040).ToOnesCompliment();
+
+            // act
+            RunProgram(new[] {
+                Extend.Instruction,
+                DoubleCompliment.Instruction
+            });
+
+            // assert
+
+            // check value in accumulator and L
+            CustomAssert.AreEqual(0xFFDF, Memory[0x0]);
+            CustomAssert.AreEqual(0xFFBF, Memory[0x1]);
+        }
+
         [TestMethod]
         public void DoubleClearAndSubstract_Default()
         {
@@ -13,15 +34,11 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = (0x020).ToOnesCompliment();
             Memory[0x201] = (0x040).ToOnesCompliment();
 
-            // insert instructions and test data
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x04000 | 0x201,
-            });
-
             // act
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(new[] {
+                Extend.Instruction,
+                DoubleClearAndSubtract.Encode(0x201)
+            });
 
             // assert
 
@@ -41,15 +58,11 @@ namespace AGC.Tests.Instructions
             // writing into SR will cause it to shift right
             Memory[0x011] = (0x004).ToOnesCompliment();
 
-            // insert instructions and test data
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x04000 | 0x011, // SR address
-            });
-
             // act
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(new[] {
+                Extend.Instruction,
+                DoubleClearAndSubtract.Encode(0x011)
+            });
 
             // assert
 
@@ -73,15 +86,11 @@ namespace AGC.Tests.Instructions
             // arrange
             Memory[0x002] = (0x020).ToOnesCompliment();
 
-            // insert instructions and test data
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x04000 | 0x002, // Q address
-            });
-
             // act
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(new[] {
+                Extend.Instruction,
+                DoubleClearAndSubtract.Encode(0x002)
+            });
 
             // assert
 
@@ -100,15 +109,11 @@ namespace AGC.Tests.Instructions
             Memory[0x002] = (0xF000).ToOnesCompliment();
             Memory[0x003] = (0x0200).ToOnesCompliment();
 
-            // insert instructions and test data
-            Memory.LoadFixedRom(new ushort[] {
-                0x00006, // EXTEND instruction
-                0x04000 | 0x003, // EB address
-            });
-
             // act
-            CPU.Execute();
-            CPU.Execute();
+            RunProgram(new[] {
+                Extend.Instruction,
+                DoubleClearAndSubtract.Encode(0x003)
+            });
 
             // assert
 

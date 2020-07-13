@@ -2,11 +2,18 @@
 {
     /// <summary>
     /// DXCH - 0101 01
+    /// 
     /// Exchanges the double-precision (DP) value in the register-pair A,L 
     /// with a value stored in the erasable memory variable pair K,K+1.
     /// </summary>
-    class DoubleExchange : IQuarterCodeInstruction
+    public class DoubleExchange : IQuarterCodeInstruction
     {
+        private const ushort _code = 0x5;
+        private const ushort _quarterCode = 0x1;
+        private const ushort _instruction = (_code << 12) | (_quarterCode << 10);
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public DoubleExchange(Processor cpu)
         {
             this.cpu = cpu;
@@ -14,10 +21,10 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x5;
-        public ushort QuarterCode => 0x1;
+        ushort IInstruction.Code => _code;
+        ushort IQuarterCodeInstruction.QuarterCode => _quarterCode;
 
-        public void Execute(ushort K0)
+        void IInstruction.Execute(ushort K0)
         {
             // find previous address
             var K1 = (ushort)(K0 - 1);

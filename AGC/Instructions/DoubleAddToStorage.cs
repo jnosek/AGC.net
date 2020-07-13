@@ -8,8 +8,14 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     ///  A double-precision (DP) add of the A,L register pair to a pair of variables in erasable memory
     /// </summary>
-    class DoubleAddToStorage : IQuarterCodeInstruction
+    public class DoubleAddToStorage : IQuarterCodeInstruction
     {
+        private const ushort _code = 0x2;
+        private const ushort _quarterCode = 0x0;
+        private const ushort _instruction = (_code << 12) | (_quarterCode << 10);
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public DoubleAddToStorage(Processor cpu)
         {
             this.cpu = cpu;
@@ -17,14 +23,14 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x2;
-        public ushort QuarterCode => 0x0;
+        ushort IInstruction.Code => _code;
+        ushort IQuarterCodeInstruction.QuarterCode => _quarterCode;
 
-        public void Execute(ushort K0)
+        void IInstruction.Execute(ushort K0)
         {
             // find previous address
             var K1 = (ushort)(K0 - 1);
-            
+
             // read DP values from registers and memroy
             var dp1 = new DoublePrecision(cpu.A.Read(), cpu.L.Read());
             var dp2 = new DoublePrecision(cpu.Memory[K1], cpu.Memory[K0]);
@@ -39,9 +45,9 @@ namespace Apollo.Virtual.AGC.Instructions
             cpu.L.Write(OnesCompliment.PositiveZero);
 
             // A set based upon overflow
-            if(sum.MostSignificantWord.IsPositiveOverflow)
+            if (sum.MostSignificantWord.IsPositiveOverflow)
                 cpu.A.Write(OnesCompliment.PositiveOne);
-            else if(sum.MostSignificantWord.IsNegativeOverflow)
+            else if (sum.MostSignificantWord.IsNegativeOverflow)
                 cpu.A.Write(OnesCompliment.NegativeOne);
             else
                 cpu.A.Write(OnesCompliment.PositiveZero);

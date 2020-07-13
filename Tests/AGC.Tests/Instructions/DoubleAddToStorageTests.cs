@@ -1,10 +1,11 @@
-﻿using Apollo.Virtual.AGC.Math;
+﻿using Apollo.Virtual.AGC.Instructions;
+using Apollo.Virtual.AGC.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AGC.Tests.Instructions
 {
     [TestClass]
-    public class DoubleAddToStorage : BaseTest
+    public class DoubleAddToStorageTests : BaseTest
     {
         [TestMethod]
         public void DoubleAddToStorage_LswValue()
@@ -16,12 +17,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.PositiveOne;
 
-            Memory.LoadFixedRom(new ushort[] { 
-                Instruction(0x02, 0x201)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
             CustomAssert.AreEqual(0, Memory[0x200]);
@@ -40,12 +37,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.PositiveOne;
 
-            Memory.LoadFixedRom(new ushort[] { 
-                Instruction(0x02, 0x201)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
             Assert.AreEqual(OnesCompliment.PositiveOne, Memory[0x200]);
@@ -64,12 +57,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.NegativeOne;
 
-            Memory.LoadFixedRom(new ushort[] { 
-                Instruction(0x02, 0x201)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
             Assert.AreEqual(OnesCompliment.NegativeOne, Memory[0x200]);
@@ -88,12 +77,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.PositiveOne;
 
-            Memory.LoadFixedRom(new ushort[] { 
-                Instruction(0x02, 0x201)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
             Assert.AreEqual(OnesCompliment.PositiveZero, Memory[0x200]);
@@ -112,12 +97,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.NegativeOne;
 
-            Memory.LoadFixedRom(new ushort[] { 
-                Instruction(0x02, 0x201)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
             Assert.AreEqual(OnesCompliment.NegativeZero, Memory[0x200]);
@@ -136,12 +117,8 @@ namespace AGC.Tests.Instructions
             Memory[0x200] = OnesCompliment.NegativeZero;
             Memory[0x201] = OnesCompliment.NegativeOne;
 
-            Memory.LoadFixedRom(new ushort[] { 
-                Instruction(0x02, 0x201)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
             Assert.AreEqual(OnesCompliment.NegativeZero, Memory[0x200]);
@@ -157,12 +134,8 @@ namespace AGC.Tests.Instructions
             Memory[0x0] = OnesCompliment.PositiveZero;
             Memory[0x1] = OnesCompliment.PositiveOne;
 
-            Memory.LoadFixedRom(new ushort[] {
-                Instruction(0x02, 0x001)
-            });
-
             // act
-            CPU.Execute();
+            RunInstruction(DoublePrecisionDouble.Instruction);
 
             // assert
             CustomAssert.AreEqual(OnesCompliment.PositiveZero, Memory[0x000]);

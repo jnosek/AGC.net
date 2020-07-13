@@ -15,6 +15,12 @@ namespace Apollo.Virtual.AGC.Instructions
     /// </summary>
     class TransferToStorage : IQuarterCodeInstruction
     {
+        private const ushort _code = 0x5;
+        private const ushort _quarterCode = 0x2;
+        private const ushort _instruction = (_code << 12) | (_quarterCode << 10);
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public TransferToStorage(Processor cpu)
         {
             this.cpu = cpu;
@@ -22,8 +28,8 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x5;
-        public ushort QuarterCode => 0x2;
+        public ushort Code => _code;
+        public ushort QuarterCode => _quarterCode;
 
         public void Execute(ushort K)
         {

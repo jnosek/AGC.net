@@ -5,8 +5,14 @@
     /// 
     /// The "Double Clear and Add" instruction moves the contents of a pair of memory locations into the A,L register pair.
     /// </summary>
-    class DoubleClearAndAdd : IQuarterCodeInstruction
+    public class DoubleClearAndAdd : IQuarterCodeInstruction
     {
+        private const ushort _code = 0x3;
+        private const ushort _quarterCode = 0x0;
+        private const ushort _instruction = (_code << 12) | (_quarterCode << 10);
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
+
         public DoubleClearAndAdd(Processor cpu)
         {
             this.cpu = cpu;
@@ -14,12 +20,12 @@
 
         private readonly Processor cpu;
 
-        public ushort Code => 0x3;
-        public ushort QuarterCode => 0x0;
+        ushort IInstruction.Code => _code;
+        ushort IQuarterCodeInstruction.QuarterCode => _quarterCode;
 
-        public void Execute(ushort K0)
+        void IInstruction.Execute(ushort K0)
         {
-            /// FYI, all double instructions are encoded with the address of the second word (K0, need to subtract 1 to find K1)
+            // FYI, all double instructions are encoded with the address of the second word (K0, need to subtract 1 to find K1)
             var K1 = (ushort)(K0 - 1);
 
             // move least significant word into L
