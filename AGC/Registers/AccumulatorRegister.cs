@@ -10,9 +10,9 @@ namespace Apollo.Virtual.AGC.Registers
         {
         }
 
-        public void Add(OnesCompliment value)
+        public void Add(ushort value)
         {
-            var sum = value + Read();
+            var sum = OnesCompliment.Add(value, Read());
 
             Write(sum);
         }

@@ -9,7 +9,7 @@ namespace Apollo.Virtual.AGC.Memory
     {
         private MemoryBank bank;
 
-        public ushort Address { get; private set; }
+        public ushort Address { get; }
 
         public MemoryWord(ushort address, MemoryBank bank)
         {
@@ -17,12 +17,7 @@ namespace Apollo.Virtual.AGC.Memory
             Address = address;
         }
 
-        public virtual OnesCompliment Read()
-        {
-            return new OnesCompliment(bank[Address]);
-        }
-
-        protected ushort ReadRaw()
+        public virtual ushort Read()
         {
             return bank[Address];
         }
@@ -32,7 +27,7 @@ namespace Apollo.Virtual.AGC.Memory
         /// </summary>
         /// <param name="address"></param>
         /// <returns></returns>
-        protected ushort ReadRaw(ushort address)
+        protected ushort Read(ushort address)
         {
             return bank[address];
         }
@@ -41,48 +36,60 @@ namespace Apollo.Virtual.AGC.Memory
         /// 15-bit writes are overflow corrected from 16-bit values
         /// </summary>
         /// <param name="value"></param>
-        public virtual void Write(OnesCompliment value)
+        public virtual void Write(ushort value)
         {
+            // TODO: see if this logic can be simplified
+            // and the two operations can be condensed
+
             // in case there is an overflow, correct it
-            var correctedValue = OverflowCorrect(value.NativeValue);
+            var correctedValue = OverflowCorrect(value);
 
             // sign extend, since we store all values as 16-bit
             correctedValue = SignExtend(correctedValue);
 
-            WriteRaw(correctedValue);
+            bank[Address] = correctedValue;
         }
 
-        protected void WriteRaw(ushort value)
+        /// <summary>
+        /// Write value into bank without overflow correction or sign extension
+        /// </summary>
+        /// <param name="value"></param>
+        protected void UnmodifiedWrite(ushort value)
         {
             bank[Address] = value;
         }
 
-        protected void WriteRaw(int value)
+        // <summary>
+        /// Write value into bank without overflow correction or sign extension
+        /// </summary>
+        /// <param name="value"></param>
+        protected void UnmodifiedWrite(int value)
         {
             bank[Address] = (ushort)value;
         }
 
         /// <summary>
         /// write a value at a specific address within the same memory bank
+        /// without overflow correction or sign extension
         /// </summary>
         /// <param name="value"></param>
         /// <param name="address"></param>
-        protected void WriteRaw(int value, ushort address)
+        protected void UnmodifiedWrite(int value, ushort address)
         {
             bank[address] = (ushort)value;
         }
 
         protected static ushort OverflowCorrect(ushort value)
         {
-            uint newValue = value;
+            uint correctedValue = value;
 
             // get lower 14 bits
-            uint lowerBits = newValue & 0x3FFF;
+            uint lowerBits = correctedValue & 0x3FFF;
 
             // move 16-th bit, into 15th position, isolate it, and set it in above value;
-            newValue = (newValue >> 1 & 0x4000) | lowerBits;
+            correctedValue = (correctedValue >> 1 & 0x4000) | lowerBits;
 
-            return (ushort)newValue;
+            return (ushort)correctedValue;
         }
 
         /// <summary>
@@ -92,15 +99,15 @@ namespace Apollo.Virtual.AGC.Memory
         /// <returns></returns>
         protected static ushort SignExtend(ushort value)
         {
-            uint newValue = value;
+            uint extendedValue = value;
 
             // take lower 15-bits
-            newValue = newValue & 0x7FFF;
+            extendedValue &= 0x7FFF;
 
             // shift left 1 and take 16th bit, combine with lower 15 bits
-            newValue = ((newValue << 1) & 0x8000) | newValue;
+            extendedValue = (extendedValue << 1 & 0x8000) | extendedValue;
 
-            return (ushort)newValue;
+            return (ushort)extendedValue;
         }
     }
 }

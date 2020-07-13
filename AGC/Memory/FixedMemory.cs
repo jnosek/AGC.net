@@ -1,4 +1,5 @@
 ﻿using Apollo.Virtual.AGC.Math;
+using System.Diagnostics;
 
 namespace Apollo.Virtual.AGC.Memory
 {
@@ -16,9 +17,9 @@ namespace Apollo.Virtual.AGC.Memory
         /// cannot write to fixed memory
         /// </summary>
         /// <param name="value"></param>
-        public override void Write(OnesCompliment value)
+        public override void Write(ushort value)
         {
-            //throw new InvalidOperationException("Cannot write to a fixed memory location");
+            Debug.Fail("Cannot write to a fixed memory location");
         }
     }
 }

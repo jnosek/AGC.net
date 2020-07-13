@@ -5,10 +5,10 @@
     /// </summary>
     public class DoublePrecision
     {
-        public OnesCompliment MostSignificantWord { get; protected set; }
-        public OnesCompliment LeastSignificantWord { get; protected set; }
+        public ushort MostSignificantWord { get; }
+        public ushort LeastSignificantWord { get; }
 
-        public DoublePrecision(OnesCompliment most, OnesCompliment least)
+        public DoublePrecision(ushort most, ushort least)
         {
             MostSignificantWord = most;
             LeastSignificantWord = least;

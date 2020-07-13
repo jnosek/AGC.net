@@ -85,10 +85,10 @@ namespace Apollo.Virtual.AGC
 
         public int MaxAddress => throw new NotImplementedException();
 
-        public OnesCompliment this[ushort a]
+        public ushort this[ushort address]
         {
-            get => GetWord(a).Read();
-            set => GetWord(a).Write(value);
+            get => GetWord(address).Read();
+            set => GetWord(address).Write(value);
         }
 
         private IWord GetWord(ushort address)

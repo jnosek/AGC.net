@@ -18,15 +18,15 @@ namespace Apollo.Virtual.AGC.Registers
             var value = Read();
 
             // increment and write
-            Write(value + OnesCompliment.PositiveOne);
+            Write(OnesCompliment.AddPositiveOne(value));
         }
 
-        public override void Write(OnesCompliment value)
+        public override void Write(ushort value)
         {
             // only store lower 12 bits
             var maskedBits = value & 0xFFF;
 
-            WriteRaw(maskedBits);
+            UnmodifiedWrite(maskedBits);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Apollo.Virtual.AGC.Math;
+using System.Xml.Schema;
 
 namespace Apollo.Virtual.AGC.Instructions
 {
@@ -30,14 +31,14 @@ namespace Apollo.Virtual.AGC.Instructions
             var value = cpu.Memory[K];
 
             // if negative
-            if(value.IsNegative)
+            if(OnesCompliment.IsNegative(value))
             {
-                cpu.Memory[K] = value + OnesCompliment.NegativeOne;
+                cpu.Memory[K] = OnesCompliment.AddNegativeOne(value);
             }
             // if positive
             else
             {
-                cpu.Memory[K] = value + OnesCompliment.PositiveOne;
+                cpu.Memory[K] = OnesCompliment.AddPositiveOne(value);
             }
         }
     }
