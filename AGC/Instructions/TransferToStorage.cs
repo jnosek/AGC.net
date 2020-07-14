@@ -13,7 +13,7 @@ namespace Apollo.Virtual.AGC.Instructions
     ///     or -1 for negative overflow
     ///     and the program counter is advanced again
     /// </summary>
-    class TransferToStorage : IQuarterCodeInstruction
+    public class TransferToStorage : IQuarterCodeInstruction
     {
         private const ushort _code = 0x5;
         private const ushort _quarterCode = 0x2;
@@ -28,28 +28,30 @@ namespace Apollo.Virtual.AGC.Instructions
 
         private readonly Processor cpu;
 
-        public ushort Code => _code;
-        public ushort QuarterCode => _quarterCode;
+        ushort IInstruction.Code => _code;
+        ushort IQuarterCodeInstruction.QuarterCode => _quarterCode;
 
-        public void Execute(ushort K)
+        void IInstruction.Execute(ushort K)
         {
             var value = cpu.A.Read();
 
             cpu.Memory[K] = value;
 
-            if(cpu.A.IsOverflow)
-            {
-                // test for 01-- ---- ---- ---- (positive overflow)
-                if ((cpu.A.Read() & 0x4000) > 0)
-                {
-                    cpu.A.Write(OnesCompliment.PositiveOne);
-                }
-                // else negative overflow
-                else
-                {
-                    cpu.A.Write(OnesCompliment.NegativeOne);
-                }
+            var a = cpu.A.Read();
 
+            // test and handle overflow conditions
+            if (OnesCompliment.IsPositiveOverflow(a))
+            {
+                cpu.A.Write(OnesCompliment.PositiveOne);
+
+                // additinally increment the program counter
+                cpu.Z.Increment();
+            }
+            else if(OnesCompliment.IsNegativeOverflow(a))
+            {
+                cpu.A.Write(OnesCompliment.NegativeOne);
+
+                // additinally increment the program counter
                 cpu.Z.Increment();
             }
         }

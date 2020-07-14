@@ -228,7 +228,7 @@ namespace Apollo.Virtual.AGC
             // main registers?
             A = memory.MapRegister<AccumulatorRegister>(0x00);
             L = memory.MapRegister<ErasableMemory>(0x01);
-            Q = memory.MapRegister<FullRegister>(0x02);
+            Q = memory.MapRegister<Register16>(0x02);
             EB = memory.MapRegister<ErasableBankRegister>(0x03);
             FB = memory.MapRegister<FixedBankRegister>(0x4);
             Z = memory.MapRegister<ProgramCounter>(0x05);

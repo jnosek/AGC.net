@@ -3,7 +3,7 @@ using Apollo.Virtual.AGC.Memory;
 
 namespace Apollo.Virtual.AGC.Registers
 {
-    class AccumulatorRegister : FullRegister
+    class AccumulatorRegister : Register16
     {
         public AccumulatorRegister(ushort address, MemoryBank bank)
             : base(address, bank)
