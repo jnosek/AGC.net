@@ -13,29 +13,29 @@ namespace AGC.Tests.Instructions
             // arrange
 
             // ensure overflow correction occurs
-            Memory[0x000] = (0x8000).ToOnesCompliment();
-            Memory[0x001] = (2).ToOnesCompliment();
+            Memory[0x000] = 0x8000;
+            Memory[0x001] = 2;
 
-            Memory[0x200] = (3).ToOnesCompliment();
-            Memory[0x201] = (4).ToOnesCompliment();
+            Memory[0x200] = 3;
+            Memory[0x201] = 4;
 
             // act - run the instruction
             RunInstruction(DoubleExchange.Encode(0x201));
 
             // assert
-            CustomAssert.AreEqual(3, Memory[0x0]);
-            CustomAssert.AreEqual(4, Memory[0x1]);
+            Assert.AreEqual(3, Memory[0x0]);
+            Assert.AreEqual(4, Memory[0x1]);
 
-            CustomAssert.AreEqual(0xC000, Memory[0x200]);
-            CustomAssert.AreEqual(2, Memory[0x201]);
+            Assert.AreEqual(0xC000, Memory[0x200]);
+            Assert.AreEqual(2, Memory[0x201]);
         }
 
         [TestMethod]
         public void DoubleExchange_SwitchingBothBanks()
         {
             // arrange
-            Memory[0x000] = (0x000D).ToOnesCompliment();
-            Memory[0x001] = (0x0800 | 0x0002).ToOnesCompliment();
+            Memory[0x000] = 0x000D;
+            Memory[0x001] = 0x0800 | 0x0002;
 
             Memory[0x006] = OnesCompliment.PositiveZero;
 
@@ -45,23 +45,23 @@ namespace AGC.Tests.Instructions
             // assert
 
             // should be set to boot interrupt + 1 instruction
-            CustomAssert.AreEqual(0x0801, Memory[0x0]); 
-            CustomAssert.AreEqual(0x0000, Memory[0x1]);
+            Assert.AreEqual(0x0801, Memory[0x0]); 
+            Assert.AreEqual(0x0000, Memory[0x1]);
 
-            CustomAssert.AreEqual(0x000D, Memory[0x005]);
-            CustomAssert.AreEqual(0x0802, Memory[0x006]);
+            Assert.AreEqual(0x000D, Memory[0x005]);
+            Assert.AreEqual(0x0802, Memory[0x006]);
 
             // check eb and fb registers
-            CustomAssert.AreEqual(0x0200, Memory[0x03]);
-            CustomAssert.AreEqual(0x0800, Memory[0x04]);
+            Assert.AreEqual(0x0200, Memory[0x03]);
+            Assert.AreEqual(0x0800, Memory[0x04]);
         }
 
         [TestMethod]
         public void DoubleExchange_SwitchingFBank()
         {
             // arrange
-            Memory[0x000] = (0x0800).ToOnesCompliment(); 
-            Memory[0x001] = (0x000D).ToOnesCompliment();
+            Memory[0x000] = 0x0800; 
+            Memory[0x001] = 0x000D;
 
             Memory[0x004] = OnesCompliment.PositiveZero;
 
@@ -70,17 +70,17 @@ namespace AGC.Tests.Instructions
 
             // assert
 
-            CustomAssert.AreEqual(0x0000, Memory[0x0]);
+            Assert.AreEqual(0x0000, Memory[0x0]);
 
             // should be set to boot interrupt + 1 instruction
-            CustomAssert.AreEqual(0x0801, Memory[0x1]);
+            Assert.AreEqual(0x0801, Memory[0x1]);
 
-            CustomAssert.AreEqual(0x0800, Memory[0x004]);
-            CustomAssert.AreEqual(0x000D, Memory[0x005]);
+            Assert.AreEqual(0x0800, Memory[0x004]);
+            Assert.AreEqual(0x000D, Memory[0x005]);
 
             // check fb and bb registers
-            CustomAssert.AreEqual(0x0800, Memory[0x04]);
-            CustomAssert.AreEqual(0x0800, Memory[0x06]);
+            Assert.AreEqual(0x0800, Memory[0x04]);
+            Assert.AreEqual(0x0800, Memory[0x06]);
         }
 
         /// <summary>
@@ -90,41 +90,41 @@ namespace AGC.Tests.Instructions
         public void DoubleExchange_QRegister()
         {
             // arrange
-            Memory[0x000] = (0x8000).ToOnesCompliment();
-            Memory[0x001] = (0x000D).ToOnesCompliment();
+            Memory[0x000] = 0x8000;
+            Memory[0x001] = 0x000D;
 
-            Memory[0x002] = (0x8001).ToOnesCompliment();
-            Memory[0x003] = (0x0400).ToOnesCompliment();
+            Memory[0x002] = 0x8001;
+            Memory[0x003] = 0x0400;
 
             // act - run the instruction
             RunInstruction(DoubleExchange.Encode(0x003));
 
             // assert
 
-            CustomAssert.AreEqual(0x8001, Memory[0x0]);
-            CustomAssert.AreEqual(0x0400, Memory[0x1]);
+            Assert.AreEqual(0x8001, Memory[0x0]);
+            Assert.AreEqual(0x0400, Memory[0x1]);
 
-            CustomAssert.AreEqual(0x8000, Memory[0x2]);
-            CustomAssert.AreEqual(0x0000, Memory[0x3]);
+            Assert.AreEqual(0x8000, Memory[0x2]);
+            Assert.AreEqual(0x0000, Memory[0x3]);
         }
 
         [TestMethod]
         public void DoubleExchange_LRegister()
         {
             // arrange
-            Memory[0x000] = (0x8000).ToOnesCompliment();
-            Memory[0x001] = (0x000D).ToOnesCompliment();
-            Memory[0x002] = (0x8001).ToOnesCompliment();
+            Memory[0x000] = 0x8000;
+            Memory[0x001] = 0x000D;
+            Memory[0x002] = 0x8001;
 
             // act - run the instruction
             RunInstruction(DoubleExchange.Encode(0x002));
 
             // assert
 
-            CustomAssert.AreEqual(0x8001, Memory[0x0]);
+            Assert.AreEqual(0x8001, Memory[0x0]);
             // this value becomes overflow corrected because L is a 15-bit register
-            CustomAssert.AreEqual(0xC000, Memory[0x1]);
-            CustomAssert.AreEqual(0x000D, Memory[0x2]);
+            Assert.AreEqual(0xC000, Memory[0x1]);
+            Assert.AreEqual(0x000D, Memory[0x2]);
         }
     }
 }

@@ -5,10 +5,10 @@
     /// </summary>
     public class DoublePrecision
     {
-        public OnesCompliment MostSignificantWord { get; protected set; }
-        public OnesCompliment LeastSignificantWord { get; protected set; }
+        public ushort MostSignificantWord { get; }
+        public ushort LeastSignificantWord { get; }
 
-        public DoublePrecision(OnesCompliment most, OnesCompliment least)
+        public DoublePrecision(ushort most, ushort least)
         {
             MostSignificantWord = most;
             LeastSignificantWord = least;
@@ -23,14 +23,14 @@
         public static DoublePrecision operator +(DoublePrecision left, DoublePrecision right)
         {
             // single preceision add the least significant word and most significant word
-            var lsw = left.LeastSignificantWord + right.LeastSignificantWord;
-            var msw = left.MostSignificantWord + right.MostSignificantWord;
+            ushort lsw = OnesCompliment.Add(left.LeastSignificantWord, right.LeastSignificantWord);
+            ushort msw = OnesCompliment.Add(left.MostSignificantWord, right.MostSignificantWord);
 
             // check for overflow and adjust
-            if (lsw.IsPositiveOverflow)
-                msw += OnesCompliment.PositiveOne;
-            else if (lsw.IsNegativeOverflow)
-                msw += OnesCompliment.NegativeOne;
+            if (OnesCompliment.IsPositiveOverflow(lsw))
+                msw = OnesCompliment.AddPositiveOne(msw);
+            else if (OnesCompliment.IsNegativeOverflow(lsw))
+                msw = OnesCompliment.AddNegativeOne(msw);
 
             // in case lsw is in overflow, correct it and extend it back to 16 bits
             

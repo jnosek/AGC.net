@@ -24,7 +24,7 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            CustomAssert.AreEqual(0x500, Memory[0x005]);
+            Assert.AreEqual(0x500, Memory[0x005]);
         }
 
         [TestMethod]
@@ -39,14 +39,14 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            CustomAssert.AreEqual(0x500, Memory[0x005]);
+            Assert.AreEqual(0x500, Memory[0x005]);
         }
 
         [TestMethod]
         public void BranchZeroToFixed_NoJump()
         {
             // arrange
-            Memory[0x0] = (5).ToOnesCompliment();
+            Memory[0x0] = 5;
 
             // act - run the instructions
             RunProgram(baseProgram);
@@ -54,7 +54,7 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for address to jump to in Z register
-            CustomAssert.AreEqual(0x802, Memory[0x005]);
+            Assert.AreEqual(0x802, Memory[0x005]);
         }
     }
 }

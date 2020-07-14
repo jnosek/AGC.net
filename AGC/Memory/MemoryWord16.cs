@@ -17,9 +17,9 @@ namespace Apollo.Virtual.AGC.Memory
         /// Write the full 16 bits into memory without overflow correction
         /// </summary>
         /// <param name="value"></param>
-        public override void Write(OnesCompliment value)
+        public override void Write(ushort value)
         {
-            WriteRaw(value.NativeValue);
+            UnmodifiedWrite(value);
         }
     }
 }

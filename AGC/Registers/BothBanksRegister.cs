@@ -10,19 +10,19 @@ namespace Apollo.Virtual.AGC.Registers
         {
         }
 
-        public override void Write(OnesCompliment value)
+        public override void Write(ushort value)
         {
             // mask values, since they are the only ones that can be set
-            var eb = value.NativeValue & 0x0007;
-            var fb = value.NativeValue & 0x7C00;
+            var eb = value & 0x0007;
+            var fb = value & 0x7C00;
 
             // write values to eb and fb register
             // shift eb values left by 8
-            WriteRaw(eb << 8, 0x3);
-            WriteRaw(fb, 0x4);
+            UnmodifiedWrite(eb << 8, 0x3);
+            UnmodifiedWrite(fb, 0x4);
 
             // write combined, masked value
-            WriteRaw(eb | fb);
+            UnmodifiedWrite(eb | fb);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Apollo.Virtual.AGC.Instructions
 
             // if +0 or negative, jump
             if (value == 0 || (value & 0x8000) > 0)
-                cpu.Z.Write(new OnesCompliment(K));
+                cpu.Z.Write(K);
         }
     }
 }

@@ -45,9 +45,9 @@ namespace Apollo.Virtual.AGC.Instructions
             cpu.L.Write(OnesCompliment.PositiveZero);
 
             // A set based upon overflow
-            if (sum.MostSignificantWord.IsPositiveOverflow)
+            if (OnesCompliment.IsPositiveOverflow(sum.MostSignificantWord))
                 cpu.A.Write(OnesCompliment.PositiveOne);
-            else if (sum.MostSignificantWord.IsNegativeOverflow)
+            else if (OnesCompliment.IsNegativeOverflow(sum.MostSignificantWord))
                 cpu.A.Write(OnesCompliment.NegativeOne);
             else
                 cpu.A.Write(OnesCompliment.PositiveZero);

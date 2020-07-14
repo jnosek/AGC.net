@@ -4,7 +4,7 @@ namespace Apollo.Virtual.AGC.Memory
 {
     public interface IMemoryBus
     {
-        OnesCompliment this[ushort a] { get; set; }
+        ushort this[ushort a] { get; set; }
         int MaxAddress { get; }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace Apollo.Virtual.AGC.Instructions
 
             // if +0 or -0, then jump
             if (value == 0 || value == OnesCompliment.NegativeZero)
-                cpu.Z.Write(new OnesCompliment(K));
+                cpu.Z.Write(K);
         }
     }
 }

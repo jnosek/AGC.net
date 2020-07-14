@@ -10,7 +10,7 @@ namespace AGC.Tests.Registers
         public void BothBanksRegister_SetWithinMask()
         {
             // arrange
-            Memory[0x200] = (0x0800 | 0x0002).ToOnesCompliment();
+            Memory[0x200] = 0x0800 | 0x0002;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -25,20 +25,20 @@ namespace AGC.Tests.Registers
             // assert
 
             // check BB register
-            CustomAssert.AreEqual(0x0800 | 0x0002, Memory[0x6]);
+            Assert.AreEqual(0x0800 | 0x0002, Memory[0x6]);
 
             // check EB register
-            CustomAssert.AreEqual(0x0200, Memory[0x3]);
+            Assert.AreEqual(0x0200, Memory[0x3]);
 
             // check FB register
-            CustomAssert.AreEqual(0x0800, Memory[0x4]);
+            Assert.AreEqual(0x0800, Memory[0x4]);
         }
 
         [TestMethod]
         public void BothBanksRegister_SetOutsideMask()
         {
             // arrange
-            Memory[0x200] = (0x0020).ToOnesCompliment();
+            Memory[0x200] = 0x0020;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -53,13 +53,13 @@ namespace AGC.Tests.Registers
             // assert
 
             // check BB register
-            CustomAssert.AreEqual(0x0000, Memory[0x6]);
+            Assert.AreEqual(0x0000, Memory[0x6]);
 
             // check EB register
-            CustomAssert.AreEqual(0x0000, Memory[0x3]);
+            Assert.AreEqual(0x0000, Memory[0x3]);
 
             // check FB register
-            CustomAssert.AreEqual(0x0000, Memory[0x4]);
+            Assert.AreEqual(0x0000, Memory[0x4]);
         }
     }
 }

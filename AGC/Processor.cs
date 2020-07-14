@@ -273,19 +273,19 @@ namespace Apollo.Virtual.AGC
             INLINK = memory.MapRegister<ErasableMemory>(0x25);
 
             // prime Z to start at the boot interrupt
-            Z.Write(new OnesCompliment(0x800));
+            Z.Write(0x800);
         }
 
         public void Execute()
         {
             // get address of instruction to run
-            ushort address = Z.Read().NativeValue;
+            ushort address = Z.Read();
 
             // update Z
             Z.Increment();
 
             // get instruction
-            ushort instruction = Memory[address].NativeValue;
+            ushort instruction = Memory[address];
 
             // we only care about 15-bit instructions
             instruction = MaskInstruction(instruction);
