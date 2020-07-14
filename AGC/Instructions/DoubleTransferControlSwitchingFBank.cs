@@ -1,5 +1,4 @@
-﻿// DTCF: See DoubleExchange (DXCH Z)
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// DTCF
@@ -9,6 +8,7 @@ namespace Apollo.Virtual.AGC.Instructions
     /// 
     /// This instruction exchanges the contents of A with FB, and the contents of L with Z.Thus by preloading the A,L register pair, we can effectively perform a jump to a different fixed-memory bank, whilst preserving the current address and fixed-memory bank for a later return.
     /// </summary>
+    /// <seealso cref="DoubleExchange"/>
     public class DoubleTransferControlSwitchingFBank
     {
         public const ushort Instruction =

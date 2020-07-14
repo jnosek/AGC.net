@@ -1,5 +1,4 @@
 ﻿using Apollo.Virtual.AGC.Math;
-using System.Xml.Schema;
 
 namespace Apollo.Virtual.AGC.Instructions
 {

@@ -1,6 +1,4 @@
-﻿using Apollo.Virtual.AGC.Math;
-
-namespace Apollo.Virtual.AGC.Memory
+﻿namespace Apollo.Virtual.AGC.Memory
 {
     /// <summary>
     /// Full 16-bit memory word, for special registers
