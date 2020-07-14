@@ -7,7 +7,13 @@ namespace Apollo.Virtual.AGC
        public static InstructionList Build(Processor cpu) =>
             new InstructionList(new IInstruction[]
             {
-                new BranchZeroToFixed(cpu),
+                new QuarterCodeInstructionList(new IQuarterCodeInstruction[]
+                {
+                    new Divide(cpu),
+                    new BranchZeroToFixed(cpu),
+                    new BranchZeroToFixed10(cpu),
+                    new BranchZeroToFixed11(cpu)
+                }),
                 new QuarterCodeInstructionList(new IQuarterCodeInstruction[] {
                     new Augment(cpu),
                     new Diminish(cpu)

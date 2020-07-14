@@ -40,5 +40,14 @@
 
             return new DoublePrecision(msw, lsw);
         }
+
+        public int ToInt32()
+        {
+            // TODO: this may have to fixed to correct the lsw and msw values stored in memory
+            int lsw = OnesCompliment.ConvertToNative(LeastSignificantWord);
+            int msw = OnesCompliment.ConvertToNative(MostSignificantWord);
+
+            return (msw << 14) + lsw;
+        }
     }
 }

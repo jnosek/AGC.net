@@ -80,7 +80,7 @@ namespace Apollo.Virtual.AGC.Memory
             bank[address] = (ushort)value;
         }
 
-        protected static ushort OverflowCorrect(ushort value)
+        internal static ushort OverflowCorrect(ushort value)
         {
             uint correctedValue = value;
 
@@ -98,7 +98,7 @@ namespace Apollo.Virtual.AGC.Memory
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        protected static ushort SignExtend(ushort value)
+        internal static ushort SignExtend(ushort value)
         {
             uint extendedValue = value;
 

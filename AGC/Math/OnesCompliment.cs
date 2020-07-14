@@ -13,18 +13,21 @@ namespace Apollo.Virtual.AGC.Math
         public const ushort PositiveZero = 0x0000;
         public const ushort PositiveOne = 0x0001;
         public const ushort NegativeOne = 0xFFFE;
+        public const ushort SignMask = 0xC000;
 
         public static bool IsNegativeZero(ushort value) => value == NegativeZero;
 
         public static bool IsPositiveZero(ushort value) => value == 0;
 
+        public static bool IsZero(ushort value) => value == 0 || value == NegativeZero;
+
         public static bool IsNegative(ushort value) => (value & 0x8000) > 0;
 
         public static bool IsPositive(ushort value) => (value & 0x8000) == 0;
         
-        public static bool IsPositiveOverflow(ushort value) => (value & 0xC000) == 0x4000;
+        public static bool IsPositiveOverflow(ushort value) => (value & SignMask) == 0x4000;
         
-        public static bool IsNegativeOverflow(ushort value) => (value & 0xC000) == 0x8000;
+        public static bool IsNegativeOverflow(ushort value) => (value & SignMask) == 0x8000;
         
         public static ushort Add(ushort left, ushort right)
         {
@@ -61,11 +64,21 @@ namespace Apollo.Virtual.AGC.Math
         }
 
         /// <summary>
-        /// Converstion helper, mainly to handle negative values
+        /// Converts a ushort one's compliment number to a native 
+        /// int two's compliment
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static ushort Convert(ushort value) => value < 0 ? (ushort)~value : value;
+        public static int ConvertToNative(ushort value)
+        {
+            if (IsZero(value))
+                return 0;
+            else if (IsNegative(value))
+                // compliment to get positive number, then negate
+                return -(~value);
+            else
+                return (int)value;
+        }
 
         /// <summary>
         /// Converstion helper, mainly to handle negative values
