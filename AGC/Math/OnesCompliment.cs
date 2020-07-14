@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Schema;
 
 namespace Apollo.Virtual.AGC.Math
 {
@@ -59,8 +60,21 @@ namespace Apollo.Virtual.AGC.Math
                 return PositiveZero;
         }
 
-        public static ushort Convert(short value) => throw new NotImplementedException();
+        /// <summary>
+        /// Converstion helper, mainly to handle negative values
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ushort Convert(ushort value) => value < 0 ? (ushort)~value : value;
 
-        public static ushort Convert(int value) => throw new NotImplementedException();
+        /// <summary>
+        /// Converstion helper, mainly to handle negative values
+        /// </summary>
+        /// <remarks>
+        /// Make the negative int positive, and then compliment the binary value
+        /// </remarks>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ushort Convert(int value) => (ushort)(value < 0 ? ~(-value): value);
     }
 }

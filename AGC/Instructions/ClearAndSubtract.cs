@@ -31,7 +31,7 @@
             var value = cpu.Memory[K];
 
             // write the compliment to the accumulator
-            cpu.A.Write(~value);
+            cpu.A.Write((ushort)~value);
 
             // if not the A register, re-write value to K
             if (K != cpu.A.Address)

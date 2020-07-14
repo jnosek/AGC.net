@@ -10,7 +10,7 @@ namespace AGC.Tests.Registers
         public void FixedBankRegister_SetWithinMask()
         {
             // arrange
-            Memory[0x200] = (0x0800).ToOnesCompliment();
+            Memory[0x200] = 0x0800;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -23,10 +23,10 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            CustomAssert.AreEqual(0x0800, Memory[0x4]);
+            Assert.AreEqual(0x0800, Memory[0x4]);
 
             // check BB register
-            CustomAssert.AreEqual(0x0800, Memory[0x6]);
+            Assert.AreEqual(0x0800, Memory[0x6]);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace AGC.Tests.Registers
         {
             // arrange
 
-            Memory[0x200] = (0x0002).ToOnesCompliment();
+            Memory[0x200] = 0x0002;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -47,10 +47,10 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            CustomAssert.AreEqual(0x0000, Memory[0x4]);
+            Assert.AreEqual(0x0000, Memory[0x4]);
 
             // check BB register
-            CustomAssert.AreEqual(0x0000, Memory[0x6]);
+            Assert.AreEqual(0x0000, Memory[0x6]);
         }
     }
 }

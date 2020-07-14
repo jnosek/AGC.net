@@ -19,7 +19,6 @@ namespace Apollo.Virtual.AGC.Memory
         /// <param name="value"></param>
         public override void Write(ushort value)
         {
-            Debug.Fail("Cannot write to a fixed memory location");
         }
     }
 }

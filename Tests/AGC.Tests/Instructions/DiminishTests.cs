@@ -17,33 +17,33 @@ namespace AGC.Tests.Instructions
         public void Diminish_PositiveNumber()
         {
             // arrange
-            Memory[0x200] = (10).ToOnesCompliment();
+            Memory[0x200] = 10;
 
             // act - run the instructions
             RunProgram(baseProgram);
 
             // assert
-            CustomAssert.AreEqual(9, Memory[0x200]);
+            Assert.AreEqual(9, Memory[0x200]);
         }
 
         [TestMethod]
         public void Diminish_NegativeNumber()
         {
             // arrange
-            Memory[0x200] = (~10).ToOnesCompliment();  // -10
+            Memory[0x200] = OnesCompliment.Convert(-10);
 
             // act - run the instructions
             RunProgram(baseProgram);
 
             // assert
-            CustomAssert.AreEqual(~9, Memory[0x200]); // -9
+            Assert.AreEqual(OnesCompliment.Convert(-9), Memory[0x200]);
         }
 
         [TestMethod]
         public void Diminish_16BitRegister()
         {
             // arrange
-            Memory[0x00] = (0x4001).ToOnesCompliment(); // 15-bit positive value
+            Memory[0x00] = 0x4001; // 15-bit positive value
 
             // act - run the instructions
             RunProgram(new ushort[] {
@@ -52,7 +52,7 @@ namespace AGC.Tests.Instructions
             }); ;
 
             // assert
-            CustomAssert.AreEqual(0x4000, Memory[0x000]);
+            Assert.AreEqual(0x4000, Memory[0x000]);
         }
     }
 }

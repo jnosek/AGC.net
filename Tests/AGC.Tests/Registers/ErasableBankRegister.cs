@@ -10,7 +10,7 @@ namespace AGC.Tests.Registers
         public void ErasableBank_SetWithinMask()
         {
             // arrange
-            Memory[0x200] = (0x0200).ToOnesCompliment();
+            Memory[0x200] = 0x0200;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -23,17 +23,17 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            CustomAssert.AreEqual(0x0200, Memory[0x3]);
+            Assert.AreEqual(0x0200, Memory[0x3]);
 
             // check BB register
-            CustomAssert.AreEqual(0x0002, Memory[0x6]);
+            Assert.AreEqual(0x0002, Memory[0x6]);
         }
 
         [TestMethod]
         public void ErasableBank_SetOutsideMask()
         {
             // arrange
-            Memory[0x200] = (0x0002).ToOnesCompliment();
+            Memory[0x200] = 0x0002;
 
             // insert instructions
             Memory.LoadFixedRom(new ushort[] {
@@ -46,10 +46,10 @@ namespace AGC.Tests.Registers
             CPU.Execute();
 
             // assert
-            CustomAssert.AreEqual(0x0, Memory[0x3]);
+            Assert.AreEqual(0x0, Memory[0x3]);
 
             // check BB register
-            CustomAssert.AreEqual(0x0000, Memory[0x6]);
+            Assert.AreEqual(0x0000, Memory[0x6]);
         }
     }
 }

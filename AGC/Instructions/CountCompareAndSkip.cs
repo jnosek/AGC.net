@@ -1,4 +1,6 @@
-﻿namespace Apollo.Virtual.AGC.Instructions
+﻿using Apollo.Virtual.AGC.Math;
+
+namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// CCS - 0001
@@ -28,7 +30,7 @@
 
             // 1) compute the Diminished ABSolute value found at K and set in A
 
-            var dabs = value.GetDiminishedAbsoluteValue();
+            var dabs = OnesCompliment.GetDiminishedAbsoluteValue(value);
 
 
             // 2) K is edited, then write dabs to A
@@ -44,17 +46,17 @@
             // if greater than +0 we do nothing, continue to next instruction as usual
 
             // if == +0 increment by 1
-            if (value.IsPositiveZero)
+            if (OnesCompliment.IsPositiveZero(value))
                 cpu.Z.Increment();
             // if == -0 increment by 3
-            else if(value.IsNegativeZero)
+            else if(OnesCompliment.IsNegativeZero(value))
             {
                 cpu.Z.Increment();
                 cpu.Z.Increment();
                 cpu.Z.Increment();
             }
             // if < 0 increment by 2
-            else if (value.IsNegative)
+            else if (OnesCompliment.IsNegative(value))
             {
                 cpu.Z.Increment();
                 cpu.Z.Increment();

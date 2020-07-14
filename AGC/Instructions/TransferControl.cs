@@ -36,7 +36,7 @@ namespace Apollo.Virtual.AGC.Instructions
                 cpu.Q.Write(cpu.Z.Read());
 
                 // set control to K
-                cpu.Z.Write(new OnesCompliment(K));
+                cpu.Z.Write(K);
 
                 // clear the extra code flag
                 cpu.ExtraCodeFlag = false;

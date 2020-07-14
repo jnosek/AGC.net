@@ -21,9 +21,9 @@ namespace AGC.Tests.Instructions
             RunInstruction(DoubleAddToStorage.Encode(0x201));
 
             // assert
-            CustomAssert.AreEqual(0, Memory[0x200]);
-            CustomAssert.AreEqual(2, Memory[0x201]);
-            CustomAssert.AreEqual(0, Memory[0x000]);
+            Assert.AreEqual(0, Memory[0x200]);
+            Assert.AreEqual(2, Memory[0x201]);
+            Assert.AreEqual(0, Memory[0x000]);
             Assert.AreEqual(OnesCompliment.PositiveZero, Memory[0x001]);
         }
 
@@ -32,7 +32,7 @@ namespace AGC.Tests.Instructions
         {
             // arrange
             Memory[0x0] = OnesCompliment.PositiveZero;
-            Memory[0x1] = (0x3FFF).ToOnesCompliment();
+            Memory[0x1] = 0x3FFF;
 
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.PositiveOne;
@@ -52,7 +52,7 @@ namespace AGC.Tests.Instructions
         {
             // arrange
             Memory[0x0] = OnesCompliment.NegativeZero;
-            Memory[0x1] = (0xC000).ToOnesCompliment(); // largest negative number;
+            Memory[0x1] = 0xC000; // largest negative number;
 
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.NegativeOne;
@@ -71,8 +71,8 @@ namespace AGC.Tests.Instructions
         public void DoubleAddToStorage_MswPositiveOverflow()
         {
             // arrange
-            Memory[0x0] = (0x3FFF).ToOnesCompliment();
-            Memory[0x1] = (0x3FFF).ToOnesCompliment();
+            Memory[0x0] = 0x3FFF;
+            Memory[0x1] = 0x3FFF;
 
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.PositiveOne;
@@ -91,8 +91,8 @@ namespace AGC.Tests.Instructions
         public void DoubleAddToStorage_MswNegativeUnderflow()
         {
             // arrange
-            Memory[0x0] = (0xC000).ToOnesCompliment(); // largest negative number;
-            Memory[0x1] = (0xC000).ToOnesCompliment(); // largest negative number;
+            Memory[0x0] = 0xC000; // largest negative number;
+            Memory[0x1] = 0xC000; // largest negative number;
 
             Memory[0x200] = OnesCompliment.PositiveZero;
             Memory[0x201] = OnesCompliment.NegativeOne;
@@ -138,8 +138,8 @@ namespace AGC.Tests.Instructions
             RunInstruction(DoublePrecisionDouble.Instruction);
 
             // assert
-            CustomAssert.AreEqual(OnesCompliment.PositiveZero, Memory[0x000]);
-            CustomAssert.AreEqual(2, Memory[0x001]);
+            Assert.AreEqual(OnesCompliment.PositiveZero, Memory[0x000]);
+            Assert.AreEqual(2, Memory[0x001]);
         }
     }
 }

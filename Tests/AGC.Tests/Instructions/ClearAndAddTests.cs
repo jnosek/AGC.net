@@ -13,7 +13,7 @@ namespace AGC.Tests.Instructions
             // arrange
 
             // insert instructions and test data
-            Memory.LoadFixedRom(new ushort[] {
+            Memory.LoadFixedRom(new ushort [] {
                 ClearAndAdd.Encode(0x801), // CA instruction and address
                 10 //value
             });
@@ -24,14 +24,14 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for value in the accumulator
-            CustomAssert.AreEqual(10, Memory[0x0]);
+            Assert.AreEqual(10, Memory[0x0]);
         }
 
         [TestMethod]
         public void ClearAndAdd_EraseableMemory()
         {
             // arrange
-            Memory[0x200] = (10).ToOnesCompliment();
+            Memory[0x200] = 10;
 
             // act - run the instructions
             RunInstruction(ClearAndAdd.Encode(0x200));
@@ -39,7 +39,7 @@ namespace AGC.Tests.Instructions
             // assert
 
             // check for value in the accumulator
-            CustomAssert.AreEqual(10, Memory[0x0]);
+            Assert.AreEqual(10, Memory[0x0]);
         }
     }
 }
