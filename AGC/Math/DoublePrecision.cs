@@ -23,14 +23,14 @@
         public static DoublePrecision operator +(DoublePrecision left, DoublePrecision right)
         {
             // single preceision add the least significant word and most significant word
-            ushort lsw = (ushort)(left.LeastSignificantWord + right.LeastSignificantWord);
-            ushort msw = (ushort)(left.MostSignificantWord + right.MostSignificantWord);
+            ushort lsw = OnesCompliment.Add(left.LeastSignificantWord, right.LeastSignificantWord);
+            ushort msw = OnesCompliment.Add(left.MostSignificantWord, right.MostSignificantWord);
 
             // check for overflow and adjust
             if (OnesCompliment.IsPositiveOverflow(lsw))
-                msw += OnesCompliment.PositiveOne;
+                msw = OnesCompliment.AddPositiveOne(msw);
             else if (OnesCompliment.IsNegativeOverflow(lsw))
-                msw += OnesCompliment.NegativeOne;
+                msw = OnesCompliment.AddNegativeOne(msw);
 
             // in case lsw is in overflow, correct it and extend it back to 16 bits
             
