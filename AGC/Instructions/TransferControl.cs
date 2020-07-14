@@ -1,6 +1,4 @@
-﻿using Apollo.Virtual.AGC.Math;
-
-namespace Apollo.Virtual.AGC.Instructions
+﻿namespace Apollo.Virtual.AGC.Instructions
 {
     /// <summary>
     /// TC - 0000
@@ -12,6 +10,9 @@ namespace Apollo.Virtual.AGC.Instructions
     public class TransferControl : IInstruction
     {
         private const ushort _code = 0x0;
+        private const ushort _instruction = _code << 12;
+
+        public static ushort Encode(ushort address) => (ushort)(_instruction | address);
 
         public TransferControl(Processor cpu)
         {

@@ -1,12 +1,14 @@
 ﻿using Apollo.Virtual.AGC.Math;
 using System.Diagnostics;
 using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace Apollo.Virtual.AGC.Memory
 {
     /// <summary>
     /// Default 15-bit ones compliment memory word
     /// </summary>
+    [DebuggerDisplay("{Read()}")]
     public class MemoryWord : IWord
     {
         private MemoryBank bank;
